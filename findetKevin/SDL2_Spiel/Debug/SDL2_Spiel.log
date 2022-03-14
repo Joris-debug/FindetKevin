@@ -1,0 +1,11 @@
+﻿Quelle.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_SDL_CreateWindow" in Funktion ""int __cdecl SDL_main(void)" (?SDL_main@@YAHXZ)".
+Quelle.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_SDL_CreateRenderer" in Funktion ""int __cdecl SDL_main(void)" (?SDL_main@@YAHXZ)".
+Quelle.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_SDL_SetRenderDrawColor" in Funktion ""int __cdecl SDL_main(void)" (?SDL_main@@YAHXZ)".
+Quelle.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_SDL_RenderClear" in Funktion ""int __cdecl SDL_main(void)" (?SDL_main@@YAHXZ)".
+Quelle.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_SDL_RenderPresent" in Funktion ""int __cdecl SDL_main(void)" (?SDL_main@@YAHXZ)".
+Quelle.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_SDL_Delay" in Funktion ""int __cdecl SDL_main(void)" (?SDL_main@@YAHXZ)".
+Quelle.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_SDL_Init" in Funktion ""int __cdecl SDL_main(void)" (?SDL_main@@YAHXZ)".
+MSVCRTD.lib(exe_main.obj) : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_main" in Funktion ""int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)".
+C:\Users\joris\source\repos\SDL2_Spiel\libs\SDL2-2.0.20\lib\x64\SDL2.lib : warning LNK4272: Bibliothekcomputertyp "x64" steht in Konflikt mit dem Zielcomputertyp "x86"
+C:\Users\joris\source\repos\SDL2_Spiel\libs\SDL2-2.0.20\lib\x64\SDL2main.lib : warning LNK4272: Bibliothekcomputertyp "x64" steht in Konflikt mit dem Zielcomputertyp "x86"
+C:\Users\joris\source\repos\SDL2_Spiel\Debug\SDL2_Spiel.exe : fatal error LNK1120: 8 nicht aufgelöste Externe
