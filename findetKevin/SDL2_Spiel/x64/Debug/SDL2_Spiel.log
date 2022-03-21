@@ -1,3 +1,3 @@
 ﻿  CGamemaster.cpp
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(44,40): warning C4244: "Argument": Konvertierung von "double" in "Uint32", möglicher Datenverlust
-  SDL2_Spiel.vcxproj -> C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(44,40): warning C4244: 'argument': conversion from 'double' to 'Uint32', possible loss of data
+  SDL2_Spiel.vcxproj -> C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe

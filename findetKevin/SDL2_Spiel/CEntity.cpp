@@ -6,7 +6,6 @@ void CEntity::update()
 void CEntity::renderer(SDL_Renderer* renderer)
 {
 	SDL_RenderCopy(renderer, texture, &textureCoords, &bounds);
-
 }
 
 CEntity::CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds)
@@ -23,10 +22,8 @@ CEntity::CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds)
 CEntity::~CEntity()
 {
 
-
 }
 CEntity::CEntity()
 {
-
 
 }

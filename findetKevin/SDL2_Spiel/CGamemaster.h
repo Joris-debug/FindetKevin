@@ -14,10 +14,10 @@ private:
 	SDL_Event input;
 	list <CEntity*> listeVonEntitys;
 	CEntity * spielerPointer;
-
+private:
+	void gameLoop();
 public:
 	CGamemaster();
-	void GameLoop();
 	void init();
 };
 

@@ -4,10 +4,10 @@
 #include "CGamemaster.h"
 #undef main
 
-CGamemaster GameMasterClass;
 int main()
 {
-    GameMasterClass.GameLoop();
+    CGamemaster GameMasterClass;
+    GameMasterClass.init();
     return 0;
 }
 

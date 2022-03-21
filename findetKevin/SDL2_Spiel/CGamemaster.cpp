@@ -1,5 +1,7 @@
 #include "CGamemaster.h"
 
+#include "Resources.h"
+
 CGamemaster::CGamemaster()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -15,11 +17,9 @@ CGamemaster::CGamemaster()
     window = SDL_CreateWindow("Findet Kevin", SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, 0);
-
-    init();
 }
 
-void CGamemaster::GameLoop()
+void CGamemaster::gameLoop()
 {
     bool quit = false;
     Uint32 currentTime = SDL_GetTicks(); //Zum errechnen der Deltatime
@@ -48,8 +48,6 @@ void CGamemaster::GameLoop()
         SDL_RenderPresent(renderer);
     }
 
-
-
     //For quitting IMG systems
     IMG_Quit();
     SDL_Quit();
@@ -57,7 +55,7 @@ void CGamemaster::GameLoop()
 
 void CGamemaster::init()
 {
-    SDL_Surface* tempSurface = IMG_Load("CharakterSheet.png");
+    SDL_Surface* tempSurface = IMG_Load(RSC_CHARACKTER_SPRITE);
     SDL_Rect tempBounds;
     tempBounds.x = 0; //Extreme left of the window
     tempBounds.y = 0; //Very top of the window
@@ -66,4 +64,6 @@ void CGamemaster::init()
     CEntity* ptr = new CPlayer(SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds);
     spielerPointer = ptr;
     listeVonEntitys.push_back(ptr);
+
+    this->gameLoop();
 }

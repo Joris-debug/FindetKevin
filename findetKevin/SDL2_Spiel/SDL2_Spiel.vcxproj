@@ -160,6 +160,7 @@
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CGamemaster.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="Resources.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
