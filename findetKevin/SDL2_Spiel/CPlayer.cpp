@@ -8,3 +8,11 @@ CPlayer::CPlayer(SDL_Texture* textureTemp, string tag, SDL_Rect bounds) : CEntit
     footSpace.w = 32 * 4;
     footSpace.h = 8 * 4;
 }
+
+int CPlayer::bewegen(int y, int x)
+{
+    bounds.x = bounds.x + x;
+    bounds.y = bounds.y + y;
+
+    return true;
+}

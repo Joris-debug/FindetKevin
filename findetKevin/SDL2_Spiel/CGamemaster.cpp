@@ -21,6 +21,8 @@ CGamemaster::CGamemaster()
 
 void CGamemaster::gameLoop()
 {
+    int y_axis = 0;
+    int x_axis = 0;
     bool quit = false;
     Uint32 currentTime = SDL_GetTicks(); //Zum errechnen der Deltatime
     while (!quit)
@@ -31,11 +33,45 @@ void CGamemaster::gameLoop()
         std::cout << deltaTime << std::endl;
         while (SDL_PollEvent(&input) > 0)
         {
-
             switch (input.type)
             {
             case SDL_QUIT:
                 quit = true;
+                break;
+
+            case SDL_KEYUP:
+                switch (input.key.keysym.sym)
+                {
+                case SDLK_w:
+                case SDLK_s:
+                    y_axis = 0;
+                    break;
+
+                case SDLK_d:
+                case SDLK_a:
+                    x_axis = 0;
+                    break;
+                }
+                break;
+            case SDL_KEYDOWN:
+
+                switch (input.key.keysym.sym)
+                {
+                case SDLK_w:
+                    y_axis = -1;
+                    break;
+                case SDLK_s:
+                    y_axis = 1;
+                    break;
+
+                case SDLK_a:
+                    x_axis = -1;
+                    break;
+                case SDLK_d:
+                    x_axis = 1;
+                    break;
+                }
+
                 break;
             }
         }
@@ -43,7 +79,7 @@ void CGamemaster::gameLoop()
         {
             SDL_Delay(float(1000 / 60) - deltaTime);
         }
-
+        spielerPointer->bewegen(y_axis, x_axis);
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
         SDL_RenderPresent(renderer);
     }
@@ -61,9 +97,9 @@ void CGamemaster::init()
     tempBounds.y = 0; //Very top of the window
     tempBounds.w = 32 * 4;
     tempBounds.h = 32 * 4;
-    CEntity* ptr = new CPlayer(SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds);
-    spielerPointer = ptr;
-    listeVonEntitys.push_back(ptr);
+    spielerPointer = new CPlayer(SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds);
+    
+    /*listeVonEntitys.push_back( );*/
 
     this->gameLoop();
 }

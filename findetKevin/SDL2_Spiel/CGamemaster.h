@@ -13,7 +13,7 @@ private:
 	SDL_Renderer* renderer;
 	SDL_Event input;
 	list <CEntity*> listeVonEntitys;
-	CEntity * spielerPointer;
+	CPlayer * spielerPointer;
 private:
 	void gameLoop();
 public:
