@@ -55,7 +55,7 @@ void CGamemaster::gameLoop()
 
 void CGamemaster::init()
 {
-    SDL_Surface* tempSurface = IMG_Load(RSC_CHARACKTER_SPRITE);
+    SDL_Surface* tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
     SDL_Rect tempBounds;
     tempBounds.x = 0; //Extreme left of the window
     tempBounds.y = 0; //Very top of the window
