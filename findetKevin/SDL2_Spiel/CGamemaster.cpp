@@ -17,6 +17,7 @@ CGamemaster::CGamemaster()
     window = SDL_CreateWindow("Findet Kevin", SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, 0);
+    spielerPointer = NULL;
 }
 
 void CGamemaster::gameLoop()
@@ -29,7 +30,7 @@ void CGamemaster::gameLoop()
     {
         Uint32 lastTime = currentTime;
         currentTime = SDL_GetTicks();
-        double deltaTime = (currentTime - lastTime) / 3.5f;
+        double deltaTime = (currentTime - lastTime);
         std::cout << deltaTime << std::endl;
         while (SDL_PollEvent(&input) > 0)
         {
@@ -40,8 +41,10 @@ void CGamemaster::gameLoop()
                 break;
 
             case SDL_KEYUP:
+
                 switch (input.key.keysym.sym)
                 {
+
                 case SDLK_w:
                 case SDLK_s:
                     y_axis = 0;
@@ -53,10 +56,12 @@ void CGamemaster::gameLoop()
                     break;
                 }
                 break;
+
             case SDL_KEYDOWN:
 
                 switch (input.key.keysym.sym)
                 {
+
                 case SDLK_w:
                     y_axis = -1;
                     break;
@@ -79,7 +84,8 @@ void CGamemaster::gameLoop()
         {
             SDL_Delay(float(1000 / 60) - deltaTime);
         }
-        spielerPointer->bewegen(y_axis, x_axis);
+        spielerPointer->animation(y_axis, x_axis, deltaTime);
+        spielerPointer->bewegen(y_axis*deltaTime * 0.225, x_axis*deltaTime * 0.225);
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
         SDL_RenderPresent(renderer);
     }
