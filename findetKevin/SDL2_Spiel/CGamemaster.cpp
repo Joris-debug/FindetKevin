@@ -14,8 +14,7 @@ CGamemaster::CGamemaster()
         printf("IMG_Init: %s\n", IMG_GetError());
         // handle error
     }
-    window = SDL_CreateWindow("Findet Kevin", SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("Findet Kevin", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, 0);
     spielerPointer = NULL;
 }
@@ -99,13 +98,23 @@ void CGamemaster::init()
 {
     SDL_Surface* tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
     SDL_Rect tempBounds;
-    tempBounds.x = 0; //Extreme left of the window
-    tempBounds.y = 0; //Very top of the window
-    tempBounds.w = 32 * 4;
-    tempBounds.h = 32 * 4;
+    SDL_Texture* tempTexture;
+    tempBounds.x = 80; //Extreme left of the window
+    tempBounds.y = 90; //Very top of the window
+    tempBounds.w = 32 * 3;
+    tempBounds.h = 32 * 3;
     spielerPointer = new CPlayer(SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds);
     
+    tempSurface = IMG_Load(RSC_MAP1_SPRITE);
+    tempBounds.x = 0; //Extreme left of the window
+    tempBounds.y = 0; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w *= 3;
+    tempBounds.h *= 3;
+    CMap * Map1 = new CMap(tempTexture, tempBounds);
+    //Hier wird eine Liste aller Maps benötigt, dort wird diese eingefügt und so kann der GameMaster sie verwalten
     /*listeVonEntitys.push_back( );*/
-
+    SDL_RenderCopy(renderer, tempTexture, NULL, &tempBounds);
     this->gameLoop();
 }
