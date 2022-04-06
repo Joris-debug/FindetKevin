@@ -85,7 +85,10 @@ void CGamemaster::gameLoop()
         }
         spielerPointer->animation(y_axis, x_axis, deltaTime);
         spielerPointer->bewegen(y_axis*deltaTime * 0.225, x_axis*deltaTime * 0.225);
+        SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
+        SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
+
         SDL_RenderPresent(renderer);
     }
 
@@ -97,24 +100,48 @@ void CGamemaster::gameLoop()
 void CGamemaster::init()
 {
     SDL_Surface* tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
+    CMapEntity* tempMapEntity;
     SDL_Rect tempBounds;
+    SDL_Rect tempTextureCoords;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
     SDL_Texture* tempTexture;
-    tempBounds.x = 80; //Extreme left of the window
+    tempBounds.x = 50; //Extreme left of the window
     tempBounds.y = 90; //Very top of the window
-    tempBounds.w = 32 * 3;
-    tempBounds.h = 32 * 3;
-    spielerPointer = new CPlayer(SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds);
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 32 * 2;
+
+    spielerPointer = new CPlayer(SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds, tempTextureCoords);
     
     tempSurface = IMG_Load(RSC_MAP1_SPRITE);
     tempBounds.x = 0; //Extreme left of the window
     tempBounds.y = 0; //Very top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
-    tempBounds.w *= 3;
-    tempBounds.h *= 3;
-    CMap * Map1 = new CMap(tempTexture, tempBounds);
-    //Hier wird eine Liste aller Maps benötigt, dort wird diese eingefügt und so kann der GameMaster sie verwalten
-    /*listeVonEntitys.push_back( );*/
-    SDL_RenderCopy(renderer, tempTexture, NULL, &tempBounds);
+    tempBounds.w *= 2;
+    tempBounds.h *= 2;
+    currentMap = new CMap(tempTexture, tempBounds);
+
+    tempSurface = IMG_Load(RSC_MAP1_SPRITE_TOP_LAYER);
+    tempBounds.x = 0; //Extreme left of the window
+    tempBounds.y = 0; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w *= 2;
+    tempBounds.h *= 2;
+    currentMap_TopLayer = new CMap(tempTexture, tempBounds);//Nur die aktuelle Karte wird abgespeichert, damit nicht unötig Speicherplatz verschwendet wird
+
+
+    
+    tempBounds.x = 0;
+    tempBounds.y = 0;
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 176 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Die erste Kollisionszone wird erstellt
+    list <CMapEntity*> tempMap = currentMap->getListeVonEntitys();
+    tempMap.push_back(tempMapEntity);
+    currentMap->setListeVonEntitys(tempMap);
+    spielerPointer->setCurrentMap(*currentMap);
+
     this->gameLoop();
 }

@@ -1,12 +1,16 @@
 #pragma once
-#include "CEntity.h" // FÜR SDL2 und die Restlichen Includes
+#include "CMapEntity.h"
 class CMap
 {
 private:
 	SDL_Rect position;
 	SDL_Texture* texture;
-	/*list <CMapEnity*> listeVonMapEntitys;*/
+	list <CMapEntity*> listeVonMapEntitys;
 public:
 	CMap(SDL_Texture* textureTemp, SDL_Rect coords);
+	SDL_Texture* getTexture();
+	SDL_Rect* getPosition();
+	list <CMapEntity*> getListeVonEntitys();
+	void setListeVonEntitys(list <CMapEntity*> listeVonEntitys);
 };
 

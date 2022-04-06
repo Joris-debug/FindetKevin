@@ -154,6 +154,7 @@
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CGamemaster.cpp" />
     <ClCompile Include="CMap.cpp" />
+    <ClCompile Include="CMapEntity.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="Quelle.cpp" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CGamemaster.h" />
     <ClInclude Include="CMap.h" />
+    <ClInclude Include="CMapEntity.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="Resources.h" />
   </ItemGroup>
