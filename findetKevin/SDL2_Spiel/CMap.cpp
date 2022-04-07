@@ -15,6 +15,11 @@ SDL_Rect* CMap::getPosition()
 	return &this->position;
 }
 
+void CMap::addObjectToMap(CMapEntity * kollisionszone)
+{
+	listeVonMapEntitys.push_back(kollisionszone);
+}
+
 list<CMapEntity*> CMap::getListeVonEntitys()
 {
 	return listeVonMapEntitys;

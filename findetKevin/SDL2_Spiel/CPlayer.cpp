@@ -1,38 +1,67 @@
 #include "CPlayer.h"
-CPlayer::CPlayer(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords) : CEntity(textureTemp, tag, bounds, textureCoords)
+#include "CGamemaster.h";
+CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords) : CEntity(textureTemp, tag, bounds, textureCoords)
 {
+    this->game = game;
 	healItems = 0;
 	healthPoints = 20; 
-    footSpace.x = 50; //Extreme left of the window
-    footSpace.y = 90; //Very top of the window
+    footSpace.x = game->getWidthOfWindow() / 2; 
+    footSpace.y = game->getHeigthOfWindow() / 2+24*2; 
     footSpace.w = 16 * 2;
     footSpace.h = 8 * 2;
 }
 
-void CPlayer::setCurrentMap(CMap &map)
+void CPlayer::setCurrentMap(CMap *map)
 {
-    this->currentmap = &map;
+    this->currentmap = map;
 }
 
 int CPlayer::bewegen(int y, int x)
 {
-
-
-    footSpace.x += x;
-    footSpace.y += y;
+    bool x_collision = true, y_collision = true;
+    SDL_Rect* temp;
+    footSpace.x += x;   //Zuerst bewege ich den Spieler und schaue ob er gegen etwas stoesst, danach erst bewege ich wirklich alle anderen Elemente
     for (auto cursor : currentmap->getListeVonEntitys())
     {
-        SDL_Rect temp = cursor->getBounds();
-        if (SDL_HasIntersection(&footSpace, &temp))
+        if (SDL_HasIntersection(&footSpace, cursor->getBounds()))
         {
-            footSpace.x -= x;
-            footSpace.y -= y;
-            return false;
+            x_collision = false;
         }
     }
+    footSpace.x -= x;
+    x *= -1; //Wir wollen die Welt um den Spieler bewegen und nicht den Spieler durch die Welt, darum invertieren wir die Richtungsvektoren
+    if (x_collision)
+    {
+        for (auto cursor : currentmap->getListeVonEntitys())
+        {
+            temp = cursor->getBounds();
+            temp->x += x;
+        }
 
-    bounds.x = bounds.x + x;
-    bounds.y = bounds.y + y;
+    }
+
+    footSpace.y += y;   //Zuerst bewege ich den Spieler und schaue ob er gegen etwas stoesst, danach erst bewege ich wirklich alle anderen Elemente
+    for (auto cursor : currentmap->getListeVonEntitys())
+    {
+        if (SDL_HasIntersection(&footSpace, cursor->getBounds()))
+        {
+            y_collision = false;
+        }
+    }
+    footSpace.y -= y;
+    y *= -1;
+    if (y_collision)
+    {
+        for (auto cursor : currentmap->getListeVonEntitys())
+        {
+            temp = cursor->getBounds();
+            temp->y += y;
+        }
+
+    }
+
+    game->moveMaps(x * x_collision, y * y_collision);
+
     return true;
 }
 

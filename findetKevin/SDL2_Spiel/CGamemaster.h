@@ -18,11 +18,14 @@ private:
 	CMap* currentMap_TopLayer;
 	CPlayer * spielerPointer;
 	const int SCREEN_WIDTH = 800;
-	const int SCREEN_HEIGHT = 600;
+	const int SCREEN_HEIGHT = 620;
 private:
 	void gameLoop();
 public:
 	CGamemaster();
 	void init();
+	int getWidthOfWindow();
+	int getHeigthOfWindow();
+	void moveMaps(int x, int y);
 };
 

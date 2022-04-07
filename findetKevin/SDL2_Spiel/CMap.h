@@ -10,6 +10,7 @@ public:
 	CMap(SDL_Texture* textureTemp, SDL_Rect coords);
 	SDL_Texture* getTexture();
 	SDL_Rect* getPosition();
+	void addObjectToMap(CMapEntity * kollisionszone);
 	list <CMapEntity*> getListeVonEntitys();
 	void setListeVonEntitys(list <CMapEntity*> listeVonEntitys);
 };

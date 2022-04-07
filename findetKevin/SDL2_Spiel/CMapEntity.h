@@ -7,6 +7,6 @@ private:
 public:
 	void onInteract();
 	CMapEntity(SDL_Rect bounds);
-	SDL_Rect getBounds();
+	SDL_Rect* getBounds();
 };
 

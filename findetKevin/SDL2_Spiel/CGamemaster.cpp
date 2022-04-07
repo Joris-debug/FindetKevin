@@ -1,7 +1,5 @@
 #include "CGamemaster.h"
-
 #include "Resources.h"
-
 CGamemaster::CGamemaster()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -89,7 +87,11 @@ void CGamemaster::gameLoop()
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
 
+        //for (auto cursor : currentMap->getListeVonEntitys()) Damit kannst du alle Hitboxen sehen
+        //    SDL_RenderDrawRect(renderer, cursor->getBounds());
+
         SDL_RenderPresent(renderer);
+        SDL_RenderClear(renderer);
     }
 
     //For quitting IMG systems
@@ -106,12 +108,12 @@ void CGamemaster::init()
     tempTextureCoords.w = 16;
     tempTextureCoords.h = 32;
     SDL_Texture* tempTexture;
-    tempBounds.x = 50; //Extreme left of the window
-    tempBounds.y = 90; //Very top of the window
+    tempBounds.x = SCREEN_WIDTH / 2; //right of the window
+    tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
     tempBounds.w = 16 * 2;
     tempBounds.h = 32 * 2;
 
-    spielerPointer = new CPlayer(SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds, tempTextureCoords);
+    spielerPointer = new CPlayer(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds, tempTextureCoords);
     
     tempSurface = IMG_Load(RSC_MAP1_SPRITE);
     tempBounds.x = 0; //Extreme left of the window
@@ -136,12 +138,49 @@ void CGamemaster::init()
     tempBounds.x = 0;
     tempBounds.y = 0;
     tempBounds.w = 16 * 2;
-    tempBounds.h = 176 * 2;
+    tempBounds.h = 175 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Die erste Kollisionszone wird erstellt
-    list <CMapEntity*> tempMap = currentMap->getListeVonEntitys();
-    tempMap.push_back(tempMapEntity);
-    currentMap->setListeVonEntitys(tempMap);
-    spielerPointer->setCurrentMap(*currentMap);
+
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = 0;
+    tempBounds.y = 160*2;
+    tempBounds.w = 32 * 2;
+    tempBounds.h = 16 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Die zweite Kollisionszone wird erstellt
+
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = 48*2;
+    tempBounds.y = 160 * 2;
+    tempBounds.w = 96 * 2;
+    tempBounds.h = 16 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Die dritte Kollisionszone wird erstellt
+
+    currentMap->addObjectToMap(tempMapEntity);
+
+    spielerPointer->setCurrentMap(currentMap);
 
     this->gameLoop();
+}
+
+int CGamemaster::getWidthOfWindow()
+{
+    return SCREEN_WIDTH;
+}
+
+int CGamemaster::getHeigthOfWindow()
+{
+    return SCREEN_HEIGHT;
+}
+
+void CGamemaster::moveMaps(int x, int y)
+{
+    SDL_Rect* MapDataPtr = currentMap->getPosition();
+    MapDataPtr->x += x;
+    MapDataPtr->y += y;
+
+    MapDataPtr = currentMap_TopLayer->getPosition();
+    MapDataPtr->x += x;
+    MapDataPtr->y += y;
 }
