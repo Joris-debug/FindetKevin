@@ -1,5 +1,6 @@
 #include "CGamemaster.h"
 #include "Resources.h"
+#include "CEnemy.h"
 CGamemaster::CGamemaster()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -87,8 +88,11 @@ void CGamemaster::gameLoop()
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
 
-        //for (auto cursor : currentMap->getListeVonEntitys()) Damit kannst du alle Hitboxen sehen
-        //    SDL_RenderDrawRect(renderer, cursor->getBounds());
+        for (auto cursor : listeVonEntitys)
+        {
+            cursor->update(y_axis, x_axis);
+            cursor->renderer(renderer);
+        }
 
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
@@ -103,12 +107,13 @@ void CGamemaster::init()
 {
     SDL_Surface* tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
     CMapEntity* tempMapEntity;
+    CEntity* tempEntity;
     SDL_Rect tempBounds;
     SDL_Rect tempTextureCoords;
     tempTextureCoords.w = 16;
     tempTextureCoords.h = 32;
     SDL_Texture* tempTexture;
-    tempBounds.x = SCREEN_WIDTH / 2; //right of the window
+    tempBounds.x = SCREEN_WIDTH / 2 + 8; //right of the window
     tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
     tempBounds.w = 16 * 2;
     tempBounds.h = 32 * 2;
@@ -158,6 +163,20 @@ void CGamemaster::init()
     tempMapEntity = new CMapEntity(tempBounds); //Die dritte Kollisionszone wird erstellt
 
     currentMap->addObjectToMap(tempMapEntity);
+
+    tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
+    tempBounds.x = 10; //Extreme left of the window
+    tempBounds.y = 350; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 16;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 2*tempBounds.w / 12; // Breite geteilt durch anzahl Frames
+    tempBounds.h = 2 * tempBounds.h / 4; // Hoehe geteilt durch anzahl der Zeilen von Frames
+    tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, 1, 1, 6, 4, 4, 2);
+    listeVonEntitys.push_back(tempEntity);
 
     spielerPointer->setCurrentMap(currentMap);
 

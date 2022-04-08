@@ -5,9 +5,9 @@ CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Re
     this->game = game;
 	healItems = 0;
 	healthPoints = 20; 
-    footSpace.x = game->getWidthOfWindow() / 2; 
+    footSpace.x = game->getWidthOfWindow() / 2 + 8; 
     footSpace.y = game->getHeigthOfWindow() / 2+24*2; 
-    footSpace.w = 16 * 2;
+    footSpace.w = 15 * 2;
     footSpace.h = 8 * 2;
 }
 

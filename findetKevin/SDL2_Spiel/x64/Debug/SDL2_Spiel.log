@@ -1,5 +1,2 @@
-﻿  CGamemaster.cpp
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(82,40): warning C4244: "Argument": Konvertierung von "double" in "Uint32", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(85,76): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(85,50): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+﻿  CEnemy.cpp
   SDL2_Spiel.vcxproj -> C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe

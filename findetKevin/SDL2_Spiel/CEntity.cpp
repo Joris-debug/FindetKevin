@@ -1,8 +1,9 @@
 #include "CEntity.h"
-void CEntity::update()
-{
 
+void CEntity::update(int y, int x)
+{
 }
+
 void CEntity::renderer(SDL_Renderer* renderer)
 {
 	SDL_RenderCopy(renderer, texture, &textureCoords, &bounds);
