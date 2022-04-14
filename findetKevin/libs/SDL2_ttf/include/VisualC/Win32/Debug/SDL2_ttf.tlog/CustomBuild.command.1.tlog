@@ -1,0 +1,12 @@
+^C:\USERS\FAMIL\DOWNLOADS\SDL2_TTF-2.0.18\VISUALC\EXTERNAL\LIB\X86\LIBFREETYPE-6.DLL
+copy C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\external\lib\x86\libfreetype-6.dll C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\\Win32\Debug\
+^C:\USERS\FAMIL\DOWNLOADS\SDL2_TTF-2.0.18\VISUALC\EXTERNAL\LIB\X86\LICENSE.FREETYPE.TXT
+copy C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\external\lib\x86\LICENSE.freetype.txt C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\\Win32\Debug\
+^C:\USERS\FAMIL\DOWNLOADS\SDL2_TTF-2.0.18\VISUALC\EXTERNAL\LIB\X86\LIBHARFBUZZ-0.DLL
+copy C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\external\lib\x86\libharfbuzz-0.dll C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\\Win32\Debug\
+^C:\USERS\FAMIL\DOWNLOADS\SDL2_TTF-2.0.18\VISUALC\EXTERNAL\LIB\X86\LICENSE.HARFBUZZ.TXT
+copy C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\external\lib\x86\LICENSE.harfbuzz.txt C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\\Win32\Debug\
+^C:\USERS\FAMIL\DOWNLOADS\SDL2_TTF-2.0.18\VISUALC\EXTERNAL\LIB\X86\LICENSE.ZLIB.TXT
+copy C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\external\lib\x86\LICENSE.zlib.txt C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\\Win32\Debug\
+^C:\USERS\FAMIL\DOWNLOADS\SDL2_TTF-2.0.18\VISUALC\EXTERNAL\LIB\X86\ZLIB1.DLL
+copy C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\external\lib\x86\zlib1.dll C:\Users\famil\Downloads\SDL2_ttf-2.0.18\VisualC\\Win32\Debug\

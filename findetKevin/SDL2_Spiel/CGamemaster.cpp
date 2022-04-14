@@ -1,6 +1,9 @@
 #include "CGamemaster.h"
 #include "Resources.h"
 #include "CEnemy.h"
+
+#include "SDL_ttf.h"
+
 CGamemaster::CGamemaster()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -20,6 +23,9 @@ CGamemaster::CGamemaster()
 
 void CGamemaster::gameLoop()
 {
+
+    /* Input */
+
     int y_axis = 0;
     int x_axis = 0;
     bool quit = false;
@@ -78,15 +84,24 @@ void CGamemaster::gameLoop()
                 break;
             }
         }
+
+        /* Update */
+
         if (deltaTime < float(1000 / 60)) //Limit FPS auf 60
         {
             SDL_Delay(float(1000 / 60) - deltaTime);
         }
+
         spielerPointer->animation(y_axis, x_axis, deltaTime);
         spielerPointer->bewegen(y_axis*deltaTime * 0.225, x_axis*deltaTime * 0.225);
+
+        /* Render */
+
         SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
+
+
 
         for (auto cursor : listeVonEntitys)
         {
@@ -105,6 +120,10 @@ void CGamemaster::gameLoop()
 
 void CGamemaster::init()
 {
+
+    if (TTF_Init() < 0)
+        cout << "Error: " << TTF_GetError() << endl;
+
     SDL_Surface* tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
     CMapEntity* tempMapEntity;
     CEntity* tempEntity;
