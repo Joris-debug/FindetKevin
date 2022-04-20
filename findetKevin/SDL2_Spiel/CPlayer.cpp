@@ -28,9 +28,10 @@ int CPlayer::bewegen(int y, int x)
             x_collision = false;
         }
     }
-    footSpace.x -= x;
-    x *= -1; //Wir wollen die Welt um den Spieler bewegen und nicht den Spieler durch die Welt, darum invertieren wir die Richtungsvektoren
-    if (x_collision)
+    footSpace.x -= x;       //Bewegung wird Rueckgaengig gemacht
+    x *= -1;    //Wir wollen die Welt um den Spieler bewegen und nicht den Spieler durch die Welt, darum invertieren wir die Richtungsvektoren
+    
+    if (x_collision)    //Alle MapEntities werden bewegt
     {
         for (auto cursor : currentmap->getListeVonEntitys())
         {
@@ -57,12 +58,24 @@ int CPlayer::bewegen(int y, int x)
             temp = cursor->getBounds();
             temp->y += y;
         }
-
     }
 
     game->moveMaps(x * x_collision, y * y_collision);
+    game->moveEntitys(x * x_collision, y * y_collision);
 
-    return true;
+    int collisionID = 2147483647; // hoechster int wert
+    for (auto cursor : game->getlisteVonEntitys())                  //Diese Schleife schaut nach mit welchem Gegnern ich kollidiere
+    {
+        if (SDL_HasIntersection(&bounds, cursor->getBounds()))
+        {
+            collisionID = cursor->getID();
+        }
+        else
+        {
+            cursor->setHealth(cursor->getMaxHealth()); //Gegner die nicht beruhrt werden, müssen wieder geheilt werden
+        }
+    }
+    return collisionID;
 }
 
 void CPlayer::animation(int y, int x, double deltaTime)

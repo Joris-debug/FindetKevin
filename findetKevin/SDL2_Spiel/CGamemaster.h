@@ -4,9 +4,9 @@
 #include <iostream>
 #include "CGamemaster.h"
 #include <list>
-#include "CEntity.h"
 #include "CPlayer.h"
 #include "CMap.h"
+#include "CEnemy.h"
 class CGamemaster
 {
 private:
@@ -14,6 +14,7 @@ private:
 	SDL_Renderer* renderer;
 	SDL_Event input;
 	list <CEntity*> listeVonEntitys;
+	list <CEntity*> listeVonEnemies;
 	CMap* currentMap;
 	CMap* currentMap_TopLayer;
 	CPlayer * spielerPointer;
@@ -27,5 +28,9 @@ public:
 	int getWidthOfWindow();
 	int getHeigthOfWindow();
 	void moveMaps(int x, int y);
+	void moveEntitys(int x, int y);
+	list <CEntity*> getlisteVonEntitys();
+	int collisionDetection(int collisionID);
+	void enemyPathfinding(double deltaTime);
 };
 
