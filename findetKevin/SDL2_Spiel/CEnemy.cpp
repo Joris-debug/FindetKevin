@@ -2,19 +2,19 @@
 
 CEnemy::CEnemy(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, int healthpoints, int damage, int walkingFrames, int attackFrames, int idleFrames, int deathFrames) : CEntity(textureTemp, tag, bounds, textureCoords)
 {
-	this->healthpoints = healthpoints;
+    this->healthpoints = healthpoints;
     this->maxHealthpoints = healthpoints;
-	this->damage = damage;
-	this->walkingFrames = walkingFrames;
-	this->attackFrames = attackFrames;
-	this->idleFrames = idleFrames;
-	this->deathFrames = deathFrames;
+    this->damage = damage;
+    this->walkingFrames = walkingFrames;
+    this->attackFrames = attackFrames;
+    this->idleFrames = idleFrames;
+    this->deathFrames = deathFrames;
 }
 
 void CEnemy::onInteract()
 {
     healthpoints--;
- 
+
 }
 
 int CEnemy::getHealth()
@@ -34,7 +34,7 @@ int CEnemy::getMaxHealth()
 
 
 void CEnemy::update(int y, int x)
-{ 
+{
 
     int totalFrames = 6;   // Animation besteht jeweils aus 6 sprites
     int delayPerFrame = 100;
@@ -44,7 +44,7 @@ void CEnemy::update(int y, int x)
     else
         movingDirection = 6;// Anfangsprite ist drei weiter Rechts auf dem Spritesheet
 
-    if (maxHealthpoints>healthpoints)
+    if (maxHealthpoints > healthpoints)
     {
         totalFrames = 2;
         if (x <= 0)
@@ -61,7 +61,7 @@ void CEnemy::update(int y, int x)
     }
 
     if (maxHealthpoints > healthpoints)  //Wenn man stirbt muss nicht die idle animation abgespielt werden
-    { 
+    {
         textureCoords.y = 48;     //Ich benutze die healthpoints um 250 frames zu zählen, warum? Speicherplatz sparen und ich muss nicht das Klassendiagramm erweitern
         return;
     }
@@ -74,6 +74,6 @@ void CEnemy::update(int y, int x)
         textureCoords.w = 16;
     }
 
-    
+
 
 }
