@@ -1,8 +1,5 @@
 ﻿  CGamemaster.cpp
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(83,40): warning C4244: "Argument": Konvertierung von "double" in "Uint32", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(86,95): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(86,69): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(294,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(295,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(297,19): warning C4101: "temp": Unreferenzierte lokale Variable
-  SDL2_Spiel.vcxproj -> C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(92,40): warning C4244: 'argument': conversion from 'double' to 'Uint32', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(96,76): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(96,50): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  SDL2_Spiel.vcxproj -> C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
