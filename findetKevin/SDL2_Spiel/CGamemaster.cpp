@@ -1,6 +1,7 @@
 #include "CGamemaster.h"
 #include "Resources.h"
 #include "CEnemy.h"
+#include <SDL_ttf.h>
 CGamemaster::CGamemaster()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -82,14 +83,23 @@ void CGamemaster::gameLoop()
         {
             SDL_Delay(float(1000 / 60) - deltaTime);
         }
+
+        for (auto cursor : listeVonEntitys)
+            cursor->update(0, 0);
         spielerPointer->animation(y_axis, x_axis, deltaTime);
         collisionDetection(spielerPointer->bewegen(y_axis * deltaTime * 0.225, x_axis * deltaTime * 0.225));
         SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
+        
         enemyPathfinding(deltaTime * 0.1);
+        for (auto cursor : listeVonEntitys)
+        {
+            cursor->renderer(renderer);
+        }
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
+
     }
 
     //For quitting IMG systems
@@ -222,6 +232,20 @@ void CGamemaster::init()
     tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, 150, 1, 6, 4, 4, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
+
+    tempSurface = IMG_Load(RSC_NPC_AMELIA_SPRITE);
+    tempBounds.x = 100; //Extreme left of the window
+    tempBounds.y = 50; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 32 * 2;
+    tempEntity = new CEntity(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords);
+    listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
 
     this->gameLoop();
@@ -265,7 +289,7 @@ int CGamemaster::collisionDetection(int collisionID)
 {
     if (collisionID != 2147483647)
     {
-        for (auto cursor : listeVonEnemies)
+        for (auto cursor : listeVonEntitys)
         {
             if (cursor->getID() == collisionID)
             {
@@ -304,6 +328,15 @@ void CGamemaster::enemyPathfinding(double deltaTime)
             }
         }
 
+        for (auto cursor : listeVonEntitys)          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
+        {
+            if (SDL_HasIntersection(cursorEnemy->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEnemy->getID())  //Der Gegner soll nicht in andere Gegner laufen, aber er selbst befindet sich auch in der Liste, das muss abgefangen werden
+            {
+                x_collision = false;
+            }
+
+        }
+
         if (!x_collision)
         {
             cursorEnemy->setBounds(0, -x);
@@ -319,6 +352,15 @@ void CGamemaster::enemyPathfinding(double deltaTime)
             }
         }
 
+        //for (auto cursor : listeVonEntitys)          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
+        //{
+        //    if (SDL_HasIntersection(cursorEnemy->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEnemy->getID())
+        //    {
+        //        y_collision = false;
+        //    }
+
+        //}
+
         if (!y_collision)
         {
             cursorEnemy->setBounds(-y, 0);
@@ -326,24 +368,8 @@ void CGamemaster::enemyPathfinding(double deltaTime)
         }
 
 
-        cursorEnemy->update(randomNmbrY, randomNmbrX);
-        cursorEnemy->renderer(renderer);
-        //game->moveMaps(x * x_collision, y * y_collision);
-        //game->moveEntitys(x * x_collision, y * y_collision);
+        cursorEnemy->update(randomNmbrY, randomNmbrX);  //Neuer Sprite wird geladen
 
-        //int collisionID = 2147483647; // hoechster int wert
-        //for (auto cursor : game->getlisteVonEntitys())                  //Diese Schleife schaut nach mit welchem Gegnern ich kollidiere
-        //{
-        //    if (SDL_HasIntersection(&bounds, cursor->getBounds()))
-        //    {
-        //        collisionID = cursor->getID();
-        //    }
-        //    else
-        //    {
-        //        cursor->setHealth(cursor->getMaxHealth()); //Gegner die nicht beruhrt werden, müssen wieder geheilt werden
-        //    }
-        //}
-        //return collisionID;
         return;
     }
 }

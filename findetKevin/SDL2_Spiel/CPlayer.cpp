@@ -28,6 +28,16 @@ int CPlayer::bewegen(int y, int x)
             x_collision = false;
         }
     }
+
+    //for (auto cursor : game->getlisteVonEntitys())          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
+    //{
+    //    if (SDL_HasIntersection(&footSpace, cursor->getBounds()))
+    //    {
+    //        x_collision = false;
+    //    }
+
+    //}
+
     footSpace.x -= x;       //Bewegung wird Rueckgaengig gemacht
     x *= -1;    //Wir wollen die Welt um den Spieler bewegen und nicht den Spieler durch die Welt, darum invertieren wir die Richtungsvektoren
     
@@ -49,6 +59,16 @@ int CPlayer::bewegen(int y, int x)
             y_collision = false;
         }
     }
+
+    //for (auto cursor : game->getlisteVonEntitys())          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
+    //{
+    //    if (SDL_HasIntersection(&footSpace, cursor->getBounds()))
+    //    {
+    //        y_collision = false;
+    //    }
+
+    //}
+
     footSpace.y -= y;
     y *= -1;
     if (y_collision)
@@ -80,7 +100,7 @@ int CPlayer::bewegen(int y, int x)
 
 void CPlayer::animation(int y, int x, double deltaTime)
 {
-    int totalFrames = 6;   // Animation besteht jeweils aus 2 sprites
+    int totalFrames = 6;   // Animation besteht jeweils aus 6 sprites
     int delayPerFrame = 100;
     int movingDirection = 0;
 

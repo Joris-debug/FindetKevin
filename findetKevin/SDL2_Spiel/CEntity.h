@@ -23,7 +23,7 @@ public:
 	virtual int getHealth();
 	virtual void setHealth(int healthpoints);
 	virtual int getMaxHealth();
-	void setBounds(int y, int x);//x oder y wird lediglich dazugerechnet
+	void setBounds(int y, int x);//x oder y wird lediglich dazu gerechnet
 	SDL_Rect* getBounds();
 	int getID();
 };
