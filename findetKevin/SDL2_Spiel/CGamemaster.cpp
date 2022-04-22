@@ -352,14 +352,14 @@ void CGamemaster::enemyPathfinding(double deltaTime)
             }
         }
 
-        //for (auto cursor : listeVonEntitys)          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
-        //{
-        //    if (SDL_HasIntersection(cursorEnemy->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEnemy->getID())
-        //    {
-        //        y_collision = false;
-        //    }
+        for (auto cursor : listeVonEntitys)          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
+        {
+            if (SDL_HasIntersection(cursorEnemy->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEnemy->getID())
+            {
+                y_collision = false;
+            }
 
-        //}
+        }
 
         if (!y_collision)
         {
