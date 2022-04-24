@@ -3,6 +3,11 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <list>
+struct structForWalkingDirections
+{
+	int xDirection;
+	int yDirection;
+};
 using namespace std;
 class CEntity
 {
@@ -20,6 +25,7 @@ public:
 	CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords);
 	~CEntity();
 	CEntity();
+	virtual structForWalkingDirections* getWalkingDirections();
 	virtual int getHealth();
 	virtual void setHealth(int healthpoints);
 	virtual int getMaxHealth();

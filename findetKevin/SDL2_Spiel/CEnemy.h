@@ -11,6 +11,7 @@ private:
 	int attackFrames;
 	int idleFrames;
 	int deathFrames;
+	structForWalkingDirections walkingDirections;
 public:
 	void shoot();
 	void onInteract();
@@ -18,6 +19,7 @@ public:
 	void setHealth(int healthpoints);
 	int getMaxHealth();
 	void update(int y, int x);
+	structForWalkingDirections* getWalkingDirections();
 	CEnemy(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, int healthpoints, int damage, int walkingFrames, int attackFrames, int idleFrames, int deathFrames);
 };
 

@@ -57,6 +57,11 @@ CEntity::CEntity()
 
 }
 
+structForWalkingDirections* CEntity::getWalkingDirections()
+{
+    return nullptr;
+}
+
 int CEntity::getHealth()
 {
 	return 1;

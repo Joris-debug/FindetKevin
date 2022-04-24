@@ -2,6 +2,9 @@
 #include "Resources.h"
 #include "CEnemy.h"
 #include <SDL_ttf.h>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
+
 CGamemaster::CGamemaster()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -309,14 +312,29 @@ int CGamemaster::collisionDetection(int collisionID)
 
 void CGamemaster::enemyPathfinding(double deltaTime)
 {
-    int randomNmbrX = SDL_GetTicks() / 5000; // alle 5000 Ticks wird ein anderer Pfad eingeschlagen
-    randomNmbrX = (randomNmbrX % 3) - 1;
-    int randomNmbrY = SDL_GetTicks() / 3000; // alle 3000 Ticks wird ein anderer Pfad eingeschlagen
-    randomNmbrY = (randomNmbrY % 3) - 1;
+
     for (CEntity* cursorEnemy : listeVonEnemies)
     {
-        int x = randomNmbrX * deltaTime;
-        int y = randomNmbrY * deltaTime;
+        structForWalkingDirections* walkingDirectionPtr = cursorEnemy->getWalkingDirections();     //Ich hole mir die Aktuelle Laufrichtung
+        int walkingDirectionX = walkingDirectionPtr->xDirection;
+        int walkingDirectionY = walkingDirectionPtr->yDirection;
+
+        srand(time(NULL));
+        if (SDL_GetTicks() % 2000 <= 10)         //Alle 2000 Ticks wird ein check gemacht ob die Richtung geändert wird(außerdem runde ich da nicht alle Computer gleich performen)
+        {
+            if (rand() % 5 == 1)   //Nur in 20% der Fällen wird wirklich die richtung verändert
+            {
+                walkingDirectionX = (rand() % 3) - 1;
+                walkingDirectionY = (rand() % 3) - 1;
+                walkingDirectionPtr->xDirection = walkingDirectionX;
+                walkingDirectionPtr->yDirection = walkingDirectionY;
+            }
+            else if (walkingDirectionX == 0 && walkingDirectionY == 0)
+                cursorEnemy->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
+            return;
+        }
+        int x = walkingDirectionX * deltaTime;
+        int y = walkingDirectionY * deltaTime;
         bool x_collision = true, y_collision = true;
         SDL_Rect* temp;
         cursorEnemy->setBounds(0, x);
@@ -340,7 +358,11 @@ void CGamemaster::enemyPathfinding(double deltaTime)
         if (!x_collision)
         {
             cursorEnemy->setBounds(0, -x);
-
+            if (rand() % 4 == 3)
+                walkingDirectionPtr->xDirection = 0;
+            else
+                walkingDirectionPtr->xDirection = walkingDirectionPtr->xDirection * (-1); //Nachdem er gegen eine Wand läuft soll er umkehren oder stehen bleiben, das macht den Gegner dynamischer
+                
         }
 
         cursorEnemy->setBounds(y, 0);
@@ -364,11 +386,16 @@ void CGamemaster::enemyPathfinding(double deltaTime)
         if (!y_collision)
         {
             cursorEnemy->setBounds(-y, 0);
+            if (rand() % 4 == 2)
+                walkingDirectionPtr->yDirection = 0;
+            else
+                walkingDirectionPtr->yDirection = walkingDirectionPtr->yDirection * (-1); //Nachdem er gegen eine Wand läuft soll er umkehren oder stehen bleiben, das macht den Gegner dynamischer
+           
 
         }
 
 
-        cursorEnemy->update(randomNmbrY, randomNmbrX);  //Neuer Sprite wird geladen
+        cursorEnemy->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
 
         return;
     }
