@@ -128,7 +128,7 @@ void CGamemaster::init()
     spielerPointer = new CPlayer(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds, tempTextureCoords);
 
     tempSurface = IMG_Load(RSC_MAP1_SPRITE);
-    tempBounds.x = 0; //Extreme left of the window
+    tempBounds.x = -208*2; //Extreme left of the window
     tempBounds.y = 0; //Very top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
@@ -137,7 +137,7 @@ void CGamemaster::init()
     currentMap = new CMap(tempTexture, tempBounds);
 
     tempSurface = IMG_Load(RSC_MAP1_SPRITE_TOP_LAYER);
-    tempBounds.x = 0; //Extreme left of the window
+    tempBounds.x = -208*2; //Extreme left of the window
     tempBounds.y = 0; //Very top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
