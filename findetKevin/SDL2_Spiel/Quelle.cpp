@@ -7,7 +7,7 @@
 int main()
 {
     CGamemaster GameMasterClass;
-    GameMasterClass.init();
+    GameMasterClass.titlescreen(); 
     return 0;
 }
 

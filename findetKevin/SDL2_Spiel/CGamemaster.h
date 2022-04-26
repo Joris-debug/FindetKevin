@@ -24,6 +24,7 @@ private:
 	void gameLoop();
 public:
 	CGamemaster();
+	~CGamemaster();
 	void init();
 	int getWidthOfWindow();
 	int getHeigthOfWindow();
@@ -32,5 +33,6 @@ public:
 	list <CEntity*> getlisteVonEntitys();
 	int collisionDetection(int collisionID);
 	void enemyPathfinding(double deltaTime);
+	void titlescreen();
 };
 

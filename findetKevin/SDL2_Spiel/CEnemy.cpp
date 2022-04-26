@@ -63,7 +63,7 @@ void CEnemy::update(int y, int x)
 
     if (maxHealthpoints > healthpoints)  //Wenn man stirbt muss nicht die idle animation abgespielt werden
     {
-        textureCoords.y = 48;     //Ich benutze die healthpoints um 250 frames zu zählen, warum? Speicherplatz sparen und ich muss nicht das Klassendiagramm erweitern
+        textureCoords.y = 48;
         return;
     }
 

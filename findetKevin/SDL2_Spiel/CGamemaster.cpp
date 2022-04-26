@@ -7,6 +7,9 @@
 
 CGamemaster::CGamemaster()
 {
+    if (TTF_Init() < 0) {
+        cout << "Error initializing SDL_ttf: " << TTF_GetError() << endl;
+    }//Um Text zu rendern
     SDL_Init(SDL_INIT_EVERYTHING);
     //For loading PNG images
     // load support for the JPG and PNG image formats
@@ -22,6 +25,16 @@ CGamemaster::CGamemaster()
     spielerPointer = NULL;
 }
 
+CGamemaster::~CGamemaster()
+{
+    cout << endl << "GameMasterclass wurde terminiert" << endl;
+    //For quitting IMG systems
+    IMG_Quit();
+    SDL_Quit();
+    TTF_Quit();
+    SDL_Quit();
+}
+
 void CGamemaster::gameLoop()
 {
     int y_axis = 0;
@@ -33,7 +46,6 @@ void CGamemaster::gameLoop()
         Uint32 lastTime = currentTime;
         currentTime = SDL_GetTicks();
         double deltaTime = (currentTime - lastTime);
-        std::cout << deltaTime << std::endl;
         while (SDL_PollEvent(&input) > 0)
         {
             switch (input.type)
@@ -105,9 +117,7 @@ void CGamemaster::gameLoop()
 
     }
 
-    //For quitting IMG systems
-    IMG_Quit();
-    SDL_Quit();
+
 }
 
 void CGamemaster::init()
@@ -253,6 +263,7 @@ void CGamemaster::init()
 
     this->gameLoop();
 }
+
 
 int CGamemaster::getWidthOfWindow()
 {
@@ -400,3 +411,84 @@ void CGamemaster::enemyPathfinding(double deltaTime)
         return;
     }
 }
+
+void CGamemaster::titlescreen()
+{
+    SDL_RenderPresent(renderer);
+    TTF_Font* font;
+
+    font = TTF_OpenFont(RSC_FONT_ARIAL, 50);
+    if (!font) {
+        cout << "Failed to load font: " << TTF_GetError() << endl;
+    }
+
+    SDL_Surface* text;
+    // Set color to white
+    SDL_Color color = { 255, 255, 255 };
+
+    text = TTF_RenderText_Solid(font, "Findet Kevin", color);
+    if (!text) {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    SDL_Texture* text_texture;
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    SDL_Rect dest = { SCREEN_WIDTH/2- text->w*0.5,  SCREEN_HEIGHT/2-120,  text->w, text->h};
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+
+    font = TTF_OpenFont(RSC_FONT_ARIAL, 24);
+    text = TTF_RenderText_Solid(font, "New Game", color);
+    if (!text) {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    text_texture;
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    SDL_Rect startGame = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 30,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &startGame);
+
+    text = TTF_RenderText_Solid(font, "Select Savefile", color);
+    if (!text) {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    text_texture;
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
+
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+
+    text = TTF_RenderText_Solid(font, "Close Game", color);
+    if (!text) {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    text_texture;
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    SDL_Rect closeButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 30,  text->w, text->h };
+
+    SDL_RenderCopy(renderer, text_texture, NULL, &closeButton);
+    SDL_RenderPresent(renderer);
+
+    SDL_Rect cursor_Hitbox;
+    SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
+    cursor_Hitbox.w = 8;
+    cursor_Hitbox.h = 8;
+
+    SDL_Event e;
+    while (SDL_PollEvent(&e) >= 0)
+    {
+        SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
+        if (e.type == SDL_MOUSEBUTTONDOWN)
+        {
+            if (SDL_HasIntersection(&cursor_Hitbox, &closeButton))
+                return;
+            if (SDL_HasIntersection(&cursor_Hitbox, &startGame))
+            {
+                init();
+                return;
+            }
+        }
+        else if (e.type == SDL_QUIT)
+            return;
+        SDL_Delay(100);
+    }
+    
+}
+
