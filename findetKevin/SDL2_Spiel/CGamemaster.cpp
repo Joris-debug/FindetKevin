@@ -32,7 +32,6 @@ CGamemaster::~CGamemaster()
     IMG_Quit();
     SDL_Quit();
     TTF_Quit();
-    SDL_Quit();
 }
 
 void CGamemaster::gameLoop()
@@ -122,6 +121,136 @@ void CGamemaster::gameLoop()
 
 void CGamemaster::init()
 {
+    SDL_RenderClear(renderer);
+    TTF_Font* font;
+
+    font = TTF_OpenFont(RSC_FONT_ARIAL, 30);
+    if (!font) {
+        cout << "Failed to load font: " << TTF_GetError() << endl;
+    }
+
+    SDL_Surface* text;
+    // Set color to white
+    SDL_Color color = { 255, 255, 255 };
+
+    text = TTF_RenderText_Blended_Wrapped(font, "Hallo junger Held, du weißt es vielleicht noch nicht, aber du wurdest von einer höhereren Macht auserkoren!", color, SCREEN_WIDTH-25);
+    if (!text) {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    SDL_Texture* text_texture;
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    SDL_Rect dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+    SDL_RenderPresent(renderer);
+    
+    SDL_Event e;
+    while (SDL_PollEvent(&e) >= 0)
+    {
+        if (e.type == SDL_KEYDOWN || e.type == SDL_MOUSEBUTTONDOWN)
+            break;
+        else if (e.type == SDL_QUIT)
+            return;
+        SDL_Delay(100);
+    }
+    SDL_DestroyTexture(text_texture);
+    SDL_FreeSurface(text);
+    SDL_RenderClear(renderer);
+
+
+    text = TTF_RenderText_Blended_Wrapped(font, "Du kannst dich sehr glücklich schätzen, Ruhm und Ehre werden dein sein und du wirst Menschen in Not helfen.....sofern du erfolgreich bist", color, SCREEN_WIDTH - 25);
+    if (!text) {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+    SDL_DestroyTexture(text_texture);
+    SDL_FreeSurface(text);
+    SDL_RenderPresent(renderer);
+    while (SDL_PollEvent(&e) >= 0)
+    {
+        if (e.type == SDL_KEYDOWN || e.type == SDL_MOUSEBUTTONDOWN)
+            break;
+        else if (e.type == SDL_QUIT)
+            return;
+        SDL_Delay(100);
+    }
+    char nameTemp[100] = "\0";
+    int charCounter = 0;
+    while (SDL_PollEvent(&e) >= 0)
+    {
+
+
+    SDL_RenderClear(renderer);
+    text = TTF_RenderText_Blended_Wrapped(font, "Aber jetzt erstmal die Förmlichkeiten, wie heißt du denn eigentlich überhaupt?   [ENTER um zu bestätigen]", color, SCREEN_WIDTH - 25);
+    if (!text) {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+    
+    SDL_DestroyTexture(text_texture);
+    SDL_FreeSurface(text);
+    if(nameTemp[0]!='\0')
+    { 
+    text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 25);
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT - 70,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+    SDL_DestroyTexture(text_texture);
+    SDL_FreeSurface(text);
+    }
+    SDL_RenderPresent(renderer);
+
+    if (  charCounter > 0 && e.key.keysym.sym == SDLK_RETURN ||charCounter == 20)
+        break;
+    if (e.type == SDL_KEYDOWN && e.key.keysym.sym != SDLK_RETURN)
+    {
+        
+        char temp = detectKey(e);
+        if (temp == '\b')           //Wenn Backspace gedrückt wurde, wird ein \0 geschrieben und zwar an die stelle vorher
+        {
+            temp = '\0';            
+            charCounter--;
+        }
+        if (charCounter < 0)        //Wir wollen nicht den Speicher überschreiben
+            charCounter = 0;
+
+        nameTemp[charCounter] = temp;
+
+        if(temp != '\0')        //Wir dürfen kein \0 mitten im String stehen haben
+            charCounter++;
+        
+    }
+    else if (e.type == SDL_QUIT)
+         return;
+    }
+
+    string nameString = nameTemp;
+    SDL_RenderClear(renderer);
+    strcat_s(nameTemp, "! Was ein schöner name und das erzähle ich sicherlich nicht jedem.");
+    text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 25);
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 100,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+    text = TTF_RenderText_Blended_Wrapped(font,"Erzähle mir etwas über dich, bist du ein beinharter Typ [1], ein Normalo [2] oder ein Dreikäsehoch [3]? Das Spielerlebnis könnte abhängig von deiner Antwort variieren.", color, SCREEN_WIDTH - 25);
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+    SDL_RenderPresent(renderer);
+    SDL_DestroyTexture(text_texture);
+    SDL_FreeSurface(text);
+    while (SDL_PollEvent(&e) >= 0)
+    {
+        if (e.type == SDL_KEYDOWN || e.type == SDL_MOUSEBUTTONDOWN)
+            break;
+        else if (e.type == SDL_QUIT)
+            return;
+        SDL_Delay(100);
+    }
+    TTF_CloseFont(font);        //Speicherplatz freigeben
+
     SDL_Surface* tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
     CMapEntity* tempMapEntity;
     CEntity* tempEntity;
@@ -426,7 +555,7 @@ void CGamemaster::titlescreen()
     // Set color to white
     SDL_Color color = { 255, 255, 255 };
 
-    text = TTF_RenderText_Solid(font, "Findet Kevin", color);
+    text = TTF_RenderText_Blended(font, "Findet Kevin", color);
     if (!text) {
         cout << "Failed to render text: " << TTF_GetError() << endl;
     }
@@ -436,7 +565,7 @@ void CGamemaster::titlescreen()
     SDL_RenderCopy(renderer, text_texture, NULL, &dest);
 
     font = TTF_OpenFont(RSC_FONT_ARIAL, 24);
-    text = TTF_RenderText_Solid(font, "New Game", color);
+    text = TTF_RenderText_Blended(font, "New Game", color);
     if (!text) {
         cout << "Failed to render text: " << TTF_GetError() << endl;
     }
@@ -445,7 +574,7 @@ void CGamemaster::titlescreen()
     SDL_Rect startGame = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 30,  text->w, text->h };
     SDL_RenderCopy(renderer, text_texture, NULL, &startGame);
 
-    text = TTF_RenderText_Solid(font, "Select Savefile", color);
+    text = TTF_RenderText_Blended(font, "Select Savefile", color);
     if (!text) {
         cout << "Failed to render text: " << TTF_GetError() << endl;
     }
@@ -455,7 +584,7 @@ void CGamemaster::titlescreen()
 
     SDL_RenderCopy(renderer, text_texture, NULL, &dest);
 
-    text = TTF_RenderText_Solid(font, "Close Game", color);
+    text =  TTF_RenderText_Blended(font, "Close Game", color);
     if (!text) {
         cout << "Failed to render text: " << TTF_GetError() << endl;
     }
@@ -470,7 +599,8 @@ void CGamemaster::titlescreen()
     SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
     cursor_Hitbox.w = 8;
     cursor_Hitbox.h = 8;
-
+    SDL_DestroyTexture(text_texture);
+    SDL_FreeSurface(text);
     SDL_Event e;
     while (SDL_PollEvent(&e) >= 0)
     {
@@ -490,5 +620,92 @@ void CGamemaster::titlescreen()
         SDL_Delay(100);
     }
     
+}
+
+char CGamemaster::detectKey(SDL_Event input)
+{
+    switch (input.key.keysym.sym)
+    {
+    case SDLK_a:
+        return 'A';
+    case SDLK_b:
+        return 'B';
+    case SDLK_c:
+        return 'C';
+    case SDLK_d:
+        return 'D';
+    case SDLK_e:
+        return 'E';
+    case SDLK_f:
+        return 'F';
+    case SDLK_g:
+        return 'G';
+    case SDLK_h:
+        return 'H';
+    case SDLK_i:
+        return 'I';
+    case SDLK_j:
+        return 'J';
+    case SDLK_k:
+        return 'K';
+    case SDLK_l:
+        return 'L';
+    case SDLK_m:
+        return 'M';
+    case SDLK_n:
+        return 'N';
+    case SDLK_o:
+        return 'O';
+    case SDLK_p:
+        return 'P';
+    case SDLK_q:
+        return 'Q';
+    case SDLK_r:
+        return 'R';
+    case SDLK_s:
+        return 'S';
+    case SDLK_t:
+        return 'T';
+    case SDLK_u:
+        return 'U';
+    case SDLK_v:
+        return 'V';
+    case SDLK_w:
+        return 'W';
+    case SDLK_x:
+        return 'X';
+    case SDLK_y:
+        return 'Y';
+    case SDLK_z:
+        return 'Z';
+    case SDLK_KP_ENTER:
+    case SDLK_RETURN:
+        return '\r';
+    case SDLK_BACKSPACE:
+        return '\b';
+    case SDLK_SPACE:
+        return ' ';
+    case SDLK_0:
+        return '0';
+    case SDLK_1:
+        return '1';
+    case SDLK_2:
+        return '2';
+    case SDLK_3:
+        return '3';
+    case SDLK_4:
+        return '4';
+    case SDLK_5:
+        return '5';
+    case SDLK_6:
+        return '6';
+    case SDLK_7:
+        return '8';
+    case SDLK_9:
+        return '9';
+        break;
+    }
+
+    return 1;
 }
 

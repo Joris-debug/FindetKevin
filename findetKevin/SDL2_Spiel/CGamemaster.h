@@ -7,12 +7,14 @@
 #include "CPlayer.h"
 #include "CMap.h"
 #include "CEnemy.h"
+#include "CSavefile.h"
 class CGamemaster
 {
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Event input;
+	list <CSavefile*> listeVonSavefiles;
 	list <CEntity*> listeVonEntitys;
 	list <CEntity*> listeVonEnemies;
 	CMap* currentMap;
@@ -34,5 +36,6 @@ public:
 	int collisionDetection(int collisionID);
 	void enemyPathfinding(double deltaTime);
 	void titlescreen();
+	char detectKey(SDL_Event input);
 };
 
