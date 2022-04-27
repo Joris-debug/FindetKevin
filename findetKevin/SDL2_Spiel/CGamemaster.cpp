@@ -543,68 +543,96 @@ void CGamemaster::enemyPathfinding(double deltaTime)
 
 void CGamemaster::titlescreen()
 {
-    SDL_RenderPresent(renderer);
     TTF_Font* font;
-
-    font = TTF_OpenFont(RSC_FONT_ARIAL, 50);
-    if (!font) {
-        cout << "Failed to load font: " << TTF_GetError() << endl;
-    }
-
-    SDL_Surface* text;
-    // Set color to white
-    SDL_Color color = { 255, 255, 255 };
-
-    text = TTF_RenderText_Blended(font, "Findet Kevin", color);
-    if (!text) {
-        cout << "Failed to render text: " << TTF_GetError() << endl;
-    }
-    SDL_Texture* text_texture;
-    text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    SDL_Rect dest = { SCREEN_WIDTH/2- text->w*0.5,  SCREEN_HEIGHT/2-120,  text->w, text->h};
-    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
-
-    font = TTF_OpenFont(RSC_FONT_ARIAL, 24);
-    text = TTF_RenderText_Blended(font, "New Game", color);
-    if (!text) {
-        cout << "Failed to render text: " << TTF_GetError() << endl;
-    }
-    text_texture;
-    text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    SDL_Rect startGame = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 30,  text->w, text->h };
-    SDL_RenderCopy(renderer, text_texture, NULL, &startGame);
-
-    text = TTF_RenderText_Blended(font, "Select Savefile", color);
-    if (!text) {
-        cout << "Failed to render text: " << TTF_GetError() << endl;
-    }
-    text_texture;
-    text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
-
-    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
-
-    text =  TTF_RenderText_Blended(font, "Close Game", color);
-    if (!text) {
-        cout << "Failed to render text: " << TTF_GetError() << endl;
-    }
-    text_texture;
-    text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    SDL_Rect closeButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 30,  text->w, text->h };
-
-    SDL_RenderCopy(renderer, text_texture, NULL, &closeButton);
-    SDL_RenderPresent(renderer);
-
-    SDL_Rect cursor_Hitbox;
-    SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
-    cursor_Hitbox.w = 8;
-    cursor_Hitbox.h = 8;
-    SDL_DestroyTexture(text_texture);
-    SDL_FreeSurface(text);
     SDL_Event e;
+    SDL_Surface* text;    // Set color to white
+    SDL_Color colorNG = { 255, 255, 255 };      //Damit können wir einen "Hover-Effekt" machen, der den jeweiligen Button highligted
+    SDL_Color colorSS = { 255, 255, 255 };
+    SDL_Color colorQG = { 255, 255, 255 };
     while (SDL_PollEvent(&e) >= 0)
-    {
+    { 
+        SDL_RenderClear(renderer);              
+        SDL_Surface* tempSurface = IMG_Load(RSC_BACKGROUND_OF_TITLESCREEN);
+        SDL_Rect tempBounds;
+        SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+        tempBounds.x = 0;
+        tempBounds.y = 0;
+        tempBounds.w = SCREEN_WIDTH;
+        tempBounds.h = SCREEN_HEIGHT;
+        SDL_RenderCopy(renderer, tempTexture, NULL, &tempBounds);
+        SDL_DestroyTexture(tempTexture);
+        SDL_FreeSurface(tempSurface);
+
+        
+        font = TTF_OpenFont(RSC_FONT_ARIAL, 50);
+        if (!font) 
+        {
+            cout << "Failed to load font: " << TTF_GetError() << endl;
+        }
+
+
+        text = TTF_RenderText_Blended(font, "Findet Kevin", { 255, 255, 255 });
+        if (!text)
+        {
+            cout << "Failed to render text: " << TTF_GetError() << endl;
+        }
+        SDL_Texture* text_texture;
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        SDL_Rect dest = { SCREEN_WIDTH / 2 - text->w * 0.5,  SCREEN_HEIGHT / 2 - 120,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+        SDL_DestroyTexture(text_texture);       //Memory management
+        SDL_FreeSurface(text);              
+        TTF_CloseFont(font);
+        font = TTF_OpenFont(RSC_FONT_ARIAL, 24);
+        text = TTF_RenderText_Blended(font, "New Game", colorNG);
+        if (!text) {
+            cout << "Failed to render text: " << TTF_GetError() << endl;
+        }
+        text_texture;
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        SDL_Rect startGame = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 30,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &startGame);
+        SDL_DestroyTexture(text_texture);       //Memory management
+        SDL_FreeSurface(text);
+        text = TTF_RenderText_Blended(font, "Select Savefile", colorSS);
+        if (!text)
+        {
+            cout << "Failed to render text: " << TTF_GetError() << endl;
+        }
+        text_texture;
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        SDL_Rect selectSavefile = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
+
+        SDL_RenderCopy(renderer, text_texture, NULL, &selectSavefile);
+        SDL_DestroyTexture(text_texture);                   //Memory management
+        SDL_FreeSurface(text);
+        text = TTF_RenderText_Blended(font, "Close Game", colorQG);
+        if (!text)
+        {
+            cout << "Failed to render text: " << TTF_GetError() << endl;
+        }
+        text_texture;
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        SDL_Rect closeButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 30,  text->w, text->h };
+
+        SDL_RenderCopy(renderer, text_texture, NULL, &closeButton);
+        SDL_RenderPresent(renderer);
+        
+        SDL_Rect cursor_Hitbox;
         SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
+        cursor_Hitbox.w = 8;
+        cursor_Hitbox.h = 4;
+        SDL_DestroyTexture(text_texture);      //Memory management
+        SDL_FreeSurface(text);
+
+        TTF_CloseFont(font);
+
+        colorNG = { 255, 255, 255 };
+        colorSS = { 255, 255, 255 };
+        colorQG = { 255, 255, 255 };
+
+        SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
+
         if (e.type == SDL_MOUSEBUTTONDOWN)
         {
             if (SDL_HasIntersection(&cursor_Hitbox, &closeButton))
@@ -615,9 +643,16 @@ void CGamemaster::titlescreen()
                 return;
             }
         }
-        else if (e.type == SDL_QUIT)
-            return;
-        SDL_Delay(100);
+
+        if (SDL_HasIntersection(&cursor_Hitbox, &closeButton))  //Farbe der Buttons wird geändert
+           colorQG = { 100, 255, 100};
+        if (SDL_HasIntersection(&cursor_Hitbox, &startGame))
+            colorNG = { 100, 255, 100 };
+        if (SDL_HasIntersection(&cursor_Hitbox, &selectSavefile))
+            colorSS = { 100, 255, 100 };
+
+        if (e.type == SDL_QUIT)
+           return;
     }
     
 }
