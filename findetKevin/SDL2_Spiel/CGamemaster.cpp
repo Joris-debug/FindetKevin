@@ -105,7 +105,7 @@ void CGamemaster::gameLoop()
         SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
         
-        enemyPathfinding(deltaTime * 0.1);
+        NPC_Pathfinding(deltaTime * 0.1);
         for (auto cursor : listeVonEntitys)
         {
             cursor->renderer(renderer);
@@ -371,13 +371,13 @@ void CGamemaster::init()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 2 * tempBounds.w / 12; // Breite geteilt durch anzahl Frames
     tempBounds.h = 2 * tempBounds.h / 4; // Hoehe geteilt durch anzahl der Zeilen von Frames
-    tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, 150, 1, 6, 4, 4, 2);
+    tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 150, 1, 6, 4, 4, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
 
     tempSurface = IMG_Load(RSC_NPC_AMELIA_SPRITE);
-    tempBounds.x = 100; //Extreme left of the window
-    tempBounds.y = 50; //Very top of the window
+    tempBounds.x = 300; //Extreme left of the window
+    tempBounds.y = 100; //Very top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
@@ -386,7 +386,7 @@ void CGamemaster::init()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
     tempBounds.h = 32 * 2;
-    tempEntity = new CEntity(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords);
+    tempEntity = new CEntity(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
 
@@ -450,17 +450,17 @@ int CGamemaster::collisionDetection(int collisionID)
     return 0;
 }
 
-void CGamemaster::enemyPathfinding(double deltaTime)
+void CGamemaster::NPC_Pathfinding(double deltaTime)
 {
-
-    for (CEntity* cursorEnemy : listeVonEnemies)
+    for (CEntity* cursorEntity : listeVonEntitys)
     {
-        structForWalkingDirections* walkingDirectionPtr = cursorEnemy->getWalkingDirections();     //Ich hole mir die Aktuelle Laufrichtung
+        if (!cursorEntity->getMovingStatus())
+            continue;
+        structForWalkingDirections* walkingDirectionPtr = cursorEntity->getWalkingDirections();     //Ich hole mir die Aktuelle Laufrichtung
         int walkingDirectionX = walkingDirectionPtr->xDirection;
         int walkingDirectionY = walkingDirectionPtr->yDirection;
-
-        srand(time(NULL));
-        if (SDL_GetTicks() % 2000 <= 10)         //Alle 2000 Ticks wird ein check gemacht ob die Richtung geändert wird(außerdem runde ich da nicht alle Computer gleich performen)
+        srand(SDL_GetTicks()*cursorEntity->getID());
+        if (SDL_GetTicks() % 2000 <= 100)         //Alle 2000 Ticks wird ein check gemacht ob die Richtung geändert wird(außerdem runde ich da nicht alle Computer gleich performen)
         {
             if (rand() % 5 == 1)   //Nur in 20% der Fällen wird wirklich die richtung verändert
             {
@@ -470,17 +470,18 @@ void CGamemaster::enemyPathfinding(double deltaTime)
                 walkingDirectionPtr->yDirection = walkingDirectionY;
             }
             else if (walkingDirectionX == 0 && walkingDirectionY == 0)
-                cursorEnemy->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
-            return;
+            { 
+                cursorEntity->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
+                return;
+            }
         }
         int x = walkingDirectionX * deltaTime;
         int y = walkingDirectionY * deltaTime;
         bool x_collision = true, y_collision = true;
-        SDL_Rect* temp;
-        cursorEnemy->setBounds(0, x);
+        cursorEntity->setBounds(0, x);
         for (auto cursorMapEntity : currentMap->getListeVonEntitys())
         {
-            if (SDL_HasIntersection(cursorEnemy->getBounds(), cursorMapEntity->getBounds()))
+            if (SDL_HasIntersection(cursorEntity->getBounds(), cursorMapEntity->getBounds()))
             {
                 x_collision = false;
             }
@@ -488,7 +489,7 @@ void CGamemaster::enemyPathfinding(double deltaTime)
 
         for (auto cursor : listeVonEntitys)          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
         {
-            if (SDL_HasIntersection(cursorEnemy->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEnemy->getID())  //Der Gegner soll nicht in andere Gegner laufen, aber er selbst befindet sich auch in der Liste, das muss abgefangen werden
+            if (SDL_HasIntersection(cursorEntity->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEntity->getID())  //Der Gegner soll nicht in andere Gegner laufen, aber er selbst befindet sich auch in der Liste, das muss abgefangen werden
             {
                 x_collision = false;
             }
@@ -497,7 +498,7 @@ void CGamemaster::enemyPathfinding(double deltaTime)
 
         if (!x_collision)
         {
-            cursorEnemy->setBounds(0, -x);
+            cursorEntity->setBounds(0, -x);
             if (rand() % 4 == 3)
                 walkingDirectionPtr->xDirection = 0;
             else
@@ -505,18 +506,19 @@ void CGamemaster::enemyPathfinding(double deltaTime)
                 
         }
 
-        cursorEnemy->setBounds(y, 0);
+        cursorEntity->setBounds(y, 0);
         for (auto cursorMapEntity : currentMap->getListeVonEntitys())
         {
-            if (SDL_HasIntersection(cursorEnemy->getBounds(), cursorMapEntity->getBounds()))
+            if (SDL_HasIntersection(cursorEntity->getBounds(), cursorMapEntity->getBounds()))
             {
+
                 y_collision = false;
             }
         }
 
         for (auto cursor : listeVonEntitys)          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
         {
-            if (SDL_HasIntersection(cursorEnemy->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEnemy->getID())
+            if (SDL_HasIntersection(cursorEntity->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEntity->getID())
             {
                 y_collision = false;
             }
@@ -525,7 +527,7 @@ void CGamemaster::enemyPathfinding(double deltaTime)
 
         if (!y_collision)
         {
-            cursorEnemy->setBounds(-y, 0);
+            cursorEntity->setBounds(-y, 0);
             if (rand() % 4 == 2)
                 walkingDirectionPtr->yDirection = 0;
             else
@@ -535,10 +537,11 @@ void CGamemaster::enemyPathfinding(double deltaTime)
         }
 
 
-        cursorEnemy->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
+        cursorEntity->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
 
-        return;
+        
     }
+    return;
 }
 
 void CGamemaster::titlescreen()

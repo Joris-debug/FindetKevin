@@ -22,7 +22,6 @@ private:
 	CPlayer * spielerPointer;
 	const int SCREEN_WIDTH = 800;
 	const int SCREEN_HEIGHT = 620;
-private:
 	void gameLoop();
 public:
 	CGamemaster();
@@ -34,7 +33,7 @@ public:
 	void moveEntitys(int x, int y);
 	list <CEntity*> getlisteVonEntitys();
 	int collisionDetection(int collisionID);
-	void enemyPathfinding(double deltaTime);
+	void NPC_Pathfinding(double deltaTime);
 	void titlescreen();
 	char detectKey(SDL_Event input);
 };

@@ -15,17 +15,20 @@ protected:
 	SDL_Rect bounds;
 	SDL_Rect textureCoords;
 	SDL_Texture * texture;
+	structForWalkingDirections walkingDirections;
 	string tag;
 	int entityID;
+	bool moving;
 	static int entityCount;
 public:
+	bool getMovingStatus();
 	virtual void update(int y, int x);
 	virtual void onInteract();
 	void renderer(SDL_Renderer* renderer);
-	CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords);
+	CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving);
 	~CEntity();
 	CEntity();
-	virtual structForWalkingDirections* getWalkingDirections();
+	structForWalkingDirections* getWalkingDirections();
 	virtual int getHealth();
 	virtual void setHealth(int healthpoints);
 	virtual int getMaxHealth();

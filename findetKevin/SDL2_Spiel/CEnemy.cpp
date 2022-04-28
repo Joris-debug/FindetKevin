@@ -1,6 +1,6 @@
 #include "CEnemy.h"
 
-CEnemy::CEnemy(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, int healthpoints, int damage, int walkingFrames, int attackFrames, int idleFrames, int deathFrames) : CEntity(textureTemp, tag, bounds, textureCoords)
+CEnemy::CEnemy(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving, int healthpoints, int damage, int walkingFrames, int attackFrames, int idleFrames, int deathFrames) : CEntity(textureTemp, tag, bounds, textureCoords, moving)
 {
     this->healthpoints = healthpoints;
     this->maxHealthpoints = healthpoints;
@@ -9,7 +9,6 @@ CEnemy::CEnemy(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect t
     this->attackFrames = attackFrames;
     this->idleFrames = idleFrames;
     this->deathFrames = deathFrames;
-    this->walkingDirections = { 0,0 };
 }
 
 void CEnemy::onInteract()
@@ -79,7 +78,3 @@ void CEnemy::update(int y, int x)
 
 }
 
-structForWalkingDirections* CEnemy::getWalkingDirections()
-{
-    return &walkingDirections;
-}

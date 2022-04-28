@@ -1,6 +1,10 @@
 #include "CEntity.h"
 #include "CGamemaster.h"
 int CEntity::entityCount = 0;
+bool CEntity::getMovingStatus()
+{
+    return moving;
+}
 void CEntity::update(int y, int x)
 {
     int totalFrames = 6;   // Animation besteht jeweils aus 2 sprites
@@ -37,7 +41,7 @@ void CEntity::renderer(SDL_Renderer* renderer)
 	SDL_RenderCopy(renderer, texture, &textureCoords, &bounds);
 }
 
-CEntity::CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords)
+CEntity::CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving)
 {
 	this->entityID = entityCount;
 	entityCount++;
@@ -45,6 +49,8 @@ CEntity::CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect
 	this->tag = tag;
 	this->bounds = bounds;
 	this->textureCoords = textureCoords;
+    this->moving = moving;
+    this->walkingDirections = { 0,0 };
 }
 
 CEntity::~CEntity()
@@ -59,7 +65,7 @@ CEntity::CEntity()
 
 structForWalkingDirections* CEntity::getWalkingDirections()
 {
-    return nullptr;
+    return &walkingDirections;
 }
 
 int CEntity::getHealth()

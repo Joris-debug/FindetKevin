@@ -1,12 +1,12 @@
 #include "CPlayer.h"
 #include "CGamemaster.h";
-CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords) : CEntity(textureTemp, tag, bounds, textureCoords)
+CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords) : CEntity(textureTemp, tag, bounds, textureCoords, false)
 {
     this->game = game;
 	healItems = 0;
 	healthPoints = 20; 
     footSpace.x = game->getWidthOfWindow() / 2 + 8; 
-    footSpace.y = game->getHeigthOfWindow() / 2+24*2; 
+    footSpace.y = game->getHeigthOfWindow() / 2 + 24*2; 
     footSpace.w = 15 * 2;
     footSpace.h = 8 * 2;
 }
