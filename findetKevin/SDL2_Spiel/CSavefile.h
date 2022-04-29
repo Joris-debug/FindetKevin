@@ -10,9 +10,9 @@ private:
 	int currentHealth;
 	int gameDifficulty;
 	double totalScore;
-	time_t creationDate;
+	char creationDate[26];
 public:
 	~CSavefile();
-	CSavefile(string playername, int gameDifficulty, time_t creationDate);
+	CSavefile(string playername, int gameDifficulty);
 };
 

@@ -13,7 +13,7 @@ private:
 	int deathFrames;
 public:
 	void shoot();
-	void onInteract();
+	int onInteract();
 	int getHealth();
 	void setHealth(int healthpoints);
 	int getMaxHealth();

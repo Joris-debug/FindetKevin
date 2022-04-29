@@ -32,8 +32,9 @@ void CEntity::update(int y, int x)
     }
 }
 
-void CEntity::onInteract()
+int CEntity::onInteract()
 {
+    return 1;
 }
 
 void CEntity::renderer(SDL_Renderer* renderer)

@@ -11,10 +11,10 @@ CEnemy::CEnemy(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect t
     this->deathFrames = deathFrames;
 }
 
-void CEnemy::onInteract()
+int CEnemy::onInteract()
 {
     healthpoints--;
-
+    return 0;
 }
 
 int CEnemy::getHealth()
@@ -65,10 +65,12 @@ void CEnemy::update(int y, int x)
         textureCoords.y = 48;
         return;
     }
-
+    int startSpriteIdle = 0;
+    if (walkingDirections.xDirection == -1)         //Warum?? weil ich bei statischen Gegnern in diesem struct die ausrichtung abspeichern will
+        startSpriteIdle = idleFrames / 2;
     if (y == 0 && x == 0)
     {
-        textureCoords.x = 0;
+        textureCoords.x = 16 * ((SDL_GetTicks() / delayPerFrame) % idleFrames/2) + startSpriteIdle;
         textureCoords.y = 0;
         textureCoords.h = 16;
         textureCoords.w = 16;

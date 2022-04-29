@@ -1,9 +1,9 @@
 ﻿  CGamemaster.cpp
 C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(98,40): warning C4244: "Argument": Konvertierung von "double" in "Uint32", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(104,99): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(104,71): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(478,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(479,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(584,44): warning C4838: Konvertierung von "double" zu "int" erfordert eine einschränkende Konvertierung
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(584,44): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(105,99): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(105,71): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(533,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(534,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(639,44): warning C4838: Konvertierung von "double" zu "int" erfordert eine einschränkende Konvertierung
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(639,44): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
   SDL2_Spiel.vcxproj -> C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe

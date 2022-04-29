@@ -100,12 +100,13 @@ void CGamemaster::gameLoop()
 
         for (auto cursor : listeVonEntitys)
             cursor->update(0, 0);
-        spielerPointer->animation(y_axis, x_axis, deltaTime);
-        collisionDetection(spielerPointer->bewegen(y_axis * deltaTime * 0.225, x_axis * deltaTime * 0.225));
+
+        spielerPointer->animation(y_axis, x_axis, deltaTime);   //Neuer Frame für den Player
+        collisionDetection(spielerPointer->bewegen(y_axis * deltaTime * 0.225, x_axis * deltaTime * 0.225)); //Neue location für den Player
         SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
         
-        NPC_Pathfinding(deltaTime * 0.1);
+        NPC_Pathfinding(deltaTime * 0.1);   //alle NPC's werden bewgegt
         for (auto cursor : listeVonEntitys)
         {
             cursor->renderer(renderer);
@@ -130,14 +131,13 @@ void CGamemaster::init()
     }
 
     SDL_Surface* text;
-    // Set color to white
-    SDL_Color color = { 255, 255, 255 };
+    SDL_Texture* text_texture;
+    SDL_Color color = { 255, 255, 255 }; // Set color to white
 
     text = TTF_RenderText_Blended_Wrapped(font, "Hallo junger Held, du weißt es vielleicht noch nicht, aber du wurdest von einer höhereren Macht auserkoren!", color, SCREEN_WIDTH-25);
     if (!text) {
         cout << "Failed to render text: " << TTF_GetError() << endl;
-    }
-    SDL_Texture* text_texture;
+    }    
     text_texture = SDL_CreateTextureFromSurface(renderer, text);
     SDL_Rect dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
     SDL_RenderCopy(renderer, text_texture, NULL, &dest);
@@ -164,8 +164,6 @@ void CGamemaster::init()
     text_texture = SDL_CreateTextureFromSurface(renderer, text);
     dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
     SDL_RenderCopy(renderer, text_texture, NULL, &dest);
-    SDL_DestroyTexture(text_texture);
-    SDL_FreeSurface(text);
     SDL_RenderPresent(renderer);
     while (SDL_PollEvent(&e) >= 0)
     {
@@ -175,31 +173,32 @@ void CGamemaster::init()
             return;
         SDL_Delay(100);
     }
+    SDL_DestroyTexture(text_texture);
+    SDL_FreeSurface(text);
+
     char nameTemp[100] = "\0";
     int charCounter = 0;
     while (SDL_PollEvent(&e) >= 0)
     {
-
-
-    SDL_RenderClear(renderer);
-    text = TTF_RenderText_Blended_Wrapped(font, "Aber jetzt erstmal die Förmlichkeiten, wie heißt du denn eigentlich überhaupt?   [ENTER um zu bestätigen]", color, SCREEN_WIDTH - 25);
-    if (!text) {
-        cout << "Failed to render text: " << TTF_GetError() << endl;
-    }
-    text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
-    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+        SDL_RenderClear(renderer);
+        text = TTF_RenderText_Blended_Wrapped(font, "Aber jetzt erstmal die Förmlichkeiten, wie heißt du denn eigentlich überhaupt?   [ENTER um zu bestätigen]", color, SCREEN_WIDTH - 25);
+        if (!text) {
+            cout << "Failed to render text: " << TTF_GetError() << endl;
+        }
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &dest);
     
-    SDL_DestroyTexture(text_texture);
-    SDL_FreeSurface(text);
-    if(nameTemp[0]!='\0')
-    { 
-    text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 25);
-    text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT - 70,  text->w, text->h };
-    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
-    SDL_DestroyTexture(text_texture);
-    SDL_FreeSurface(text);
+        SDL_DestroyTexture(text_texture);
+        SDL_FreeSurface(text);
+        if(nameTemp[0]!='\0')
+        { 
+        text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 25);
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT - 70,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+        SDL_DestroyTexture(text_texture);
+        SDL_FreeSurface(text);
     }
     SDL_RenderPresent(renderer);
 
@@ -228,29 +227,56 @@ void CGamemaster::init()
     }
 
     string nameString = nameTemp;
-    SDL_RenderClear(renderer);
     strcat_s(nameTemp, "! Was ein schöner name und das erzähle ich sicherlich nicht jedem.");
-    text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 25);
-    text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 100,  text->w, text->h };
-    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
-    text = TTF_RenderText_Blended_Wrapped(font,"Erzähle mir etwas über dich, bist du ein beinharter Typ [1], ein Normalo [2] oder ein Dreikäsehoch [3]? Das Spielerlebnis könnte abhängig von deiner Antwort variieren.", color, SCREEN_WIDTH - 25);
-    text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
-    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
-    SDL_RenderPresent(renderer);
-    SDL_DestroyTexture(text_texture);
-    SDL_FreeSurface(text);
+    char schwierigkeitsgradTemp[] = "0";
     while (SDL_PollEvent(&e) >= 0)
     {
-        if (e.type == SDL_KEYDOWN || e.type == SDL_MOUSEBUTTONDOWN)
-            break;
+        SDL_RenderClear(renderer);
+        text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 25);
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 100,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+        SDL_DestroyTexture(text_texture);
+        SDL_FreeSurface(text);
+
+        text = TTF_RenderText_Blended_Wrapped(font,"Erzähle mir etwas über dich, bist du ein beinharter Typ[1], ein Normalo[2] oder ein Dreikäsehoch[3]? Das Spielerlebnis könnte abhängig von deiner Antwort variieren.", color, SCREEN_WIDTH - 25);
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &dest);        
+        SDL_DestroyTexture(text_texture);
+        SDL_FreeSurface(text);
+
+        if (schwierigkeitsgradTemp[0] != '0')
+        {
+            text = TTF_RenderText_Blended_Wrapped(font, schwierigkeitsgradTemp, color, SCREEN_WIDTH - 25);
+            text_texture = SDL_CreateTextureFromSurface(renderer, text);
+            dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT - 70,  text->w, text->h };
+            SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+            SDL_DestroyTexture(text_texture);
+            SDL_FreeSurface(text);
+        }
+        SDL_RenderPresent(renderer);
+
+        if (e.type == SDL_KEYDOWN)
+        {
+            char temp = detectKey(e);
+            if (temp >= '1' && temp <= '3')
+            {
+                schwierigkeitsgradTemp[0] = temp;
+            }
+            if (e.key.keysym.sym == SDLK_RETURN)
+            {
+                if (schwierigkeitsgradTemp[0] >= '1' && schwierigkeitsgradTemp[0] <= '3')
+                    break;
+            }
+        }
         else if (e.type == SDL_QUIT)
             return;
-        SDL_Delay(100);
     }
     TTF_CloseFont(font);        //Speicherplatz freigeben
 
+    CSavefile* newSavefile = new CSavefile(nameString, schwierigkeitsgradTemp[0] - 48);
+    listeVonSavefiles.push_back(newSavefile);
     SDL_Surface* tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
     CMapEntity* tempMapEntity;
     CEntity* tempEntity;
@@ -258,13 +284,13 @@ void CGamemaster::init()
     SDL_Rect tempTextureCoords;
     tempTextureCoords.w = 16;
     tempTextureCoords.h = 32;
-    SDL_Texture* tempTexture;
+    SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempBounds.x = SCREEN_WIDTH / 2 + 8; //right of the window
     tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
     tempBounds.w = 16 * 2;
     tempBounds.h = 32 * 2;
-
-    spielerPointer = new CPlayer(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Player", tempBounds, tempTextureCoords);
+    spielerPointer = new CPlayer(this, tempTexture, "Player", tempBounds, tempTextureCoords);
+    SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_MAP1_SPRITE);
     tempBounds.x = -208*2; //Extreme left of the window
@@ -274,6 +300,7 @@ void CGamemaster::init()
     tempBounds.w *= 2;
     tempBounds.h *= 2;
     currentMap = new CMap(tempTexture, tempBounds);
+    SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_MAP1_SPRITE_TOP_LAYER);
     tempBounds.x = -208*2; //Extreme left of the window
@@ -283,15 +310,13 @@ void CGamemaster::init()
     tempBounds.w *= 2;
     tempBounds.h *= 2;
     currentMap_TopLayer = new CMap(tempTexture, tempBounds);//Nur die aktuelle Karte wird abgespeichert, damit nicht unötig Speicherplatz verschwendet wird
-
-
+    SDL_FreeSurface(tempSurface);
 
     tempBounds.x = 0;
     tempBounds.y = 0;
     tempBounds.w = 16 * 2;
     tempBounds.h = 175 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Die erste Kollisionszone wird erstellt
-
     currentMap->addObjectToMap(tempMapEntity);
 
     tempBounds.x = 0;
@@ -299,7 +324,6 @@ void CGamemaster::init()
     tempBounds.w = 32 * 2;
     tempBounds.h = 16 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Die zweite Kollisionszone wird erstellt
-
     currentMap->addObjectToMap(tempMapEntity);
 
     tempBounds.x = 48 * 2;
@@ -307,7 +331,6 @@ void CGamemaster::init()
     tempBounds.w = 96 * 2;
     tempBounds.h = 16 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Die dritte Kollisionszone wird erstellt
-
     currentMap->addObjectToMap(tempMapEntity);
 
     tempBounds.x = 16 * 2;
@@ -315,7 +338,6 @@ void CGamemaster::init()
     tempBounds.w = 176 * 2;
     tempBounds.h = 32 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Die vierte Kollisionszone wird erstellt
-
     currentMap->addObjectToMap(tempMapEntity);
 
     tempBounds.x = 192 * 2;
@@ -361,8 +383,8 @@ void CGamemaster::init()
     currentMap->addObjectToMap(tempMapEntity);
 
     tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
-    tempBounds.x = 50; //Extreme left of the window
-    tempBounds.y = 100; //Very top of the window
+    tempBounds.x = 50;  //left of the window
+    tempBounds.y = 100; //top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
@@ -371,9 +393,40 @@ void CGamemaster::init()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 2 * tempBounds.w / 12; // Breite geteilt durch anzahl Frames
     tempBounds.h = 2 * tempBounds.h / 4; // Hoehe geteilt durch anzahl der Zeilen von Frames
-    tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 150, 1, 6, 4, 4, 2);
+    tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = 280; // left of the window
+    tempBounds.y = 260; //top of the window
+    tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
+    listeVonEnemies.push_back(tempEntity);
+    listeVonEntitys.push_back(tempEntity);
+    SDL_FreeSurface(tempSurface);
+
+
+    tempSurface = IMG_Load(RSC_ANGRY_SPROUT_SPRITE);
+    tempBounds.x = 300;  //left of the window
+    tempBounds.y = 370; //top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 16;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 2 * tempBounds.w / 12; // Breite geteilt durch anzahl Frames
+    tempBounds.h = 2 * tempBounds.h / 4; // Hoehe geteilt durch anzahl der Zeilen von Frames
+    tempEntity = new CEnemy(tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
+    listeVonEnemies.push_back(tempEntity);
+    listeVonEntitys.push_back(tempEntity);
+    SDL_FreeSurface(tempSurface);
+
+    tempBounds.x = 950;  //left of the window
+    tempBounds.y = 360; //top of the window
+    tempEntity = new CEnemy(tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
+    listeVonEnemies.push_back(tempEntity);
+    listeVonEntitys.push_back(tempEntity);
+
 
     tempSurface = IMG_Load(RSC_NPC_AMELIA_SPRITE);
     tempBounds.x = 300; //Extreme left of the window
@@ -389,6 +442,7 @@ void CGamemaster::init()
     tempEntity = new CEntity(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
+    SDL_FreeSurface(tempSurface);
 
     this->gameLoop();
 }
@@ -436,11 +490,12 @@ int CGamemaster::collisionDetection(int collisionID)
         {
             if (cursor->getID() == collisionID)
             {
-                cursor->onInteract();
-                if (cursor->getHealth() <= 0) //Dying ist da um die sterbe-Animation abzuspielen, während der animation ist die variable auf true gesetzt
+                if(cursor->onInteract()==0)                     //Wenn der Gegner durch interaction schaden nimmt,....
+                if (cursor->getHealth() <= 0) 
                 {
-                    listeVonEntitys.remove(cursor);//Gegner getroffen, ZEIT IHN ZU VERNICHTEN MUHAHAHAHAHA (Capslock war an, ups)
-                    listeVonEnemies.remove(cursor);
+                    listeVonEntitys.remove(cursor);             //Gegner getroffen, ZEIT IHN ZU VERNICHTEN MUHAHAHAHAHA (Capslock war an, ups)
+                    if(typeid(cursor).name() == "CEnemy")       //Ich nehme typeid um möglichst schnell zu schauen ob das objekt in der liste ist
+                        listeVonEnemies.remove(cursor);
                     delete cursor;
                 }
                 break;
@@ -469,7 +524,7 @@ void CGamemaster::NPC_Pathfinding(double deltaTime)
                 walkingDirectionPtr->xDirection = walkingDirectionX;
                 walkingDirectionPtr->yDirection = walkingDirectionY;
             }
-            else if (walkingDirectionX == 0 && walkingDirectionY == 0)
+            else if (walkingDirectionX == 0 && walkingDirectionY == 0)      //In dem Fall muss nicht der Rest der Methode durchlaufen werden
             { 
                 cursorEntity->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
                 return;
