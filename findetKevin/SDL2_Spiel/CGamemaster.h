@@ -8,6 +8,7 @@
 #include "CMap.h"
 #include "CEnemy.h"
 #include "CSavefile.h"
+#include <typeinfo>
 class CGamemaster
 {
 private:

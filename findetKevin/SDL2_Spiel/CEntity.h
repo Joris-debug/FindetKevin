@@ -20,6 +20,8 @@ protected:
 	int entityID;
 	bool moving;
 	static int entityCount;
+private:
+	bool hasTalkedToThePlayer;	 // Dieses Attribut hat keine der Tochterklassen, Gegner und Projektile reden nicht
 public:
 	bool getMovingStatus();
 	virtual void update(int y, int x);
@@ -35,5 +37,6 @@ public:
 	void setBounds(int y, int x);//x oder y wird lediglich dazu gerechnet
 	SDL_Rect* getBounds();
 	int getID();
+	bool* getHasTalkedToThePlayer();
 };
 

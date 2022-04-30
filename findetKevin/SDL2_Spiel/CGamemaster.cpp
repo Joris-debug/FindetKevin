@@ -490,14 +490,22 @@ int CGamemaster::collisionDetection(int collisionID)
         {
             if (cursor->getID() == collisionID)
             {
-                if(cursor->onInteract()==0)                     //Wenn der Gegner durch interaction schaden nimmt,....
-                if (cursor->getHealth() <= 0) 
-                {
-                    listeVonEntitys.remove(cursor);             //Gegner getroffen, ZEIT IHN ZU VERNICHTEN MUHAHAHAHAHA (Capslock war an, ups)
-                    if(typeid(cursor).name() == "CEnemy")       //Ich nehme typeid um möglichst schnell zu schauen ob das objekt in der liste ist
-                        listeVonEnemies.remove(cursor);
-                    delete cursor;
+                if (cursor->onInteract() == 1)                      //Wenn der NPC ein gespräch triggert,....
+                { 
+                    if(*(cursor->getHasTalkedToThePlayer())==false)
+                    {
+                        cout << "Ich bin NPC " << cursor->getID()<< endl;
+                        *cursor->getHasTalkedToThePlayer() = true;
+                    }
                 }
+                else if (cursor->onInteract() == 0)                 //Wenn der Gegner durch interaction schaden nimmt,....
+                    if (cursor->getHealth() <= 0)
+                    {
+                        listeVonEntitys.remove(cursor);             //Gegner getroffen, ZEIT IHN ZU VERNICHTEN MUHAHAHAHAHA (Capslock war an, ups)
+                        if (typeid(*cursor) == typeid(CEntity))      //Ich nehme typeid um möglichst schnell zu schauen ob das objekt in der liste ist
+                            listeVonEnemies.remove(cursor);
+                        delete cursor;
+                    }
                 break;
             }
         }
@@ -587,14 +595,8 @@ void CGamemaster::NPC_Pathfinding(double deltaTime)
                 walkingDirectionPtr->yDirection = 0;
             else
                 walkingDirectionPtr->yDirection = walkingDirectionPtr->yDirection * (-1); //Nachdem er gegen eine Wand läuft soll er umkehren oder stehen bleiben, das macht den Gegner dynamischer
-           
-
         }
-
-
         cursorEntity->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
-
-        
     }
     return;
 }

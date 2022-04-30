@@ -52,6 +52,8 @@ CEntity::CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect
 	this->textureCoords = textureCoords;
     this->moving = moving;
     this->walkingDirections = { 0,0 };
+    if(typeid(*this) == typeid(CEntity))  //Nur die Klasse CENTITY hat diese Membervariable, Gegner und Projektile reden nicht
+        this->hasTalkedToThePlayer = false;
 }
 
 CEntity::~CEntity()
@@ -98,6 +100,11 @@ SDL_Rect* CEntity::getBounds()
 int CEntity::getID()
 {
 	return entityID;
+}
+
+bool* CEntity::getHasTalkedToThePlayer()
+{
+    return &hasTalkedToThePlayer;
 }
 
 

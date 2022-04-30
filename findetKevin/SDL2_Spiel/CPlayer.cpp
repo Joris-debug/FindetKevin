@@ -93,6 +93,8 @@ int CPlayer::bewegen(int y, int x)
         else
         {
             cursor->setHealth(cursor->getMaxHealth()); //Gegner die nicht beruhrt werden, müssen wieder geheilt werden
+            if (typeid(*cursor) == typeid(CEntity))
+                *cursor->getHasTalkedToThePlayer() = false;
         }
     }
     return collisionID;
