@@ -295,8 +295,8 @@ void CGamemaster::init()
     SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_MAP1_SPRITE);
-    tempBounds.x = -208*2; //Extreme left of the window
-    tempBounds.y = 0; //Very top of the window
+    tempBounds.x = -208*4; //Extreme left of the window
+    tempBounds.y = -1264; //Very top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w *= 2;
@@ -305,8 +305,8 @@ void CGamemaster::init()
     SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_MAP1_SPRITE_TOP_LAYER);
-    tempBounds.x = -208*2; //Extreme left of the window
-    tempBounds.y = 0; //Very top of the window
+    tempBounds.x = -208*4; //Extreme left of the window
+    tempBounds.y = -1264; //Very top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w *= 2;
@@ -314,79 +314,79 @@ void CGamemaster::init()
     currentMap_TopLayer = new CMap(tempTexture, tempBounds);//Nur die aktuelle Karte wird abgespeichert, damit nicht unötig Speicherplatz verschwendet wird
     SDL_FreeSurface(tempSurface);
 
-    tempBounds.x = 0;
-    tempBounds.y = 0;
+    tempBounds.x = -704;
+    tempBounds.y = -1040;
     tempBounds.w = 16 * 2;
     tempBounds.h = 175 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Die erste Kollisionszone wird erstellt
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds.x = 0;
-    tempBounds.y = 160 * 2;
+    tempBounds.x = -704;
+    tempBounds.y = -720;
     tempBounds.w = 32 * 2;
     tempBounds.h = 16 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Die zweite Kollisionszone wird erstellt
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds.x = 48 * 2;
-    tempBounds.y = 160 * 2;
+    tempBounds.x = -608;
+    tempBounds.y = -720;
     tempBounds.w = 96 * 2;
     tempBounds.h = 16 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Die dritte Kollisionszone wird erstellt
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds.x = 16 * 2;
-    tempBounds.y = 16 * 2;
+    tempBounds.x = -672;
+    tempBounds.y = -1008;
     tempBounds.w = 176 * 2;
     tempBounds.h = 32 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Die vierte Kollisionszone wird erstellt
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds.x = 192 * 2;
-    tempBounds.y = 0;
+    tempBounds.x = -320;
+    tempBounds.y = -1040;
     tempBounds.w = 16 * 2;
     tempBounds.h = 176 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //usw
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds.x = 160 * 2;
-    tempBounds.y = 160 * 2;
+    tempBounds.x = -384;
+    tempBounds.y = -720;
     tempBounds.w = 32 * 2;
     tempBounds.h = 16 * 2;
     tempMapEntity = new CMapEntity(tempBounds);
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds.x = 175 * 2;
-    tempBounds.y = 96 * 2;
+    tempBounds.x = -354;
+    tempBounds.y = -848;
     tempBounds.w = 16 * 2;
     tempBounds.h = 64 * 2;
     tempMapEntity = new CMapEntity(tempBounds); // Schrank unten Rechts und Stück der Wand
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds.x = 48 * 2;
-    tempBounds.y = 64 * 2;
+    tempBounds.x = -608;
+    tempBounds.y = -912;
     tempBounds.w = 80 * 2;
     tempBounds.h = 16 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Obere Tischreihe
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds.x = 64 * 2;
-    tempBounds.y = 112 * 2;
+    tempBounds.x = -576;
+    tempBounds.y = -816;
     tempBounds.w = 80 * 2;
     tempBounds.h = 16 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Untere Tischreihe
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds.x = 32 * 2;
-    tempBounds.y = 96 * 2;
+    tempBounds.x = -640;
+    tempBounds.y = -848;
     tempBounds.w = 16 * 2;
     tempBounds.h = 32 * 2;
     tempMapEntity = new CMapEntity(tempBounds); //Lehrerpult
     currentMap->addObjectToMap(tempMapEntity);
 
     tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
-    tempBounds.x = 50;  //left of the window
-    tempBounds.y = 100; //top of the window
+    tempBounds.x = -654;  //left of the window
+    tempBounds.y = -940; //top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
@@ -399,8 +399,8 @@ void CGamemaster::init()
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
 
-    tempBounds.x = 280; // left of the window
-    tempBounds.y = 260; //top of the window
+    tempBounds.x = -424; // left of the window
+    tempBounds.y = -780; //top of the window
     tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
@@ -408,8 +408,8 @@ void CGamemaster::init()
 
 
     tempSurface = IMG_Load(RSC_ANGRY_SPROUT_SPRITE);
-    tempBounds.x = 300;  //left of the window
-    tempBounds.y = 370; //top of the window
+    tempBounds.x = -404;  //left of the window
+    tempBounds.y = -670; //top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
@@ -423,16 +423,16 @@ void CGamemaster::init()
     listeVonEntitys.push_back(tempEntity);
     SDL_FreeSurface(tempSurface);
 
-    tempBounds.x = 950;  //left of the window
-    tempBounds.y = 360; //top of the window
+    tempBounds.x = 262;  //left of the window
+    tempBounds.y = -680; //top of the window
     tempEntity = new CEnemy(tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
 
 
     tempSurface = IMG_Load(RSC_NPC_AMELIA_SPRITE);
-    tempBounds.x = 300; //Extreme left of the window
-    tempBounds.y = 100; //Very top of the window
+    tempBounds.x = -404; //Extreme left of the window
+    tempBounds.y = -940; //Very top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
@@ -653,7 +653,6 @@ void CGamemaster::titlescreen()
         if (!text) {
             cout << "Failed to render text: " << TTF_GetError() << endl;
         }
-        text_texture;
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
         SDL_Rect startGame = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 30,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &startGame);
@@ -666,7 +665,6 @@ void CGamemaster::titlescreen()
         {
             cout << "Failed to render text: " << TTF_GetError() << endl;
         }
-        text_texture;
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
         SDL_Rect selectSavefile = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
 
@@ -680,11 +678,11 @@ void CGamemaster::titlescreen()
         {
             cout << "Failed to render text: " << TTF_GetError() << endl;
         }
-        text_texture;
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
         SDL_Rect closeButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 30,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &closeButton);
-        SDL_RenderPresent(renderer);
+        SDL_DestroyTexture(text_texture);                   //Memory management
+        SDL_FreeSurface(text);
 
         /* -------------- Test Endgame --------------------- */
         text = TTF_RenderText_Blended(font, "Endgame", colorEG);
@@ -692,20 +690,18 @@ void CGamemaster::titlescreen()
         {
             cout << "Failed to render text: " << TTF_GetError() << endl;
         }
-        text_texture;
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
         SDL_Rect endgameButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 60,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &endgameButton);
-        SDL_RenderPresent(renderer);
         /* ------------------------------------------------ */
 
+        SDL_RenderPresent(renderer);
         SDL_Rect cursor_Hitbox;
         SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
         cursor_Hitbox.w = 8;
         cursor_Hitbox.h = 4;
         SDL_DestroyTexture(text_texture);      //Memory management
         SDL_FreeSurface(text);
-
         TTF_CloseFont(font);
 
         colorNG = { 255, 255, 255 };

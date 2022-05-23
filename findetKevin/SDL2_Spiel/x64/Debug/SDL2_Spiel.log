@@ -1,2 +1,9 @@
-﻿  IKPlayer.cpp
-  SDL2_Spiel.vcxproj -> C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
+﻿  CGamemaster.cpp
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(100,40): warning C4244: "Argument": Konvertierung von "double" in "Uint32", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(107,99): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(107,71): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(543,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(544,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(644,44): warning C4838: Konvertierung von "double" zu "int" erfordert eine einschränkende Konvertierung
+C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(644,44): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+  SDL2_Spiel.vcxproj -> C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
