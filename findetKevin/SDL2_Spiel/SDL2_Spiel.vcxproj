@@ -158,6 +158,9 @@
     <ClCompile Include="CMapEntity.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSavefile.cpp" />
+    <ClCompile Include="IKGameLogic.cpp" />
+    <ClCompile Include="IKMap.cpp" />
+    <ClCompile Include="IKPlayer.cpp" />
     <ClCompile Include="Quelle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +171,9 @@
     <ClInclude Include="CMapEntity.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSavefile.h" />
+    <ClInclude Include="IKGameLogic.h" />
+    <ClInclude Include="IKMap.h" />
+    <ClInclude Include="IKPlayer.h" />
     <ClInclude Include="Resources.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

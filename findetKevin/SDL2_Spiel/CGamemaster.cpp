@@ -5,6 +5,8 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
+#include "IKGameLogic.h"
+
 CGamemaster::CGamemaster()
 {
     if (TTF_Init() < 0) {
@@ -609,6 +611,7 @@ void CGamemaster::titlescreen()
     SDL_Color colorNG = { 255, 255, 255 };      //Damit können wir einen "Hover-Effekt" machen, der den jeweiligen Button highligted
     SDL_Color colorSS = { 255, 255, 255 };
     SDL_Color colorQG = { 255, 255, 255 };
+    SDL_Color colorEG = { 255, 255, 255 };
     while (SDL_PollEvent(&e) >= 0)
     { 
         SDL_RenderClear(renderer);              
@@ -644,6 +647,8 @@ void CGamemaster::titlescreen()
         SDL_FreeSurface(text);              
         TTF_CloseFont(font);
         font = TTF_OpenFont(RSC_FONT_ARIAL, 24);
+
+        /* New game Button */
         text = TTF_RenderText_Blended(font, "New Game", colorNG);
         if (!text) {
             cout << "Failed to render text: " << TTF_GetError() << endl;
@@ -654,6 +659,8 @@ void CGamemaster::titlescreen()
         SDL_RenderCopy(renderer, text_texture, NULL, &startGame);
         SDL_DestroyTexture(text_texture);       //Memory management
         SDL_FreeSurface(text);
+
+        /* Select Savefile Button */
         text = TTF_RenderText_Blended(font, "Select Savefile", colorSS);
         if (!text)
         {
@@ -666,6 +673,8 @@ void CGamemaster::titlescreen()
         SDL_RenderCopy(renderer, text_texture, NULL, &selectSavefile);
         SDL_DestroyTexture(text_texture);                   //Memory management
         SDL_FreeSurface(text);
+
+        /* Close game Button */
         text = TTF_RenderText_Blended(font, "Close Game", colorQG);
         if (!text)
         {
@@ -674,10 +683,22 @@ void CGamemaster::titlescreen()
         text_texture;
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
         SDL_Rect closeButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 30,  text->w, text->h };
-
         SDL_RenderCopy(renderer, text_texture, NULL, &closeButton);
         SDL_RenderPresent(renderer);
-        
+
+        /* -------------- Test Endgame --------------------- */
+        text = TTF_RenderText_Blended(font, "Endgame", colorEG);
+        if (!text)
+        {
+            cout << "Failed to render text: " << TTF_GetError() << endl;
+        }
+        text_texture;
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        SDL_Rect endgameButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 60,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &endgameButton);
+        SDL_RenderPresent(renderer);
+        /* ------------------------------------------------ */
+
         SDL_Rect cursor_Hitbox;
         SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
         cursor_Hitbox.w = 8;
@@ -690,6 +711,7 @@ void CGamemaster::titlescreen()
         colorNG = { 255, 255, 255 };
         colorSS = { 255, 255, 255 };
         colorQG = { 255, 255, 255 };
+        colorEG = { 255, 255, 255 };
 
         SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
 
@@ -702,6 +724,13 @@ void CGamemaster::titlescreen()
                 init();
                 return;
             }
+            if (SDL_HasIntersection(&cursor_Hitbox, &endgameButton))
+            {
+                cout << "Entering endgame!" << endl;
+                IKGameLogic* ikgamelogic = new IKGameLogic(renderer, window);
+                ikgamelogic->init();
+                return;
+            }
         }
 
         if (SDL_HasIntersection(&cursor_Hitbox, &closeButton))  //Farbe der Buttons wird geändert
@@ -710,6 +739,8 @@ void CGamemaster::titlescreen()
             colorNG = { 100, 255, 100 };
         if (SDL_HasIntersection(&cursor_Hitbox, &selectSavefile))
             colorSS = { 100, 255, 100 };
+        if (SDL_HasIntersection(&cursor_Hitbox, &endgameButton))
+            colorEG = { 100, 255, 100 };
 
         if (e.type == SDL_QUIT)
            return;
