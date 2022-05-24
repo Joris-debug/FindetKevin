@@ -113,6 +113,11 @@ void CGamemaster::gameLoop()
         {
             cursor->renderer(renderer);
         }
+        //for (auto cursor : currentMap->getListeVonEntitys())
+        //{
+        //    SDL_RenderDrawRect(renderer, cursor->getBounds());
+        //}
+
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
@@ -384,6 +389,69 @@ void CGamemaster::init()
     tempMapEntity = new CMapEntity(tempBounds); //Lehrerpult
     currentMap->addObjectToMap(tempMapEntity);
 
+    tempBounds.x = -543;
+    tempBounds.y = -848;
+    tempBounds.w = 13 * 2;
+    tempBounds.h = 16 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Untere Tischreihe Klassenzimmer, hervorstehender Tisch Nr.1
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -447;
+    tempBounds.y = -848;
+    tempBounds.w = 13 * 2;
+    tempBounds.h = 16 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Untere Tischreihe Klassenzimmer, hervorstehender Tisch Nr.2
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -411;
+    tempBounds.y = -944;
+    tempBounds.w = 16 * 6 - 5;
+    tempBounds.h = 16 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Fernseher in 0255
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -411;
+    tempBounds.y = -944;
+    tempBounds.w = 16 * 6 - 5;
+    tempBounds.h = 16 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Fernseher in 0255
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 272 * 2;
+    tempBounds.y = -1264 + 256 * 2;
+    tempBounds.w = 16 * 32;
+    tempBounds.h = 32 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Nordwand des Ostflügels
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 528 * 2;
+    tempBounds.y = -1264 ;
+    tempBounds.w = 16 * 16;
+    tempBounds.h = 32 * 3 + 10;
+    tempMapEntity = new CMapEntity(tempBounds); //Nordwand des Südflügels
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 512 * 2;
+    tempBounds.y = -1264;
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 32 * 18;
+    tempMapEntity = new CMapEntity(tempBounds); //Obere Westwand des Südflügels
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 560 * 2;
+    tempBounds.y = -1264 + 144 * 2;
+    tempBounds.w = 16 * 14;
+    tempBounds.h = 32 * 7;
+    tempMapEntity = new CMapEntity(tempBounds); //S248 + Klo
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 656 * 2;
+    tempBounds.y = -1264;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 9;
+    tempMapEntity = new CMapEntity(tempBounds); //Rechte Wand S249
+    currentMap->addObjectToMap(tempMapEntity);
+
     tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
     tempBounds.x = -654;  //left of the window
     tempBounds.y = -940; //top of the window
@@ -432,7 +500,7 @@ void CGamemaster::init()
 
     tempSurface = IMG_Load(RSC_NPC_AMELIA_SPRITE);
     tempBounds.x = -404; //Extreme left of the window
-    tempBounds.y = -940; //Very top of the window
+    tempBounds.y = -910; //Very top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
