@@ -560,15 +560,7 @@ int CGamemaster::collisionDetection(int collisionID)
         {
             if (cursor->getID() == collisionID)
             {
-                if (cursor->onInteract() == 1)                      //Wenn der NPC ein gespräch triggert,....
-                { 
-                    if(*(cursor->getHasTalkedToThePlayer())==false)
-                    {
-                        cout << "Ich bin NPC " << cursor->getID()<< endl;
-                        *cursor->getHasTalkedToThePlayer() = true;
-                    }
-                }
-                else if (cursor->onInteract() == 0)                 //Wenn der Gegner durch interaction schaden nimmt,....
+               if (cursor->onInteract() == 0)                 //Wenn der Gegner durch interaction schaden nimmt,....
                     if (cursor->getHealth() <= 0)
                     {
                         listeVonEntitys.remove(cursor);             //Gegner getroffen, ZEIT IHN ZU VERNICHTEN MUHAHAHAHAHA (Capslock war an, ups)

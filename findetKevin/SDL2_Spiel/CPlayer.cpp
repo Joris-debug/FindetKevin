@@ -92,9 +92,12 @@ int CPlayer::bewegen(int y, int x)
         }
         else
         {
-            cursor->setHealth(cursor->getMaxHealth()); //Gegner die nicht beruhrt werden, müssen wieder geheilt werden
-            if (typeid(*cursor) == typeid(CEntity))
-                *cursor->getHasTalkedToThePlayer() = false;
+            cursor->setHealth(cursor->getMaxHealth()); //Gegner die nicht berührt werden, müssen wieder geheilt werden
+            if (typeid(*cursor) == typeid(CNPC))
+            { 
+                CNPC* temp_Pointer_NPC = dynamic_cast<CNPC*>(cursor);   //Damit kann ich einen CEntity Pointer zu einem CNPC Pointer umwandeln um so die Funktion der Tochterklasse aufzurufen
+                *temp_Pointer_NPC->getHasTalkedToThePlayer() = false; // Jetzt kann das Gespräch wieder getriggert werden
+            }
         }
     }
     return collisionID;

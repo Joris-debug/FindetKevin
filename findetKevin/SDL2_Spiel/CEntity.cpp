@@ -34,7 +34,7 @@ void CEntity::update(int y, int x)
 
 int CEntity::onInteract()
 {
-    return 1;
+    return 0;
 }
 
 void CEntity::renderer(SDL_Renderer* renderer)
@@ -50,10 +50,9 @@ CEntity::CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect
 	this->tag = tag;
 	this->bounds = bounds;
 	this->textureCoords = textureCoords;
-    this->moving = moving;
     this->walkingDirections = { 0,0 };
-    if(typeid(*this) == typeid(CEntity))  //Nur die Klasse CENTITY hat diese Membervariable, Gegner und Projektile reden nicht
-        this->hasTalkedToThePlayer = false;
+    this->moving = moving;
+ 
 }
 
 CEntity::~CEntity()
@@ -102,9 +101,5 @@ int CEntity::getID()
 	return entityID;
 }
 
-bool* CEntity::getHasTalkedToThePlayer()
-{
-    return &hasTalkedToThePlayer;
-}
 
 

@@ -9,6 +9,7 @@
 #include "CEnemy.h"
 #include "CSavefile.h"
 #include <typeinfo>
+#include "CNPC.h"
 class CGamemaster
 {
 private:
