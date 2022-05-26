@@ -156,12 +156,17 @@
     <ClCompile Include="CGamemaster.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMapEntity.cpp" />
+<<<<<<< Updated upstream
     <ClCompile Include="CNPC.cpp" />
+=======
+    <ClCompile Include="Collider.cpp" />
+>>>>>>> Stashed changes
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSavefile.cpp" />
     <ClCompile Include="IKGameLogic.cpp" />
     <ClCompile Include="IKMap.cpp" />
     <ClCompile Include="IKPlayer.cpp" />
+    <ClCompile Include="IKRenderLayer.cpp" />
     <ClCompile Include="Quelle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,12 +175,17 @@
     <ClInclude Include="CGamemaster.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMapEntity.h" />
+<<<<<<< Updated upstream
     <ClInclude Include="CNPC.h" />
+=======
+    <ClInclude Include="Collider.h" />
+>>>>>>> Stashed changes
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSavefile.h" />
     <ClInclude Include="IKGameLogic.h" />
     <ClInclude Include="IKMap.h" />
     <ClInclude Include="IKPlayer.h" />
+    <ClInclude Include="IKRenderLayer.h" />
     <ClInclude Include="Resources.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -48,7 +48,14 @@
     <ClCompile Include="IKMap.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
     <ClCompile Include="CNPC.cpp">
+=======
+    <ClCompile Include="IKRenderLayer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+>>>>>>> Stashed changes
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,7 +93,14 @@
     <ClInclude Include="IKMap.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="CNPC.h">
+=======
+    <ClInclude Include="IKRenderLayer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+>>>>>>> Stashed changes
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

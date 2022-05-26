@@ -1,5 +1,7 @@
 #include "IKGameLogic.h"
 
+#include "IKPlayer.h"
+
 IKGameLogic::IKGameLogic(SDL_Renderer* renderer, SDL_Window* window)
 {
 	m_Renderer = renderer;
@@ -13,6 +15,7 @@ void IKGameLogic::init()
 
     m_Map = new IKMap(m_Renderer);
     m_Map->init();
+    m_Player = m_Map->getPlayer();
     m_Map->render();
 
 	SDL_RenderPresent(m_Renderer);
@@ -46,8 +49,11 @@ void IKGameLogic::init()
                 case SDLK_a:
                     //x_axis = 0;
                     break;
+                case SDLK_SPACE:
+                    //m_Player->jump();
+                    break;
                 }
-                break;
+
 
             case SDL_KEYDOWN:
 
@@ -67,11 +73,18 @@ void IKGameLogic::init()
                 case SDLK_d:
                     //x_axis = 1;
                     break;
+                case SDLK_SPACE:
+                    m_Player->jump();
+                    break;
                 }
 
                 break;
             }
         }
+
+        update(deltaTime);
+        render();
+
         if (deltaTime < float(1000 / 60)) //Limit FPS auf 60
         {
             SDL_Delay(float(1000 / 60) - deltaTime);
@@ -92,9 +105,9 @@ void IKGameLogic::init()
             cursor->renderer(renderer);
         }
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
-        SDL_RenderPresent(renderer);
-        SDL_RenderClear(renderer);
         */
+        SDL_RenderPresent(m_Renderer);
+        SDL_RenderClear(m_Renderer);
 
     }
 }
@@ -102,4 +115,14 @@ void IKGameLogic::init()
 IKGameLogic::~IKGameLogic()
 {
     delete m_Map;
+}
+
+void IKGameLogic::update(double& dt)
+{
+    m_Map->update(dt);
+}
+
+void IKGameLogic::render()
+{
+    m_Map->render();
 }
