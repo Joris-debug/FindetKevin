@@ -1,15 +1,30 @@
-<<<<<<< Updated upstream
-﻿  CGamemaster.cpp
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(100,40): warning C4244: "Argument": Konvertierung von "double" in "Uint32", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(107,99): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(107,71): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(694,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(695,15): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(795,44): warning C4838: Konvertierung von "double" zu "int" erfordert eine einschränkende Konvertierung
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(795,44): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-  SDL2_Spiel.vcxproj -> C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
-=======
-﻿  IKGameLogic.cpp
+﻿  CEnemy.cpp
+  CEntity.cpp
+  CGamemaster.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(100,40): warning C4244: 'argument': conversion from 'double' to 'Uint32', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(107,99): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(107,71): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(694,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(695,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(795,44): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(795,44): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  CMap.cpp
+  CMapEntity.cpp
+  CNPC.cpp
+  Collider.cpp
+  CPlayer.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CPlayer.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  CSavefile.cpp
+  IKGameLogic.cpp
 C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKGameLogic.cpp(90,40): warning C4244: 'argument': conversion from 'double' to 'Uint32', possible loss of data
+  IKMap.cpp
+  IKPlayer.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKPlayer.cpp(51,41): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKPlayer.cpp(54,45): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKPlayer.cpp(58,41): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKPlayer.cpp(79,45): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  IKRenderLayer.cpp
+  Quelle.cpp
+  Generating Code...
+  LINK : C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe not found or not built by the last incremental link; performing full link
   SDL2_Spiel.vcxproj -> C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
->>>>>>> Stashed changes

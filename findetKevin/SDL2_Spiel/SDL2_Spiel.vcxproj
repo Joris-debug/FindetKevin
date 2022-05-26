@@ -156,11 +156,8 @@
     <ClCompile Include="CGamemaster.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMapEntity.cpp" />
-<<<<<<< Updated upstream
     <ClCompile Include="CNPC.cpp" />
-=======
     <ClCompile Include="Collider.cpp" />
->>>>>>> Stashed changes
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSavefile.cpp" />
     <ClCompile Include="IKGameLogic.cpp" />
@@ -175,11 +172,8 @@
     <ClInclude Include="CGamemaster.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMapEntity.h" />
-<<<<<<< Updated upstream
     <ClInclude Include="CNPC.h" />
-=======
     <ClInclude Include="Collider.h" />
->>>>>>> Stashed changes
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSavefile.h" />
     <ClInclude Include="IKGameLogic.h" />
