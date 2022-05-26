@@ -440,7 +440,7 @@ void CGamemaster::init()
 
     tempBounds.x = -832 + 560 * 2;
     tempBounds.y = -1264 + 144 * 2;
-    tempBounds.w = 16 * 14;
+    tempBounds.w = 16 * 18;
     tempBounds.h = 32 * 7;
     tempMapEntity = new CMapEntity(tempBounds); //S248 + Klo
     currentMap->addObjectToMap(tempMapEntity);
@@ -450,6 +450,97 @@ void CGamemaster::init()
     tempBounds.w = 32 * 1;
     tempBounds.h = 32 * 9;
     tempMapEntity = new CMapEntity(tempBounds); //Rechte Wand S249
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 16*2;
+    tempBounds.y = -1264 + 256 * 2;
+    tempBounds.w = 32 * 3;
+    tempBounds.h = 32 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Nordwand links von 0255
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832;
+    tempBounds.y = -1264 + 256 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 4;
+    tempMapEntity = new CMapEntity(tempBounds); //Westwand links von 0255
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 32;
+    tempBounds.y = -1264 + 320 * 2;
+    tempBounds.w = 32 * 32;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Südwand unter 0255
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 512*2;
+    tempBounds.y = -1264 + 336 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 33;
+    tempMapEntity = new CMapEntity(tempBounds); //Untere Westwand
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 528 * 2;
+    tempBounds.y = -1264 + 848 * 2;
+    tempBounds.w = 32 * 11;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Südlichste Wand der Schule
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 560 * 2;
+    tempBounds.y = -1264 + 608 * 2;
+    tempBounds.w = 32 * 9;
+    tempBounds.h = 32 * 11;
+    tempMapEntity = new CMapEntity(tempBounds); //Secret Room
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 560 * 2;
+    tempBounds.y = -1264 + 448 * 2;
+    tempBounds.w = 7 * 2;
+    tempBounds.h = 32 * 8;
+    tempMapEntity = new CMapEntity(tempBounds); //Obere Westwand südlichster Raum
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 560 * 2;
+    tempBounds.y = -1264 + 592 * 2;
+    tempBounds.w = 7 * 2;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //untere Westwand südlichster Raum
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 624 * 2;
+    tempBounds.y = -1264 + 576 * 2;
+    tempBounds.w = 32 * 2;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Schreibtisch Lehrer südlichster Raum
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 656 * 2;
+    tempBounds.y = -1264 + 320 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 18;
+    tempMapEntity = new CMapEntity(tempBounds); //Östliche Wand
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 560 * 2;
+    tempBounds.y = -1264 + 480 * 2;
+    tempBounds.w = 32 * 6;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Nordwand südlichster Raum
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 640 * 2;
+    tempBounds.y = -1264 + 496 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Blume und Tisch südlichster Raum
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 575 * 2;
+    tempBounds.y = -1264 + 512 * 2;
+    tempBounds.w = 32 * 2;
+    tempBounds.h = 32 * 3;
+    tempMapEntity = new CMapEntity(tempBounds); //Tische und Bücher südlichster Raum
     currentMap->addObjectToMap(tempMapEntity);
 
     tempSurface = IMG_Load(RSC_BANDIT_SPRITE);

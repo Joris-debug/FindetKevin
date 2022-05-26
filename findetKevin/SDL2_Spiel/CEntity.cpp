@@ -34,7 +34,7 @@ void CEntity::update(int y, int x)
 
 int CEntity::onInteract()
 {
-    return 0;
+    return 3;
 }
 
 void CEntity::renderer(SDL_Renderer* renderer)

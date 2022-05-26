@@ -23,7 +23,7 @@ protected:
 public:
 	bool getMovingStatus();
 	virtual void update(int y, int x);
-	virtual int onInteract();				// 2:NPC nimmt damage, 1:NPC triggert gespräch, 3:?
+	virtual int onInteract();				// 0:NPC nimmt damage, 1:NPC triggert gespräch, 3:Nichts
 	void renderer(SDL_Renderer* renderer);
 	CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving);
 	~CEntity();
