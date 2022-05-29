@@ -1,6 +1,6 @@
 #include "CNPC.h"
 
-CNPC::CNPC()
+CNPC::CNPC(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving) : CEntity(textureTemp, tag, bounds, textureCoords, moving)
 {
 	this->hasTalkedToThePlayer = false;
 }

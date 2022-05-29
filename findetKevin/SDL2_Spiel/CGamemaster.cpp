@@ -462,12 +462,12 @@ void CGamemaster::init()
     tempBounds.x = -832;
     tempBounds.y = -1264 + 256 * 2;
     tempBounds.w = 32 * 1;
-    tempBounds.h = 32 * 4;
+    tempBounds.h = 32 * 5;
     tempMapEntity = new CMapEntity(tempBounds); //Westwand links von 0255
     currentMap->addObjectToMap(tempMapEntity);
 
     tempBounds.x = -832 + 32;
-    tempBounds.y = -1264 + 320 * 2;
+    tempBounds.y = -1264 + 336 * 2;
     tempBounds.w = 32 * 32;
     tempBounds.h = 32 * 1;
     tempMapEntity = new CMapEntity(tempBounds); //Südwand unter 0255
@@ -516,9 +516,9 @@ void CGamemaster::init()
     currentMap->addObjectToMap(tempMapEntity);
 
     tempBounds.x = -832 + 656 * 2;
-    tempBounds.y = -1264 + 320 * 2;
+    tempBounds.y = -1264 + 336 * 2;
     tempBounds.w = 32 * 1;
-    tempBounds.h = 32 * 18;
+    tempBounds.h = 32 * 17;
     tempMapEntity = new CMapEntity(tempBounds); //Östliche Wand
     currentMap->addObjectToMap(tempMapEntity);
 
@@ -541,6 +541,20 @@ void CGamemaster::init()
     tempBounds.w = 32 * 2;
     tempBounds.h = 32 * 3;
     tempMapEntity = new CMapEntity(tempBounds); //Tische und Bücher südlichster Raum
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 560 * 2;
+    tempBounds.y = -1264 + 336 * 2;
+    tempBounds.w = 32 * 9;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Oberer Flur zur Treppe, Südwand
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 624 * 2;
+    tempBounds.y = -1264 + 544 * 2;
+    tempBounds.w = 32 * 2;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Tische unten rechts südlichster Raum
     currentMap->addObjectToMap(tempMapEntity);
 
     tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
@@ -600,7 +614,7 @@ void CGamemaster::init()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
     tempBounds.h = 32 * 2;
-    tempEntity = new CEntity(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, true);
+    tempEntity = new CNPC(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
