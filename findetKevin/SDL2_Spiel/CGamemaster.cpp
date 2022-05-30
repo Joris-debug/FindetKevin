@@ -557,6 +557,70 @@ void CGamemaster::init()
     tempMapEntity = new CMapEntity(tempBounds); //Tische unten rechts südlichster Raum
     currentMap->addObjectToMap(tempMapEntity);
 
+    tempBounds.x = -832 + 624 * 2;
+    tempBounds.y = -1264 + 512 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Tisch oben rechts südlichster Raum
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 560 * 2;
+    tempBounds.y = -1264 + 336 * 2;
+    tempBounds.w = 7 * 2;
+    tempBounds.h = 32 * 6;
+    tempMapEntity = new CMapEntity(tempBounds); //Obere dünne Westwand im Flur
+    currentMap->addObjectToMap(tempMapEntity);
+
+
+    tempBounds.x = -832 + 626 * 2;
+    tempBounds.y = -1264 + 432 * 2;
+    tempBounds.w = 32 * 2;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Schreibtisch Lehrer zweiter Raum des Lehrers
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 521 * 2;
+    tempBounds.y = -1264 + 192 * 2;
+    tempBounds.w = 26 * 1;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Tür S249 Links
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 554 * 2;
+    tempBounds.y = -1264 + 192 * 2;
+    tempBounds.w = 26 * 1;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Tür S249 Rechts
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 595 * 2;
+    tempBounds.y = -1264 + 128 * 2;
+    tempBounds.w = 28 * 2;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Schreibtisch Lehrer S249
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 560 * 2;
+    tempBounds.y = -1264 + 96 * 2;
+    tempBounds.w = 32 * 5;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Untere Tischreihe S249
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 560 * 2;
+    tempBounds.y = -1264 + 64 * 2;
+    tempBounds.w = 32 * 5;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Obere Tischreihe S249
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 544 * 2;
+    tempBounds.y = -1264 + 64 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 2;
+    tempMapEntity = new CMapEntity(tempBounds); //Linke Tischreihe S249
+    currentMap->addObjectToMap(tempMapEntity);
+
     tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
     tempBounds.x = -654;  //left of the window
     tempBounds.y = -940; //top of the window
@@ -615,6 +679,22 @@ void CGamemaster::init()
     tempBounds.w = 16 * 2;
     tempBounds.h = 32 * 2;
     tempEntity = new CNPC(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, true);
+    listeVonEntitys.push_back(tempEntity);
+    spielerPointer->setCurrentMap(currentMap);
+    SDL_FreeSurface(tempSurface);
+
+    tempSurface = IMG_Load(RSC_NPC_ALEX_SPRITE);
+    tempBounds.x = -832 + 528 * 2; //Extreme left of the window
+    tempBounds.y = -1264 + 128 * 2; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 32 * 2;
+    tempEntity = new CNPC(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
