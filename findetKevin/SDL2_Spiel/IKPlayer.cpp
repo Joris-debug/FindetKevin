@@ -46,30 +46,29 @@ void IKPlayer::init()
 
 void IKPlayer::update(double dt)
 {
-    dt = dt / 3;
+    dt = dt / 4;
 
-    m_Bounds.x += m_VelocityX * dt * 0.5;       // Apply force on x axis
+    m_Bounds.x += m_VelocityX * dt * 0.5;
     Collider* collidingObject = checkCollision();
-    if(collidingObject != nullptr){                        // check for collision
-        m_Bounds.x -= m_VelocityX * dt * 0.5;       // take back the applyed force if it leads to collision
-        //std::cout << "Collision detected on x axis" << std::endl;
+    if(collidingObject != nullptr){
+        m_Bounds.x -= m_VelocityX * dt * 0.5;
     }
 
-    m_Bounds.y += m_VelocityY * dt * 0.5;
+    m_Map->setOffsetY(m_Map->getOffsetY() + m_VelocityY * dt * -0.5);
     collidingObject = checkCollision();
     if (collidingObject != nullptr && m_InAir) 
     {
         if (m_VelocityY > 0)    // Player collided while falling on an object (landed)
         {
-            m_Bounds.y = collidingObject->getRect().y - m_Bounds.h;
+            m_Map->setOffsetY(m_Bounds.y + m_Bounds.h - collidingObject->getRect().y);
             m_VelocityY = 0;
             m_InAir = false;
-            std::cout << "hftfjfkghghtjhjjdhgtrjzrjjzrztzkjgdghdjsjjshjhjhsfgsfhdjbgsb10 " << std::endl;
         }
         else if (m_VelocityY < 0)   // Player collided while jumping
         {
-            std::cout << "-----------------------------------------------------------------" << std::endl;
-            m_Bounds.y = collidingObject->getRect().y + collidingObject->getRect().h;
+            std::cout << "lol ------------------------------------------------------------------------------------------------" << std::endl;
+            //m_Map->setOffsetY(collidingObject->getRect().y - collidingObject->getRect().h);
+            m_Map->setOffsetY(m_Bounds.y - collidingObject->getRect().y - collidingObject->getRect().h);
             m_VelocityY = m_VelocityY * (-1);   // Hits his head and falls back down immediatly
         }
     }
@@ -78,17 +77,12 @@ void IKPlayer::update(double dt)
     {
         m_VelocityY += m_Map->m_Gravity * dt;
     }
-
-    std::cout << "y pos " << m_Bounds.y << std::endl;
-    std::cout << "y vel " << m_VelocityY << std::endl;
 }
 
 void IKPlayer::render()
 {
     SDL_Rect srcRect = {48, 9, 16, 23};     // pixel in the image
-    //SDL_Rect dstRect = {400, 340, 16*2, 23*2};
     SDL_Rect dstRect = m_Bounds;    // bounds in screen space 
-    //std::cout << "Rendering the IKPlayer!" << std::endl;
     SDL_RenderCopyEx(m_Map->getRenderer(), m_Texture, &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
 }
 
@@ -113,12 +107,12 @@ Collider* IKPlayer::checkCollision()
 {
     IKRenderLayer* colLayer = m_Map->getCollisionLayer();
     Collider playerCollider;
+    playerCollider.m_OffsetY = 0;
     playerCollider.setRect(&m_Bounds);
     for (auto collider : colLayer->getColliders())
     {
         if (collider->checkCollison(playerCollider))
         {
-            //std::cout << "Collision detected" << std::endl;
             return collider;
         }
     }

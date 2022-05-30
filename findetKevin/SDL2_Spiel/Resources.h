@@ -9,4 +9,4 @@
 #define RSC_BACKGROUND_OF_TITLESCREEN "TitlescreenBackground.png"
 
 #define RSC_IK_CHARAKTER_SPRITE "./PlayerTextures/Adam_16x16.png"
-#define RSC_IK_BACKGROUND_IMAGE_OUTLINE "./IKTextures/IKBG_outline.png"
+#define RSC_IK_BACKGROUND_IMAGE_OUTLINE "./IKTextures/Rand.png"

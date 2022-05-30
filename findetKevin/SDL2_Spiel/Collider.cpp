@@ -1,26 +1,30 @@
 #include "Collider.h"
 
+#include <SDL.h>
+
 Collider::Collider(SDL_Rect other)
 {
 	this->m_Box.w = other.w;
 	this->m_Box.h = other.h;
 	this->m_Box.x = other.x;
 	this->m_Box.y = other.y;
+
+	this->m_OffsetY = 0;
 }
 
 bool Collider::checkCollison(Collider& other)
 {
 	SDL_Rect rect1 = this->m_Box;
 	SDL_Rect rect2 = other.m_Box;
-	//if (m_Box.x > other.m_Box.x && m_Box.x + m_Box.w < other.m_Box.x) return true;
-	//if (m_Box.x > other.m_Box.x + other.m_Box.w && m_Box.x + m_Box.w < other.m_Box.x + other.m_Box.w) return true;
-	//if (m_Box.y > other.m_Box.y && m_Box.y + m_Box.h < other.m_Box.y) return true;
-	//if (m_Box.y > other.m_Box.y + other.m_Box.h && m_Box.y + m_Box.h < other.m_Box.y + other.m_Box.h) return true;
 
-	if (rect1.x < rect2.x + rect2.w &&
-		rect1.x + rect1.w > rect2.x &&
-		rect1.y < rect2.y + rect2.h &&
-		rect1.h + rect1.y > rect2.y) {
+	int o1 = this->m_OffsetY;
+	int o2 = other.m_OffsetY;
+
+	rect1.y += o1;
+	rect2.y += o2;
+
+	if (SDL_HasIntersection(&rect1, &rect2) == SDL_TRUE)
+	{
 		return true;
 	}
 
@@ -30,13 +34,16 @@ bool Collider::checkCollison(Collider& other)
 void Collider::render(SDL_Renderer* renderer)
 {
 	Uint8 r, g, b, a;
+
+	SDL_Rect renderBox{ m_Box.x, m_Box.y + m_OffsetY, m_Box.w, m_Box.h };
+
 	SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
-	SDL_RenderFillRect(renderer, &m_Box);
+	SDL_RenderFillRect(renderer, &renderBox);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
 void Collider::print()
 {
-	std::cout << m_Box.x << " " << m_Box.y << " " << m_Box.w << " " << m_Box.h << std::endl;
+	//std::cout << m_Box.x << " " << m_Box.y << " " << m_Box.w << " " << m_Box.h << std::endl;
 }

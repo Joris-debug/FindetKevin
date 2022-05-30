@@ -17,8 +17,9 @@ private:
 	SDL_Renderer* m_Renderer;
 	float m_Distance;
 	std::list<Collider*> m_Colliders;
+	IKMap* m_Map;
 public:
-	void init(const std::string& path, SDL_Renderer* renderer, float distance);
+	void init(const std::string& path, SDL_Renderer* renderer, float distance, IKMap* map);
 	void update(double dt);
 	void render(bool renderCols);
 public:
