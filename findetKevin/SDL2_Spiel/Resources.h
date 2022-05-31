@@ -10,4 +10,4 @@
 #define RSC_NPC_ALEX_SPRITE "./PlayerTextures/Alex_16x16.png"
 
 #define RSC_IK_CHARAKTER_SPRITE "./PlayerTextures/Adam_16x16.png"
-#define RSC_IK_BACKGROUND_IMAGE_OUTLINE "./IKTextures/IKBG_outline.png"
+#define RSC_IK_BACKGROUND_IMAGE_OUTLINE "./IKTextures/Rand.png"

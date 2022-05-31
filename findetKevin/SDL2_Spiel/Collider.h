@@ -9,6 +9,7 @@ class Collider
 private:
 	SDL_Rect m_Box;
 public:
+	int m_OffsetY;
 	bool checkCollison(Collider& other);
 	void render(SDL_Renderer* renderer);
 public:

@@ -90,22 +90,6 @@ void IKGameLogic::init()
             SDL_Delay(float(1000 / 60) - deltaTime);
         }
 
-        /*
-        for (auto cursor : listeVonEntitys)
-            cursor->update(0, 0);
-
-        spielerPointer->animation(y_axis, x_axis, deltaTime);   //Neuer Frame für den Player
-        collisionDetection(spielerPointer->bewegen(y_axis * deltaTime * 0.225, x_axis * deltaTime * 0.225)); //Neue location für den Player
-        SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
-        spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
-
-        NPC_Pathfinding(deltaTime * 0.1);   //alle NPC's werden bewgegt
-        for (auto cursor : listeVonEntitys)
-        {
-            cursor->renderer(renderer);
-        }
-        SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
-        */
         SDL_RenderPresent(m_Renderer);
         SDL_RenderClear(m_Renderer);
 

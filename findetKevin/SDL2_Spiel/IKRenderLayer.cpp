@@ -4,9 +4,11 @@
 
 #include <iostream>
 
-void IKRenderLayer::init(const std::string& path, SDL_Renderer* renderer, float distance)
+void IKRenderLayer::init(const std::string& path, SDL_Renderer* renderer, float distance, IKMap* map)
 {
     m_Renderer = renderer;
+    m_Map = map;
+    m_Distance = distance;
 
     SDL_Surface* surf = IMG_Load(path.c_str());
     if (surf == NULL)
@@ -23,27 +25,25 @@ void IKRenderLayer::init(const std::string& path, SDL_Renderer* renderer, float 
     m_SrcRect.h = 1000;
 
     m_DstRect.x = 0;
-    m_DstRect.y = 0;
+    m_DstRect.y = m_Map->getOffsetY();
     m_DstRect.w = 800;
     m_DstRect.h = 2000;
-
-    //std::cout << "lol" << std::endl;
 }
 
 void IKRenderLayer::update(double dt)
 {
-    //std::cout << "Updating the Background layer! " << m_DstRect.y << " " << dt << std::endl;
-    //m_DstRect.y = m_DstRect.y + 0.1f * dt;
+    m_DstRect.y = m_Map->getOffsetY() * m_Distance;
+
+    for (auto collider : m_Colliders)
+    {
+
+        collider->m_OffsetY = m_Map->getOffsetY();
+    }
 }
 
 void IKRenderLayer::render(bool renderCols)
 {
-    //std::cout << "Rendering the Background layer!" << std::endl;
-    //SDL_Rect dstRect{ 0, 20, 800, 2000};
-    //m_DstRect.y += 20;
-    //std::cout << m_DstRect.y << std::endl;
-    //m_DstRect.y += 20;
-    //std::cout << "Rendering with: " << m_DstRect.y << std::endl;
+
     SDL_RenderCopy(m_Renderer, m_Image, NULL, &m_DstRect);
 
     if (renderCols)
