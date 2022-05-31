@@ -9,7 +9,6 @@ private:
     int healItems;
     SDL_Rect footSpace;
     CMap* currentmap;
-    CGamemaster* game;
 public:
     void onDeath();
     int bewegen(int y, int x);

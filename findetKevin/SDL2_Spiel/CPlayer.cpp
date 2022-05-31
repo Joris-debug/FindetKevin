@@ -1,8 +1,7 @@
 #include "CPlayer.h"
 #include "CGamemaster.h";
-CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords) : CEntity(textureTemp, tag, bounds, textureCoords, false)
+CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords) : CEntity(game ,textureTemp, tag, bounds, textureCoords, false)
 {
-    this->game = game;
 	healItems = 0;
 	healthPoints = 20; 
     footSpace.x = game->getWidthOfWindow() / 2 + 8; 

@@ -1,0 +1,2 @@
+Hallo, ich bin NPC Nummer 1;
+Hey, ich bin NPC Nummer 2;

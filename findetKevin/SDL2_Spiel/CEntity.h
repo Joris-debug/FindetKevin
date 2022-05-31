@@ -9,6 +9,7 @@ struct structForWalkingDirections
 	int yDirection;
 };
 using namespace std;
+class CGamemaster;
 class CEntity
 {
 protected:
@@ -20,12 +21,13 @@ protected:
 	string tag;
 	int entityID;
 	static int entityCount;
+	CGamemaster* game;
 public:
 	bool getMovingStatus();
 	virtual void update(int y, int x);
 	virtual int onInteract();				// 0:NPC nimmt damage, 1:NPC triggert gespräch, 3:Nichts
 	void renderer(SDL_Renderer* renderer);
-	CEntity(SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving);
+	CEntity(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving);
 	~CEntity();
 	CEntity();
 	structForWalkingDirections* getWalkingDirections();
@@ -35,5 +37,6 @@ public:
 	void setBounds(int y, int x);//x oder y wird lediglich dazu gerechnet
 	SDL_Rect* getBounds();
 	int getID();
+	void entityPathfinding(double deltaTime);
 };
 

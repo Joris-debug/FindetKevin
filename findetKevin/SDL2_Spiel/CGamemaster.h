@@ -38,6 +38,7 @@ public:
 	void NPC_Pathfinding(double deltaTime);
 	void titlescreen();
 	char detectKey(SDL_Event input);
-	void characterSpeech(int characterID); //Der Text der Person wird in einer externen Datei abgespeichert, daraus lesen wir sie aus
+	CMap* getMap();
+	
 };
 

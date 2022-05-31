@@ -284,31 +284,19 @@ void CGamemaster::init()
 
     CSavefile* newSavefile = new CSavefile(nameString, schwierigkeitsgradTemp[0] - 48);
     listeVonSavefiles.push_back(newSavefile);
-    SDL_Surface* tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
-    CMapEntity* tempMapEntity;
-    CEntity* tempEntity;
+
+    SDL_Surface* tempSurface = IMG_Load(RSC_MAP1_SPRITE);    
     SDL_Rect tempBounds;
     SDL_Rect tempTextureCoords;
-    tempTextureCoords.w = 16;
-    tempTextureCoords.h = 32;
-    SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    tempBounds.x = SCREEN_WIDTH / 2 + 8; //right of the window
-    tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
-    tempBounds.w = 16 * 2;
-    tempBounds.h = 32 * 2;
-    spielerPointer = new CPlayer(this, tempTexture, "Player", tempBounds, tempTextureCoords);
-    SDL_FreeSurface(tempSurface);
-
-    tempSurface = IMG_Load(RSC_MAP1_SPRITE);
     tempBounds.x = -208*4; //Extreme left of the window
     tempBounds.y = -1264; //Very top of the window
-    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w *= 2;
     tempBounds.h *= 2;
     currentMap = new CMap(tempTexture, tempBounds);
     SDL_FreeSurface(tempSurface);
-
+    
     tempSurface = IMG_Load(RSC_MAP1_SPRITE_TOP_LAYER);
     tempBounds.x = -208*4; //Extreme left of the window
     tempBounds.y = -1264; //Very top of the window
@@ -319,6 +307,19 @@ void CGamemaster::init()
     currentMap_TopLayer = new CMap(tempTexture, tempBounds);//Nur die aktuelle Karte wird abgespeichert, damit nicht unötig Speicherplatz verschwendet wird
     SDL_FreeSurface(tempSurface);
 
+    tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
+    CEntity* tempEntity;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempBounds.x = SCREEN_WIDTH / 2 + 8; //right of the window
+    tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 32 * 2;
+    spielerPointer = new CPlayer(this, tempTexture, "Player", tempBounds, tempTextureCoords);
+    SDL_FreeSurface(tempSurface);
+
+    CMapEntity* tempMapEntity;
     tempBounds.x = -704;
     tempBounds.y = -1040;
     tempBounds.w = 16 * 2;
@@ -621,6 +622,8 @@ void CGamemaster::init()
     tempMapEntity = new CMapEntity(tempBounds); //Linke Tischreihe S249
     currentMap->addObjectToMap(tempMapEntity);
 
+
+
     tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
     tempBounds.x = -654;  //left of the window
     tempBounds.y = -940; //top of the window
@@ -632,17 +635,16 @@ void CGamemaster::init()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 2 * tempBounds.w / 12; // Breite geteilt durch anzahl Frames
     tempBounds.h = 2 * tempBounds.h / 4; // Hoehe geteilt durch anzahl der Zeilen von Frames
-    tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
+    tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
 
     tempBounds.x = -424; // left of the window
     tempBounds.y = -780; //top of the window
-    tempEntity = new CEnemy(SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
+    tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
     SDL_FreeSurface(tempSurface);
-
 
     tempSurface = IMG_Load(RSC_ANGRY_SPROUT_SPRITE);
     tempBounds.x = -404;  //left of the window
@@ -655,14 +657,14 @@ void CGamemaster::init()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 2 * tempBounds.w / 12; // Breite geteilt durch anzahl Frames
     tempBounds.h = 2 * tempBounds.h / 4; // Hoehe geteilt durch anzahl der Zeilen von Frames
-    tempEntity = new CEnemy(tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
+    tempEntity = new CEnemy(this, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
     SDL_FreeSurface(tempSurface);
 
     tempBounds.x = 262;  //left of the window
     tempBounds.y = -680; //top of the window
-    tempEntity = new CEnemy(tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
+    tempEntity = new CEnemy(this, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
 
@@ -678,7 +680,7 @@ void CGamemaster::init()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
     tempBounds.h = 32 * 2;
-    tempEntity = new CNPC(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, true);
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
@@ -694,14 +696,13 @@ void CGamemaster::init()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
     tempBounds.h = 32 * 2;
-    tempEntity = new CNPC(SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, true);
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
 
     this->gameLoop();
 }
-
 
 int CGamemaster::getWidthOfWindow()
 {
@@ -764,86 +765,7 @@ void CGamemaster::NPC_Pathfinding(double deltaTime)
 {
     for (CEntity* cursorEntity : listeVonEntitys)
     {
-        if (!cursorEntity->getMovingStatus())
-            continue;
-        structForWalkingDirections* walkingDirectionPtr = cursorEntity->getWalkingDirections();     //Ich hole mir die Aktuelle Laufrichtung
-        int walkingDirectionX = walkingDirectionPtr->xDirection;
-        int walkingDirectionY = walkingDirectionPtr->yDirection;
-        srand(SDL_GetTicks()*cursorEntity->getID());
-        if (SDL_GetTicks() % 2000 <= 100)         //Alle 2000 Ticks wird ein check gemacht ob die Richtung geändert wird(außerdem runde ich da nicht alle Computer gleich performen)
-        {
-            if (rand() % 5 == 1)   //Nur in 20% der Fällen wird wirklich die richtung verändert
-            {
-                walkingDirectionX = (rand() % 3) - 1;
-                walkingDirectionY = (rand() % 3) - 1;
-                walkingDirectionPtr->xDirection = walkingDirectionX;
-                walkingDirectionPtr->yDirection = walkingDirectionY;
-            }
-            else if (walkingDirectionX == 0 && walkingDirectionY == 0)      //In dem Fall muss nicht der Rest der Methode durchlaufen werden
-            { 
-                cursorEntity->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
-                return;
-            }
-        }
-        int x = walkingDirectionX * deltaTime;
-        int y = walkingDirectionY * deltaTime;
-        bool x_collision = true, y_collision = true;
-        cursorEntity->setBounds(0, x);
-        for (auto cursorMapEntity : currentMap->getListeVonEntitys())
-        {
-            if (SDL_HasIntersection(cursorEntity->getBounds(), cursorMapEntity->getBounds()))
-            {
-                x_collision = false;
-            }
-        }
-
-        for (auto cursor : listeVonEntitys)          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
-        {
-            if (SDL_HasIntersection(cursorEntity->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEntity->getID())  //Der Gegner soll nicht in andere Gegner laufen, aber er selbst befindet sich auch in der Liste, das muss abgefangen werden
-            {
-                x_collision = false;
-            }
-
-        }
-
-        if (!x_collision)
-        {
-            cursorEntity->setBounds(0, -x);
-            if (rand() % 4 == 3)
-                walkingDirectionPtr->xDirection = 0;
-            else
-                walkingDirectionPtr->xDirection = walkingDirectionPtr->xDirection * (-1); //Nachdem er gegen eine Wand läuft soll er umkehren oder stehen bleiben, das macht den Gegner dynamischer
-                
-        }
-
-        cursorEntity->setBounds(y, 0);
-        for (auto cursorMapEntity : currentMap->getListeVonEntitys())
-        {
-            if (SDL_HasIntersection(cursorEntity->getBounds(), cursorMapEntity->getBounds()))
-            {
-
-                y_collision = false;
-            }
-        }
-
-        for (auto cursor : listeVonEntitys)          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
-        {
-            if (SDL_HasIntersection(cursorEntity->getBounds(), cursor->getBounds()) && cursor->getID() != cursorEntity->getID())
-            {
-                y_collision = false;
-            }
-
-        }
-
-        if (!y_collision)
-        {
-            cursorEntity->setBounds(-y, 0);
-            if (rand() % 4 == 2)
-                walkingDirectionPtr->yDirection = 0;
-            else
-                walkingDirectionPtr->yDirection = walkingDirectionPtr->yDirection * (-1); //Nachdem er gegen eine Wand läuft soll er umkehren oder stehen bleiben, das macht den Gegner dynamischer
-        }
-        cursorEntity->update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
+        cursorEntity->entityPathfinding(deltaTime);
     }
     return;
 }
@@ -1074,5 +996,10 @@ char CGamemaster::detectKey(SDL_Event input)
     }
 
     return 1;
+}
+
+CMap* CGamemaster::getMap()
+{
+    return currentMap;
 }
 
