@@ -43,6 +43,8 @@ void Collider::render(SDL_Renderer* renderer)
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
+// lol
+
 void Collider::print()
 {
 	//std::cout << m_Box.x << " " << m_Box.y << " " << m_Box.w << " " << m_Box.h << std::endl;
