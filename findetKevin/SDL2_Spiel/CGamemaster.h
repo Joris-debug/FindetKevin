@@ -13,6 +13,7 @@
 class CGamemaster
 {
 private:
+	double deltaTime;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Event input;
@@ -39,6 +40,8 @@ public:
 	void titlescreen();
 	char detectKey(SDL_Event input);
 	CMap* getMap();
-	
+	void renderStillFrameOfTheGame();
+	SDL_Renderer* getRenderer();
+	void setDeltaTime(double deltaTime);
 };
 

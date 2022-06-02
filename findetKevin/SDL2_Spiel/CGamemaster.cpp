@@ -9,6 +9,7 @@
 
 CGamemaster::CGamemaster()
 {
+    deltaTime = 1;
     if (TTF_Init() < 0) {
         cout << "Error initializing SDL_ttf: " << TTF_GetError() << endl;
     }//Um Text zu rendern
@@ -46,7 +47,14 @@ void CGamemaster::gameLoop()
     {
         Uint32 lastTime = currentTime;
         currentTime = SDL_GetTicks();
-        double deltaTime = (currentTime - lastTime);
+        if (deltaTime == -1) //Wenn das Spiel pausiert ist, würde die DeltaTime in die Höhe springen. Mithilfe der Setmethode setze ich sie dann auf -1 und das wird hier abgefangen und eine neue und niedrige Deltatime wird berechnet
+        {
+            deltaTime++;    //Sonst lande ich in einem endlosen Loop
+            y_axis = 0;     //Movement-Anomalien verhindern
+            x_axis = 0;
+            continue;
+        }        
+        deltaTime = (currentTime - lastTime);
         while (SDL_PollEvent(&input) > 0)
         {
             switch (input.type)
@@ -1001,5 +1009,28 @@ char CGamemaster::detectKey(SDL_Event input)
 CMap* CGamemaster::getMap()
 {
     return currentMap;
+}
+
+void CGamemaster::renderStillFrameOfTheGame()
+{
+    SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
+    spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
+
+    for (auto cursor : listeVonEntitys)
+    {
+        cursor->renderer(renderer);
+    }
+
+    SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
+}
+
+SDL_Renderer* CGamemaster::getRenderer()
+{
+    return renderer;
+}
+
+void CGamemaster::setDeltaTime(double deltaTime)
+{
+    this->deltaTime = deltaTime;
 }
 
