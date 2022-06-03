@@ -13,5 +13,6 @@ public:
     CNPC(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving);
     int onInteract();
     bool* getHasTalkedToThePlayer();
+    void update(int y, int x);
 };
 

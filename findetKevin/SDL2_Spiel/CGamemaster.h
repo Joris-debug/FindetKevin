@@ -34,8 +34,8 @@ public:
 	int getHeigthOfWindow();
 	void moveMaps(int x, int y);
 	void moveEntitys(int x, int y);
-	list <CEntity*> getlisteVonEntitys();
-	int collisionDetection(int collisionID);
+	list <CEntity*>* getlisteVonEntitys();
+	list <CEntity*>* getlisteVonEnemies();
 	void NPC_Pathfinding(double deltaTime);
 	void titlescreen();
 	char detectKey(SDL_Event input);

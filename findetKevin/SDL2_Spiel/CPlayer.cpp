@@ -4,8 +4,8 @@ CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Re
 {
 	healItems = 0;
 	healthPoints = 20; 
-    footSpace.x = game->getWidthOfWindow() / 2 + 8; 
-    footSpace.y = game->getHeigthOfWindow() / 2 + 24*2; 
+    footSpace.x = game->getWidthOfWindow() / 2 - 8; 
+    footSpace.y = game->getHeigthOfWindow() / 2 + 16*2; 
     footSpace.w = 15 * 2;
     footSpace.h = 8 * 2;
 }
@@ -82,12 +82,27 @@ int CPlayer::bewegen(int y, int x)
     game->moveMaps(x * x_collision, y * y_collision);
     game->moveEntitys(x * x_collision, y * y_collision);
 
-    int collisionID = 2147483647; // hoechster int wert
-    for (auto cursor : game->getlisteVonEntitys())                  //Diese Schleife schaut nach mit welchem Gegnern ich kollidiere
+    for (auto cursor : *game->getlisteVonEntitys())                  //Diese Schleife schaut nach mit welchem Gegnern ich kollidiere
     {
         if (SDL_HasIntersection(&bounds, cursor->getBounds()))
         {
-            collisionID = cursor->getID();
+            int collisionID = cursor->getID();
+            for (auto cursor : *game->getlisteVonEntitys())
+            {
+                if (cursor->getID() == collisionID)
+                {
+                    if (cursor->onInteract() == 0)                 //Wenn der Gegner durch interaction schaden nimmt,....
+                        if (cursor->getHealth() <= 0)
+                        {
+                            game->getlisteVonEntitys()->remove(cursor);             //Gegner getroffen, ZEIT IHN ZU VERNICHTEN MUHAHAHAHAHA (Capslock war an, ups)
+                            if (typeid(*cursor) == typeid(CEnemy))//Ich nehme typeid um möglichst schnell zu schauen ob das objekt in der liste ist                                             
+                            game->getlisteVonEnemies()->remove(cursor);
+                            delete cursor;
+                        }
+                    return 1;
+                }
+            }
+
         }
         else
         {
@@ -99,7 +114,7 @@ int CPlayer::bewegen(int y, int x)
             }
         }
     }
-    return collisionID;
+    return 0;
 }
 
 void CPlayer::animation(int y, int x, double deltaTime)
@@ -120,11 +135,13 @@ void CPlayer::animation(int y, int x, double deltaTime)
     int frame = movingDirection + (SDL_GetTicks() / delayPerFrame) % totalFrames;
     textureCoords.x = frame * textureCoords.w;
     textureCoords.y = 64;
+    textureCoords.y += 8;
     if (y == 0 && x == 0)
     {       
         textureCoords.x = 48;
-        textureCoords.y = 0;
-        textureCoords.h = 32;
+        textureCoords.y = 8;
+        textureCoords.h = 24;
         textureCoords.w = 16;        
     }
+    
 }

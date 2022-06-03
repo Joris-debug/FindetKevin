@@ -112,7 +112,7 @@ void CGamemaster::gameLoop()
             cursor->update(0, 0);
 
         spielerPointer->animation(y_axis, x_axis, deltaTime);   //Neuer Frame für den Player
-        collisionDetection(spielerPointer->bewegen(y_axis * deltaTime * 0.225, x_axis * deltaTime * 0.225)); //Neue location für den Player
+        spielerPointer->bewegen(y_axis * deltaTime * 0.225, x_axis * deltaTime * 0.225); //Neue location für den Player
         SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
         
@@ -140,7 +140,7 @@ void CGamemaster::init()
     SDL_RenderClear(renderer);
     TTF_Font* font;
 
-    font = TTF_OpenFont(RSC_FONT_ARIAL, 30);
+    font = TTF_OpenFont(RSC_FONT_PIXELSPLITTER, 30);
     if (!font) {
         cout << "Failed to load font: " << TTF_GetError() << endl;
     }
@@ -149,7 +149,7 @@ void CGamemaster::init()
     SDL_Texture* text_texture;
     SDL_Color color = { 255, 255, 255 }; // Set color to white
 
-    text = TTF_RenderText_Blended_Wrapped(font, "Hallo junger Held, du weißt es vielleicht noch nicht, aber du wurdest von einer höhereren Macht auserkoren!", color, SCREEN_WIDTH-25);
+    text = TTF_RenderText_Blended_Wrapped(font, "Hallo junger Held, du weisst es vielleicht noch nicht, aber du wurdest von einer höhereren Macht auserkoren!", color, SCREEN_WIDTH-25);
     if (!text) {
         cout << "Failed to render text: " << TTF_GetError() << endl;
     }    
@@ -196,7 +196,7 @@ void CGamemaster::init()
     while (SDL_PollEvent(&e) >= 0)
     {
         SDL_RenderClear(renderer);
-        text = TTF_RenderText_Blended_Wrapped(font, "Aber jetzt erstmal die Förmlichkeiten, wie heißt du denn eigentlich überhaupt?   [ENTER um zu bestätigen]", color, SCREEN_WIDTH - 25);
+        text = TTF_RenderText_Blended_Wrapped(font, "Aber jetzt erstmal die Förmlichkeiten, wie heisst du denn eigentlich überhaupt? (ENTER um zu bestätigen)", color, SCREEN_WIDTH - 25);
         if (!text) {
             cout << "Failed to render text: " << TTF_GetError() << endl;
         }
@@ -249,12 +249,12 @@ void CGamemaster::init()
         SDL_RenderClear(renderer);
         text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 25);
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
-        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 100,  text->w, text->h };
+        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 90,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &dest);
         SDL_DestroyTexture(text_texture);
         SDL_FreeSurface(text);
 
-        text = TTF_RenderText_Blended_Wrapped(font,"Erzähle mir etwas über dich, bist du ein beinharter Typ[1], ein Normalo[2] oder ein Dreikäsehoch[3]? Das Spielerlebnis könnte abhängig von deiner Antwort variieren.", color, SCREEN_WIDTH - 25);
+        text = TTF_RenderText_Blended_Wrapped(font,"Erzähle mir etwas über dich, bist du ein beinharter Typ(1), ein Normalo(2) oder ein Dreikäsehoch(3)? Das Spielerlebnis könnte abhängig von deiner Antwort variieren.", color, SCREEN_WIDTH - 25);
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
         dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &dest);        
@@ -320,10 +320,10 @@ void CGamemaster::init()
     tempTextureCoords.w = 16;
     tempTextureCoords.h = 32;
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    tempBounds.x = SCREEN_WIDTH / 2 + 8; //right of the window
+    tempBounds.x = SCREEN_WIDTH / 2 - 8; //right of the window
     tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
     tempBounds.w = 16 * 2;
-    tempBounds.h = 32 * 2;
+    tempBounds.h = 24 * 2;
     spielerPointer = new CPlayer(this, tempTexture, "Player", tempBounds, tempTextureCoords);
     SDL_FreeSurface(tempSurface);
 
@@ -741,32 +741,14 @@ void CGamemaster::moveEntitys(int x, int y)
     }
 }
 
-list<CEntity*> CGamemaster::getlisteVonEntitys()
+list<CEntity*>* CGamemaster::getlisteVonEntitys()
 {
-    return listeVonEntitys;
+    return &listeVonEntitys;
 }
 
-int CGamemaster::collisionDetection(int collisionID)
+list<CEntity*>* CGamemaster::getlisteVonEnemies()
 {
-    if (collisionID != 2147483647)
-    {
-        for (auto cursor : listeVonEntitys)
-        {
-            if (cursor->getID() == collisionID)
-            {
-               if (cursor->onInteract() == 0)                 //Wenn der Gegner durch interaction schaden nimmt,....
-                    if (cursor->getHealth() <= 0)
-                    {
-                        listeVonEntitys.remove(cursor);             //Gegner getroffen, ZEIT IHN ZU VERNICHTEN MUHAHAHAHAHA (Capslock war an, ups)
-                        if (typeid(*cursor) == typeid(CEntity))      //Ich nehme typeid um möglichst schnell zu schauen ob das objekt in der liste ist
-                            listeVonEnemies.remove(cursor);
-                        delete cursor;
-                    }
-                break;
-            }
-        }
-    }
-    return 0;
+    return &listeVonEnemies;
 }
 
 void CGamemaster::NPC_Pathfinding(double deltaTime)
@@ -802,7 +784,7 @@ void CGamemaster::titlescreen()
         SDL_FreeSurface(tempSurface);
 
         
-        font = TTF_OpenFont(RSC_FONT_ARIAL, 50);
+        font = TTF_OpenFont(RSC_FONT_PIXELSPLITTER, 50);
         if (!font) 
         {
             cout << "Failed to load font: " << TTF_GetError() << endl;
@@ -821,7 +803,7 @@ void CGamemaster::titlescreen()
         SDL_DestroyTexture(text_texture);       //Memory management
         SDL_FreeSurface(text);              
         TTF_CloseFont(font);
-        font = TTF_OpenFont(RSC_FONT_ARIAL, 24);
+        font = TTF_OpenFont(RSC_FONT_PIXELSPLITTER, 24);
 
         /* New game Button */
         text = TTF_RenderText_Blended(font, "New Game", colorNG);
@@ -829,7 +811,7 @@ void CGamemaster::titlescreen()
             cout << "Failed to render text: " << TTF_GetError() << endl;
         }
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
-        SDL_Rect startGame = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 30,  text->w, text->h };
+        SDL_Rect startGame = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &startGame);
         SDL_DestroyTexture(text_texture);       //Memory management
         SDL_FreeSurface(text);
@@ -841,7 +823,7 @@ void CGamemaster::titlescreen()
             cout << "Failed to render text: " << TTF_GetError() << endl;
         }
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
-        SDL_Rect selectSavefile = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
+        SDL_Rect selectSavefile = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 15,  text->w, text->h };
 
         SDL_RenderCopy(renderer, text_texture, NULL, &selectSavefile);
         SDL_DestroyTexture(text_texture);                   //Memory management
@@ -854,7 +836,7 @@ void CGamemaster::titlescreen()
             cout << "Failed to render text: " << TTF_GetError() << endl;
         }
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
-        SDL_Rect closeButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 30,  text->w, text->h };
+        SDL_Rect closeButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 20,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &closeButton);
         SDL_DestroyTexture(text_texture);                   //Memory management
         SDL_FreeSurface(text);
@@ -866,7 +848,7 @@ void CGamemaster::titlescreen()
             cout << "Failed to render text: " << TTF_GetError() << endl;
         }
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
-        SDL_Rect endgameButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 60,  text->w, text->h };
+        SDL_Rect endgameButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 55,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &endgameButton);
         /* ------------------------------------------------ */
 
@@ -1003,7 +985,7 @@ char CGamemaster::detectKey(SDL_Event input)
         break;
     }
 
-    return 1;
+    return '*';
 }
 
 CMap* CGamemaster::getMap()

@@ -7,29 +7,7 @@ bool CEntity::getMovingStatus()
 }
 void CEntity::update(int y, int x)
 {
-    int totalFrames = 6;   // Animation besteht jeweils aus 2 sprites
-    int delayPerFrame = 500;
-    int movingDirection = 0;
 
-    if (x > 0)
-        movingDirection = 0; // Anfangsprite ist eins weiter Rechts auf dem Spritesheet
-    if (x < 0)
-        movingDirection = 12;// Anfangsprite ist drei weiter Rechts auf dem Spritesheet
-    if (y < 0)
-        movingDirection = 6;
-    if (y > 0)
-        movingDirection = 18;
-
-    int frame = movingDirection + (SDL_GetTicks() / delayPerFrame) % totalFrames;
-    textureCoords.x = frame * textureCoords.w;
-    textureCoords.y = 64;
-    if (y == 0 && x == 0)
-    {
-        textureCoords.x = 16 * ((SDL_GetTicks() / delayPerFrame) % 4);
-        textureCoords.y = 0;
-        textureCoords.h = 32;
-        textureCoords.w = 16;
-    }
 }
 
 int CEntity::onInteract()
@@ -58,7 +36,7 @@ CEntity::CEntity(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Re
 
 CEntity::~CEntity()
 {
-
+    cout << "Entity " << entityID << " ist gestorben" << endl;
 }
 
 CEntity::CEntity()
@@ -137,7 +115,7 @@ void CEntity::entityPathfinding(double deltaTime)
         }
     }
 
-    for (auto cursor : game->getlisteVonEntitys())          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
+    for (auto cursor : *game->getlisteVonEntitys())          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
     {
         if (SDL_HasIntersection(&bounds, cursor->getBounds()) && cursor->getID() != entityID)  //Der Gegner soll nicht in andere Gegner laufen, aber er selbst befindet sich auch in der Liste, das muss abgefangen werden
         {
@@ -166,7 +144,7 @@ void CEntity::entityPathfinding(double deltaTime)
         }
     }
 
-    for (auto cursor : game->getlisteVonEntitys())          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
+    for (auto cursor : *game->getlisteVonEntitys())          //Diese Schleife schaut nach mit welchen anderen Entities ich kollidiere
     {
         if (SDL_HasIntersection(&bounds, cursor->getBounds()) && cursor->getID() != entityID)
         {
