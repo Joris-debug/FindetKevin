@@ -9,6 +9,8 @@
 #define RSC_BACKGROUND_OF_TITLESCREEN "TitlescreenBackground.png"
 #define RSC_BACKGROUND_OF_TEXTBOX "TextboxForNPCs.png"
 #define RSC_NPC_ALEX_SPRITE "./PlayerTextures/Alex_16x16.png"
+#define RSC_NPC_BOB_SPRITE "./PlayerTextures/Bob_16x16.png"
+#define RSC_NPC_JOHN_SPRITE "./PlayerTextures/John_16x16.png"
 #define RSC_FONT_PIXELSPLITTER "./Fonts/PixelSplitter.ttf"
 
 #define RSC_IK_CHARAKTER_SPRITE "./PlayerTextures/Adam_16x16.png"

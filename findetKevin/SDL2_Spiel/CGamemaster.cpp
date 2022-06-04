@@ -709,6 +709,38 @@ void CGamemaster::init()
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
 
+
+    tempSurface = IMG_Load(RSC_NPC_BOB_SPRITE);
+    tempBounds.x = -832 + 640 * 2; //Extreme left of the window
+    tempBounds.y = -1264 + 60 * 2; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 32 * 2;
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Herr_Schwaiger", tempBounds, tempTextureCoords, false);
+    listeVonEntitys.push_back(tempEntity);
+    spielerPointer->setCurrentMap(currentMap);
+    SDL_FreeSurface(tempSurface);
+
+    tempSurface = IMG_Load(RSC_NPC_JOHN_SPRITE);
+    tempBounds.x = -832 + 640 * 2; //Extreme left of the window
+    tempBounds.y = -1264 + 80 * 2; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 32 * 2;
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Herr_John", tempBounds, tempTextureCoords, false);
+    listeVonEntitys.push_back(tempEntity);
+    spielerPointer->setCurrentMap(currentMap);
+    SDL_FreeSurface(tempSurface);
     this->gameLoop();
 }
 
