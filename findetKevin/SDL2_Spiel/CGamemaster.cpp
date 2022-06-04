@@ -114,21 +114,22 @@ void CGamemaster::gameLoop()
         spielerPointer->animation(y_axis, x_axis, deltaTime);   //Neuer Frame für den Player
         spielerPointer->bewegen(y_axis * deltaTime * 0.225, x_axis * deltaTime * 0.225); //Neue location für den Player
         SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
-        spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
+        
         
         NPC_Pathfinding(deltaTime * 0.1);   //alle NPC's werden bewgegt
         for (auto cursor : listeVonEntitys)
         {
             cursor->renderer(renderer);
         }
+        spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
         //for (auto cursor : currentMap->getListeVonEntitys())
         //{
         //    SDL_RenderDrawRect(renderer, cursor->getBounds());
         //}
-        for(auto cursor : listeVonEntitys)
-        SDL_RenderDrawRect(renderer, cursor->getBounds());
-        SDL_RenderDrawRect(renderer, spielerPointer->getBounds());
-        SDL_RenderDrawRect(renderer, spielerPointer->getFootSpace());
+        //for(auto cursor : listeVonEntitys)
+        //SDL_RenderDrawRect(renderer, cursor->getBounds());
+        //SDL_RenderDrawRect(renderer, spielerPointer->getBounds());
+        //SDL_RenderDrawRect(renderer, spielerPointer->getFootSpace());
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
@@ -327,7 +328,7 @@ void CGamemaster::init()
     tempBounds.x = SCREEN_WIDTH / 2; //right of the window
     tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
     tempBounds.w = 16 * 2;
-    tempBounds.h = 22 * 2;
+    tempBounds.h = 21 * 2;
     spielerPointer = new CPlayer(this, tempTexture, "Player", tempBounds, tempTextureCoords);
     SDL_FreeSurface(tempSurface);
 
@@ -634,7 +635,40 @@ void CGamemaster::init()
     tempMapEntity = new CMapEntity(tempBounds); //Linke Tischreihe S249
     currentMap->addObjectToMap(tempMapEntity);
 
+    tempBounds.x = -832 + 640 * 2;
+    tempBounds.y = -1264 + 368 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 3;
+    tempMapEntity = new CMapEntity(tempBounds); //Klausurraum 2 Tische rechts
+    currentMap->addObjectToMap(tempMapEntity);
 
+    tempBounds.x = -832 + 576 * 2;
+    tempBounds.y = -1264 + 368 * 2;
+    tempBounds.w = 31 * 3;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Klausurraum 2 Tische oben links
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 576 * 2;
+    tempBounds.y = -1264 + 400 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Klausurraum 1 Tisch unten links neben NPC
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 608 * 2;
+    tempBounds.y = -1264 + 400 * 2;
+    tempBounds.w = 29 * 1;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Klausurraum 1 Tisch unten rechts neben NPC
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds.x = -832 + 592 * 2;
+    tempBounds.y = -1264 + 432 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 1;
+    tempMapEntity = new CMapEntity(tempBounds); //Klausurraum 1 Tisch unter NPC
+    currentMap->addObjectToMap(tempMapEntity);
 
     tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
     tempBounds.x = -654;  //left of the window
@@ -691,7 +725,7 @@ void CGamemaster::init()
     tempTextureCoords.h = 32;
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
-    tempBounds.h = 32 * 2;
+    tempBounds.h = 23 * 2;
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
@@ -704,10 +738,10 @@ void CGamemaster::init()
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
     tempTextureCoords.w = 16;
-    tempTextureCoords.h = 32;
+    tempTextureCoords.h = 23;
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
-    tempBounds.h = 32 * 2;
+    tempBounds.h = 23 * 2;
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
@@ -721,10 +755,10 @@ void CGamemaster::init()
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
     tempTextureCoords.w = 16;
-    tempTextureCoords.h = 32;
+    tempTextureCoords.h = 23;
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
-    tempBounds.h = 32 * 2;
+    tempBounds.h = 23 * 2;
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Herr_Schwaiger", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
@@ -740,8 +774,24 @@ void CGamemaster::init()
     tempTextureCoords.h = 32;
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
-    tempBounds.h = 32 * 2;
+    tempBounds.h = 23 * 2;
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Herr_John", tempBounds, tempTextureCoords, false);
+    listeVonEntitys.push_back(tempEntity);
+    spielerPointer->setCurrentMap(currentMap);
+    SDL_FreeSurface(tempSurface);
+
+    tempSurface = IMG_Load(RSC_NPC_ADAM_SPRITE);
+    tempBounds.x = -832 + 592 * 2; //Extreme left of the window
+    tempBounds.y = -1264 + 384 * 2; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 23 * 2;
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);

@@ -9,6 +9,7 @@ int CNPC::numberOfNPCs = 0;
 
 void CNPC::messageBox(string text)
 {
+	SDL_RenderClear(game->getRenderer());
 	game->renderStillFrameOfTheGame();
 	SDL_Renderer* renderer = game->getRenderer();
 	SDL_Surface* tempSurface = IMG_Load(RSC_BACKGROUND_OF_TEXTBOX);	
@@ -107,12 +108,12 @@ void CNPC::update(int y, int x)
 
 	int frame = movingDirection + (SDL_GetTicks() / delayPerFrame) % totalFrames;
 	textureCoords.x = frame * textureCoords.w;
-	textureCoords.y = 64;
+	textureCoords.y = 73;
 	if (y == 0 && x == 0)
-	{
-		textureCoords.x = 16 * ((SDL_GetTicks() / delayPerFrame) % 4);
-		textureCoords.y = 0;
-		textureCoords.h = 32;
+	{		
+		textureCoords.x = 16 * ((SDL_GetTicks() / 2000 ^ entityID) % 4);
+		textureCoords.y = 9;
+		textureCoords.h = 23;
 		textureCoords.w = 16;
 	}
 }

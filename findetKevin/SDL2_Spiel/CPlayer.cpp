@@ -125,24 +125,21 @@ int CPlayer::bewegen(int y, int x)
 void CPlayer::animation(int y, int x, double deltaTime)
 {
     int totalFrames = 8;   // Animation besteht jeweils aus 6 sprites
-    int delayPerFrame = 100;
+    int delayPerFrame = 130;
     int movingDirection = 0;
 
     if (x > 0 )
         movingDirection = 0; // Anfangsprite ist eins weiter Rechts auf dem Spritesheet
-    if (x < 0)
-        movingDirection = 8;// Anfangsprite ist drei weiter Rechts auf dem Spritesheet
-    if (y < 0)
-        movingDirection = 0;
-    if (y > 0)
-        movingDirection = 8;
+    else
+        movingDirection = 8;// Anfangsprite ist 8 weiter Rechts auf dem Spritesheet
+
 
     int frame = movingDirection + (SDL_GetTicks() / delayPerFrame) % totalFrames;
     textureCoords.x = frame * textureCoords.w;
     textureCoords.y = 64;
     if (y == 0 && x == 0)
     {       
-        textureCoords.x = 0;
+        textureCoords.x = 0 + 32 *((SDL_GetTicks() / delayPerFrame) % 13);
         textureCoords.y = 0;
         textureCoords.h = 32;
         textureCoords.w = 32;        

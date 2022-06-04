@@ -18,7 +18,7 @@ int CEntity::onInteract()
 void CEntity::renderer(SDL_Renderer* renderer)
 {
 
-    if (textureCoords.w * 2 != bounds.w || textureCoords.h * 2 != bounds.h)
+    if (textureCoords.w * 2 != bounds.w && textureCoords.h * 2 != bounds.h) //Entity befindet sich in der Mitte des Sprites
     {
         SDL_Rect tempRect;
         tempRect.w = textureCoords.w * 2;
