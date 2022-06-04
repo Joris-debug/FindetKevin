@@ -17,7 +17,18 @@ int CEntity::onInteract()
 
 void CEntity::renderer(SDL_Renderer* renderer)
 {
-	SDL_RenderCopy(renderer, texture, &textureCoords, &bounds);
+
+    if (textureCoords.w * 2 != bounds.w || textureCoords.h * 2 != bounds.h)
+    {
+        SDL_Rect tempRect;
+        tempRect.w = textureCoords.w * 2;
+        tempRect.h = textureCoords.h * 2;
+        tempRect.x = bounds.x - bounds.w / 2;
+        tempRect.y = bounds.y - bounds.h / 2;
+        SDL_RenderCopy(renderer, texture, &textureCoords, &tempRect);
+    }
+    else
+    SDL_RenderCopy(renderer, texture, &textureCoords, &bounds);
 }
 
 CEntity::CEntity(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving)

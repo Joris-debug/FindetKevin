@@ -125,7 +125,10 @@ void CGamemaster::gameLoop()
         //{
         //    SDL_RenderDrawRect(renderer, cursor->getBounds());
         //}
-
+        for(auto cursor : listeVonEntitys)
+        SDL_RenderDrawRect(renderer, cursor->getBounds());
+        SDL_RenderDrawRect(renderer, spielerPointer->getBounds());
+        SDL_RenderDrawRect(renderer, spielerPointer->getFootSpace());
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
@@ -295,6 +298,7 @@ void CGamemaster::init()
 
     SDL_Surface* tempSurface = IMG_Load(RSC_MAP1_SPRITE);    
     SDL_Rect tempBounds;
+    SDL_Rect tempTextureSize;
     SDL_Rect tempTextureCoords;
     tempBounds.x = -208*4; //Extreme left of the window
     tempBounds.y = -1264; //Very top of the window
@@ -315,15 +319,15 @@ void CGamemaster::init()
     currentMap_TopLayer = new CMap(tempTexture, tempBounds);//Nur die aktuelle Karte wird abgespeichert, damit nicht unötig Speicherplatz verschwendet wird
     SDL_FreeSurface(tempSurface);
 
-    tempSurface = IMG_Load(RSC_CHARAKTER_SPRITE);
+    tempSurface = IMG_Load(RSC_PLAYER_SPRITE);
     CEntity* tempEntity;
-    tempTextureCoords.w = 16;
+    tempTextureCoords.w = 32;
     tempTextureCoords.h = 32;
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    tempBounds.x = SCREEN_WIDTH / 2 - 8; //right of the window
+    tempBounds.x = SCREEN_WIDTH / 2; //right of the window
     tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
     tempBounds.w = 16 * 2;
-    tempBounds.h = 24 * 2;
+    tempBounds.h = 22 * 2;
     spielerPointer = new CPlayer(this, tempTexture, "Player", tempBounds, tempTextureCoords);
     SDL_FreeSurface(tempSurface);
 
@@ -663,8 +667,8 @@ void CGamemaster::init()
     tempTextureCoords.w = 16;
     tempTextureCoords.h = 16;
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
-    tempBounds.w = 2 * tempBounds.w / 12; // Breite geteilt durch anzahl Frames
-    tempBounds.h = 2 * tempBounds.h / 4; // Hoehe geteilt durch anzahl der Zeilen von Frames
+    tempBounds.w = 32; // Breite geteilt durch anzahl Frames
+    tempBounds.h = 32; // Hoehe geteilt durch anzahl der Zeilen von Frames
     tempEntity = new CEnemy(this, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);

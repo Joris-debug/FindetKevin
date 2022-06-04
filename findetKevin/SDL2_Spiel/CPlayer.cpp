@@ -4,15 +4,20 @@ CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Re
 {
 	healItems = 0;
 	healthPoints = 20; 
-    footSpace.x = game->getWidthOfWindow() / 2 - 8; 
-    footSpace.y = game->getHeigthOfWindow() / 2 + 16*2; 
-    footSpace.w = 15 * 2;
+    footSpace.x = game->getWidthOfWindow() / 2; 
+    footSpace.y = game->getHeigthOfWindow() / 2 + 14*2; 
+    footSpace.w = 16 * 2;
     footSpace.h = 8 * 2;
 }
 
 void CPlayer::setCurrentMap(CMap *map)
 {
     this->currentmap = map;
+}
+
+SDL_Rect* CPlayer::getFootSpace()
+{
+    return &footSpace;
 }
 
 int CPlayer::bewegen(int y, int x)
@@ -119,29 +124,28 @@ int CPlayer::bewegen(int y, int x)
 
 void CPlayer::animation(int y, int x, double deltaTime)
 {
-    int totalFrames = 6;   // Animation besteht jeweils aus 6 sprites
+    int totalFrames = 8;   // Animation besteht jeweils aus 6 sprites
     int delayPerFrame = 100;
     int movingDirection = 0;
 
     if (x > 0 )
         movingDirection = 0; // Anfangsprite ist eins weiter Rechts auf dem Spritesheet
     if (x < 0)
-        movingDirection = 12;// Anfangsprite ist drei weiter Rechts auf dem Spritesheet
+        movingDirection = 8;// Anfangsprite ist drei weiter Rechts auf dem Spritesheet
     if (y < 0)
-        movingDirection = 6;
+        movingDirection = 0;
     if (y > 0)
-        movingDirection = 18;
+        movingDirection = 8;
 
     int frame = movingDirection + (SDL_GetTicks() / delayPerFrame) % totalFrames;
     textureCoords.x = frame * textureCoords.w;
     textureCoords.y = 64;
-    textureCoords.y += 8;
     if (y == 0 && x == 0)
     {       
-        textureCoords.x = 48;
-        textureCoords.y = 8;
-        textureCoords.h = 24;
-        textureCoords.w = 16;        
+        textureCoords.x = 0;
+        textureCoords.y = 0;
+        textureCoords.h = 32;
+        textureCoords.w = 32;        
     }
     
 }

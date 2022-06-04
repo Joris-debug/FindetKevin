@@ -14,8 +14,8 @@ class CEntity
 {
 protected:
 	bool moving;
-	SDL_Rect bounds;
-	SDL_Rect textureCoords;
+	SDL_Rect bounds;		//Wiegroﬂ ist das Entity
+	SDL_Rect textureCoords;	//Wo sind die Texturen auf dem Spritesheet
 	SDL_Texture * texture;
 	structForWalkingDirections walkingDirections;
 	string tag;

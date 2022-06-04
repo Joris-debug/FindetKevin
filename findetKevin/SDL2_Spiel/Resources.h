@@ -12,6 +12,7 @@
 #define RSC_NPC_BOB_SPRITE "./PlayerTextures/Bob_16x16.png"
 #define RSC_NPC_JOHN_SPRITE "./PlayerTextures/John_16x16.png"
 #define RSC_FONT_PIXELSPLITTER "./Fonts/PixelSplitter.ttf"
+#define RSC_PLAYER_SPRITE "./PlayerTextures/Adventurer Sprite Sheet v1.1.png"
 
 #define RSC_IK_CHARAKTER_SPRITE "./PlayerTextures/Adam_16x16.png"
 #define RSC_IK_BACKGROUND_IMAGE_OUTLINE "./IKTextures/Rand.png"
