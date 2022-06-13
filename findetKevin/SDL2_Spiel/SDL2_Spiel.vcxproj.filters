@@ -43,6 +43,9 @@
     <ClCompile Include="Quelle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CCoin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resources.h">
@@ -85,6 +88,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IKRenderLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCoin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,7 @@
 
 int main()
 {
+    std::locale::global(std::locale(""));   //Um Umlaute zu sehen
     CGamemaster GameMasterClass;
     GameMasterClass.titlescreen(); 
     return 0;

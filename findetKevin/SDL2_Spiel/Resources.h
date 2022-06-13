@@ -6,13 +6,16 @@
 #define RSC_ANGRY_SPROUT_SPRITE "./EnemyTextures/SproutSheet.png"
 #define RSC_NPC_AMELIA_SPRITE "./PlayerTextures/Amelia_16x16.png"
 #define RSC_FONT_ARIAL "./Fonts/arial.ttf"
-#define RSC_BACKGROUND_OF_TITLESCREEN "TitlescreenBackground.png"
-#define RSC_BACKGROUND_OF_TEXTBOX "TextboxForNPCs.png"
+#define RSC_BACKGROUND_OF_TITLESCREEN "./OtherTextures/TitlescreenBackground.png"
+#define RSC_BACKGROUND_OF_SELECTSAVEFILE "./OtherTextures/SelectSaveFileBackground.png"
+#define RSC_BACKGROUND_OF_TEXTBOX "./OtherTextures/TextboxForNPCs.png"
 #define RSC_NPC_ALEX_SPRITE "./PlayerTextures/Alex_16x16.png"
 #define RSC_NPC_BOB_SPRITE "./PlayerTextures/Bob_16x16.png"
 #define RSC_NPC_JOHN_SPRITE "./PlayerTextures/John_16x16.png"
 #define RSC_FONT_PIXELSPLITTER "./Fonts/PixelSplitter.ttf"
 #define RSC_PLAYER_SPRITE "./PlayerTextures/Adventurer Sprite Sheet v1.1.png"
+
+#define RSC_COIN_SPRITE "./OtherTextures/coin_16x16.png"
 
 #define RSC_IK_CHARAKTER_SPRITE "./PlayerTextures/Adam_16x16.png"
 #define RSC_IK_BACKGROUND_IMAGE_OUTLINE "./IKTextures/Rand.png"

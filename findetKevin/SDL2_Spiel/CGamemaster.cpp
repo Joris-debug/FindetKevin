@@ -4,7 +4,9 @@
 #include <SDL_ttf.h>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
-
+#include "CCoin.h"
+#include <string>
+#include <iomanip> 
 #include "IKGameLogic.h"
 
 CGamemaster::CGamemaster()
@@ -25,7 +27,8 @@ CGamemaster::CGamemaster()
     }
     window = SDL_CreateWindow("Findet Kevin", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, 0);
-    spielerPointer = NULL;
+    spielerPointer = nullptr;
+    alleSaveFiles = CSavefile::EinlesenDerSpeicherdaten();
 }
 
 CGamemaster::~CGamemaster()
@@ -139,7 +142,7 @@ void CGamemaster::gameLoop()
 
 }
 
-void CGamemaster::init()
+void CGamemaster::initLevel1()
 {
     SDL_RenderClear(renderer);
     TTF_Font* font;
@@ -153,7 +156,7 @@ void CGamemaster::init()
     SDL_Texture* text_texture;
     SDL_Color color = { 255, 255, 255 }; // Set color to white
 
-    text = TTF_RenderText_Blended_Wrapped(font, "Hallo junger Held, du weisst es vielleicht noch nicht, aber du wurdest von einer höhereren Macht auserkoren!", color, SCREEN_WIDTH-25);
+    text = TTF_RenderText_Blended_Wrapped(font, "Hallo junger Held, du weisst es vielleicht noch nicht, aber du wurdest von einer höheren Macht auserkoren!", color, SCREEN_WIDTH-25);
     if (!text) {
         cout << "Failed to render text: " << TTF_GetError() << endl;
     }    
@@ -221,7 +224,7 @@ void CGamemaster::init()
     }
     SDL_RenderPresent(renderer);
 
-    if (  charCounter > 0 && e.key.keysym.sym == SDLK_RETURN ||charCounter == 20)
+    if (  charCounter > 0 && e.key.keysym.sym == SDLK_RETURN || charCounter == 9)
         break;
     if (e.type == SDL_KEYDOWN && e.key.keysym.sym != SDLK_RETURN)
     {
@@ -253,7 +256,7 @@ void CGamemaster::init()
         SDL_RenderClear(renderer);
         text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 25);
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
-        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 90,  text->w, text->h };
+        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 120,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &dest);
         SDL_DestroyTexture(text_texture);
         SDL_FreeSurface(text);
@@ -295,7 +298,10 @@ void CGamemaster::init()
     TTF_CloseFont(font);        //Speicherplatz freigeben
 
     CSavefile* newSavefile = new CSavefile(nameString, schwierigkeitsgradTemp[0] - 48);
-    listeVonSavefiles.push_back(newSavefile);
+    newSavefile->setNextFile(alleSaveFiles);
+    alleSaveFiles = newSavefile;
+    alleSaveFiles->SchreibenDerSpeicherdaten();
+
 
     SDL_Surface* tempSurface = IMG_Load(RSC_MAP1_SPRITE);    
     SDL_Rect tempBounds;
@@ -670,49 +676,49 @@ void CGamemaster::init()
     tempMapEntity = new CMapEntity(tempBounds); //Klausurraum 1 Tisch unter NPC
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
-    tempBounds.x = -654;  //left of the window
-    tempBounds.y = -940; //top of the window
-    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    tempTextureCoords.x = 0;
-    tempTextureCoords.y = 0;
-    tempTextureCoords.w = 16;
-    tempTextureCoords.h = 16;
-    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
-    tempBounds.w = 2 * tempBounds.w / 12; // Breite geteilt durch anzahl Frames
-    tempBounds.h = 2 * tempBounds.h / 4; // Hoehe geteilt durch anzahl der Zeilen von Frames
-    tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
-    listeVonEnemies.push_back(tempEntity);
-    listeVonEntitys.push_back(tempEntity);
+    //tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
+    //tempBounds.x = -654;  //left of the window
+    //tempBounds.y = -940; //top of the window
+    //tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    //tempTextureCoords.x = 0;
+    //tempTextureCoords.y = 0;
+    //tempTextureCoords.w = 16;
+    //tempTextureCoords.h = 16;
+    //SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    //tempBounds.w = 2 * tempBounds.w / 12; // Breite geteilt durch anzahl Frames
+    //tempBounds.h = 2 * tempBounds.h / 4; // Hoehe geteilt durch anzahl der Zeilen von Frames
+    //tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
+    //listeVonEnemies.push_back(tempEntity);
+    //listeVonEntitys.push_back(tempEntity);
 
-    tempBounds.x = -424; // left of the window
-    tempBounds.y = -780; //top of the window
-    tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
-    listeVonEnemies.push_back(tempEntity);
-    listeVonEntitys.push_back(tempEntity);
-    SDL_FreeSurface(tempSurface);
+    //tempBounds.x = -424; // left of the window
+    //tempBounds.y = -780; //top of the window
+    //tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
+    //listeVonEnemies.push_back(tempEntity);
+    //listeVonEntitys.push_back(tempEntity);
+    //SDL_FreeSurface(tempSurface);
 
-    tempSurface = IMG_Load(RSC_ANGRY_SPROUT_SPRITE);
-    tempBounds.x = -404;  //left of the window
-    tempBounds.y = -670; //top of the window
-    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    tempTextureCoords.x = 0;
-    tempTextureCoords.y = 0;
-    tempTextureCoords.w = 16;
-    tempTextureCoords.h = 16;
-    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
-    tempBounds.w = 32; // Breite geteilt durch anzahl Frames
-    tempBounds.h = 32; // Hoehe geteilt durch anzahl der Zeilen von Frames
-    tempEntity = new CEnemy(this, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
-    listeVonEnemies.push_back(tempEntity);
-    listeVonEntitys.push_back(tempEntity);
-    SDL_FreeSurface(tempSurface);
+    //tempSurface = IMG_Load(RSC_ANGRY_SPROUT_SPRITE);
+    //tempBounds.x = -404;  //left of the window
+    //tempBounds.y = -670; //top of the window
+    //tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    //tempTextureCoords.x = 0;
+    //tempTextureCoords.y = 0;
+    //tempTextureCoords.w = 16;
+    //tempTextureCoords.h = 16;
+    //SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    //tempBounds.w = 32; // Breite geteilt durch anzahl Frames
+    //tempBounds.h = 32; // Hoehe geteilt durch anzahl der Zeilen von Frames
+    //tempEntity = new CEnemy(this, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
+    //listeVonEnemies.push_back(tempEntity);
+    //listeVonEntitys.push_back(tempEntity);
+    //SDL_FreeSurface(tempSurface);
 
-    tempBounds.x = 262;  //left of the window
-    tempBounds.y = -680; //top of the window
-    tempEntity = new CEnemy(this, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
-    listeVonEnemies.push_back(tempEntity);
-    listeVonEntitys.push_back(tempEntity);
+    //tempBounds.x = 262;  //left of the window
+    //tempBounds.y = -680; //top of the window
+    //tempEntity = new CEnemy(this, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
+    //listeVonEnemies.push_back(tempEntity);
+    //listeVonEntitys.push_back(tempEntity);
 
 
     tempSurface = IMG_Load(RSC_NPC_AMELIA_SPRITE);
@@ -726,7 +732,7 @@ void CGamemaster::init()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
     tempBounds.h = 23 * 2;
-    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, true);
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
@@ -747,6 +753,21 @@ void CGamemaster::init()
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
 
+    tempSurface = IMG_Load(RSC_NPC_ADAM_SPRITE);
+    tempBounds.x = -832 + 592 * 2; //Extreme left of the window
+    tempBounds.y = -1264 + 384 * 2; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 23 * 2;
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, false);
+    listeVonEntitys.push_back(tempEntity);
+    spielerPointer->setCurrentMap(currentMap);
+    SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_NPC_BOB_SPRITE);
     tempBounds.x = -832 + 640 * 2; //Extreme left of the window
@@ -771,30 +792,20 @@ void CGamemaster::init()
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
     tempTextureCoords.w = 16;
-    tempTextureCoords.h = 32;
+    tempTextureCoords.h = 23;
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
     tempBounds.h = 23 * 2;
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Herr_John", tempBounds, tempTextureCoords, false);
-    listeVonEntitys.push_back(tempEntity);
-    spielerPointer->setCurrentMap(currentMap);
+    listeVonEntitys.push_back(tempEntity);    
     SDL_FreeSurface(tempSurface);
 
-    tempSurface = IMG_Load(RSC_NPC_ADAM_SPRITE);
-    tempBounds.x = -832 + 592 * 2; //Extreme left of the window
-    tempBounds.y = -1264 + 384 * 2; //Very top of the window
-    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    tempTextureCoords.x = 0;
-    tempTextureCoords.y = 0;
-    tempTextureCoords.w = 16;
-    tempTextureCoords.h = 32;
-    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
-    tempBounds.w = 16 * 2;
-    tempBounds.h = 23 * 2;
-    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, false);
+    tempBounds.x = -832 + 640 * 2;
+    tempBounds.y = -1264 + 526 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN1", tempBounds, tempTextureCoords, NULL);
     listeVonEntitys.push_back(tempEntity);
+    
     spielerPointer->setCurrentMap(currentMap);
-    SDL_FreeSurface(tempSurface);
     this->gameLoop();
 }
 
@@ -958,11 +969,18 @@ void CGamemaster::titlescreen()
         {
             if (SDL_HasIntersection(&cursor_Hitbox, &closeButton))
                 return;
+
             if (SDL_HasIntersection(&cursor_Hitbox, &startGame))
             {
-                init();
+                this->initLevel1();
                 return;
             }
+
+            if (SDL_HasIntersection(&cursor_Hitbox, &selectSavefile))
+            {
+                this->selectSavefile();
+            }
+
             if (SDL_HasIntersection(&cursor_Hitbox, &endgameButton))
             {
                 cout << "Entering endgame!" << endl;
@@ -985,6 +1003,111 @@ void CGamemaster::titlescreen()
            return;
     }
     
+}
+
+void CGamemaster::selectSavefile()
+{
+    TTF_Font* font;
+    SDL_Event e;
+    SDL_Surface* text;    // Set color to white
+
+    while (SDL_PollEvent(&e) >= 0)
+    {
+        SDL_RenderClear(renderer);
+        SDL_Surface* tempSurface = IMG_Load(RSC_BACKGROUND_OF_SELECTSAVEFILE);
+        SDL_Rect tempBounds;
+        SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+        tempBounds.x = 0;
+        tempBounds.y = 0;
+        tempBounds.w = SCREEN_WIDTH;
+        tempBounds.h = SCREEN_HEIGHT;
+        SDL_RenderCopy(renderer, tempTexture, NULL, &tempBounds);
+        SDL_DestroyTexture(tempTexture);
+        SDL_FreeSurface(tempSurface);
+
+
+        font = TTF_OpenFont(RSC_FONT_PIXELSPLITTER, 50);
+        if (!font)
+        {
+            cout << "Failed to load font: " << TTF_GetError() << endl;
+        }
+
+
+        text = TTF_RenderText_Blended(font, "Savefiles", { 50, 50, 50 });
+        if (!text)
+        {
+            cout << "Failed to render text: " << TTF_GetError() << endl;
+        }
+        SDL_Texture* text_texture;
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        SDL_Rect dest = { SCREEN_WIDTH / 2 - text->w * 0.5,  0,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+        SDL_DestroyTexture(text_texture);       //Memory management
+        SDL_FreeSurface(text);
+        TTF_CloseFont(font);
+ 
+        //-------------------------------------------Anzeigen_aller_Savefiles-----------------------------------------
+        CSavefile* nextSlot = alleSaveFiles;
+
+        font = TTF_OpenFont(RSC_FONT_PIXELSPLITTER, 30);
+
+        if (!font)
+        {
+            cout << "Failed to load font: " << TTF_GetError() << endl;
+        }
+        int counterofSlots = 0;
+
+        string giantMergeSpace;
+        
+        while (nextSlot != nullptr)
+        {
+            string tempDate = nextSlot->getCreationDate();
+
+            giantMergeSpace = tempDate.substr(4, 7) + tempDate.substr(20) + to_string(nextSlot->getLevel()) + " " + nextSlot->getDifficultyString() + " " + to_string(nextSlot->getTotalScore());
+            text = TTF_RenderText_Blended(font, giantMergeSpace.c_str(), { 255, 255, 255 });
+            if (!text)
+            {
+                cout << "Failed to render text: " << TTF_GetError() << endl;
+            }
+            text_texture = SDL_CreateTextureFromSurface(renderer, text);
+            SDL_Rect saveFileSlot = { 235,  90 + 40 * counterofSlots,  text->w, text->h };
+            SDL_RenderCopy(renderer, text_texture, NULL, &saveFileSlot);
+
+            text = TTF_RenderText_Blended(font, nextSlot->getPlayername().c_str(), { 255, 255, 255 });  //Ausgabe des Namens
+            if (!text)
+            {
+                cout << "Failed to render text: " << TTF_GetError() << endl;
+            }
+            text_texture = SDL_CreateTextureFromSurface(renderer, text);
+            saveFileSlot = { 35,  90 + 40 * counterofSlots,  text->w, text->h };
+            SDL_RenderCopy(renderer, text_texture, NULL, &saveFileSlot);
+
+
+            counterofSlots++;
+            nextSlot = nextSlot->getNextFile();
+            SDL_DestroyTexture(text_texture);       //Memory management
+            SDL_FreeSurface(text);
+        }
+        TTF_CloseFont(font);
+        //---------------------------------------------------------------------------------------------------------
+
+
+        SDL_RenderPresent(renderer);
+        SDL_Rect cursor_Hitbox;
+        SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
+        cursor_Hitbox.w = 8;
+        cursor_Hitbox.h = 4;
+
+        SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
+
+        if (e.type == SDL_MOUSEBUTTONDOWN)
+        {
+            break;
+        }
+
+        if (e.type == SDL_QUIT)
+            exit(0);
+    }
 }
 
 char CGamemaster::detectKey(SDL_Event input)

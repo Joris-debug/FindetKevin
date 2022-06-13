@@ -67,13 +67,16 @@ int CNPC::onInteract()
 {
 	if (*getHasTalkedToThePlayer() == false)
 	{
+
 		string lineOfDialogue;
+		
 		ifstream dialogueFile;
 		dialogueFile.open("NPC_Dialogue.csv");// always check whether the file is open
 		if (dialogueFile.is_open())
 		{		 
 			while (getline(dialogueFile, lineOfDialogue))
 			{
+				cout << lineOfDialogue << endl;
 				if (lineOfDialogue.substr(0, lineOfDialogue.find(";")) == to_string(dialogueNumber))
 					messageBox(lineOfDialogue.substr(lineOfDialogue.find(";") + 1));
 			}

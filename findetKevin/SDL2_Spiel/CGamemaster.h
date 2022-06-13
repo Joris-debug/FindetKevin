@@ -13,11 +13,11 @@
 class CGamemaster
 {
 private:
+	CSavefile* alleSaveFiles;
 	double deltaTime;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Event input;
-	list <CSavefile*> listeVonSavefiles;
 	list <CEntity*> listeVonEntitys;
 	list <CEntity*> listeVonEnemies;
 	CMap* currentMap;
@@ -29,7 +29,7 @@ private:
 public:
 	CGamemaster();
 	~CGamemaster();
-	void init();
+	void initLevel1();
 	int getWidthOfWindow();
 	int getHeigthOfWindow();
 	void moveMaps(int x, int y);
@@ -38,8 +38,10 @@ public:
 	list <CEntity*>* getlisteVonEnemies();
 	void NPC_Pathfinding(double deltaTime);
 	void titlescreen();
+	void selectSavefile();
 	char detectKey(SDL_Event input);
 	CMap* getMap();
+	inline CPlayer* getPlayer() { return spielerPointer; }
 	void renderStillFrameOfTheGame();
 	SDL_Renderer* getRenderer();
 	void setDeltaTime(double deltaTime);
