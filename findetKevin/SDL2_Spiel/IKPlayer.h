@@ -8,7 +8,8 @@
 enum Direction
 {
 	LEFT,
-	RIGHT
+	RIGHT,
+	NONE
 };
 
 class IKPlayer
@@ -21,6 +22,10 @@ private:
 	bool m_InAir;
 	float m_VelocityX;
 	float m_VelocityY;
+	float m_Inertia;
+	bool m_CollidingRight;
+	bool m_CollidingLeft;
+	Direction m_Dir;
 public:
 	IKPlayer(IKMap* map);
 	~IKPlayer();

@@ -34,6 +34,9 @@ void IKMap::init()
 
 	Collider* ceilingCollider = new Collider({ 0, 160, 800, 20 });  // x, y, w, h
 	m_BackgroundLayer->getColliders().push_back(ceilingCollider);
+
+	Collider* randomCollider = new Collider({ 0, 300, 100, 100 });  // x, y, w, h
+	m_BackgroundLayer->getColliders().push_back(randomCollider);
 }
 
 void IKMap::update(double dt)

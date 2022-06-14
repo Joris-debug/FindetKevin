@@ -1,11 +1,1 @@
-﻿  CGamemaster.cpp
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CSavefile.h(24,38): warning C4244: "return": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(111,40): warning C4244: "Argument": Konvertierung von "double" in "Uint32", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(118,80): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(118,52): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(308,14): warning C4101: "tempTextureSize": Unreferenzierte lokale Variable
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(898,44): warning C4838: Konvertierung von "double" zu "int" erfordert eine einschränkende Konvertierung
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(898,44): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1043,44): warning C4838: Konvertierung von "double" zu "int" erfordert eine einschränkende Konvertierung
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1043,44): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-  SDL2_Spiel.vcxproj -> C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
+﻿  SDL2_Spiel.vcxproj -> C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
