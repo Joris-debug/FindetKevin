@@ -39,7 +39,7 @@ void IKPlayer::init()
     m_Texture = SDL_CreateTextureFromSurface(m_Map->getRenderer(), surf);
     SDL_FreeSurface(surf);
 
-    m_InAir = true;
+    m_InAir = false;
     m_VelocityX = 0.0f;
     m_VelocityY = 0.0f;
     m_Inertia = 0.01f;
@@ -52,72 +52,31 @@ void IKPlayer::update(double dt)
 {
     dt = dt / 4;
 
-    Collider* collidingObject = checkCollision();
-    /* Applying y foce */
-    m_Map->setOffsetY(m_Map->getOffsetY() + m_VelocityY * dt * -0.5f);
-    if(m_InAir)
-        m_VelocityY += m_Map->m_Gravity * dt;
+    m_VelocityX *= dt;
+    //m_VelocityY += m_Map->m_Gravity;
+    m_VelocityX *= dt;
 
-    collidingObject = checkCollision();
-    if (collidingObject != nullptr && m_InAir) 
-    {
-        if (m_VelocityY > 0)    // Player collided while falling on an object (landed)
-        {
-            m_Map->setOffsetY(m_Bounds.y + m_Bounds.h - collidingObject->getRect().y);
-            std::cout << "Player landed" << std::endl;
-            m_VelocityY = 0;
-            m_InAir = false;
-        }
-        else if (m_VelocityY < 0)   // Player collided while jumping
-        {
-            std::cout << "lol ------------------------------------------------------------------------------------------------" << std::endl;
-            //m_Map->setOffsetY(collidingObject->getRect().y - collidingObject->getRect().h);
-            m_Map->setOffsetY(m_Bounds.y - collidingObject->getRect().y - collidingObject->getRect().h);
-            m_VelocityY = m_VelocityY * (-1);   // Hits his head and falls back down immediatly
-        }  
-        else
-        {
-            std::cout << "lol" << std::endl;
-        }
-    }
-    /* Applying x force */
-    //std::cout << m_VelocityX * dt * 0.5f << std::endl;
-    if(!(m_VelocityX < 0 && m_CollidingLeft) && !(m_VelocityX > 0 && m_CollidingRight))   // Not trying to walk left while already colliding left
-        m_Bounds.x += m_VelocityX * dt * 0.5f;
-
-
-    if(collidingObject != nullptr && !m_CollidingLeft && !m_CollidingRight){     // Collision detected
-        if (m_VelocityX < 0)    // Player collided while walking to the left
-        {
-            m_Bounds.x = collidingObject->getRect().x + collidingObject->getRect().w + 1;
-            m_CollidingLeft = true;
-        }
-        else if (m_VelocityX > 0)   // Player collided while walking to the right 
-        {
-            std::cout << "Collision detected!" << std::endl;
-            m_Bounds.x = collidingObject->getRect().x - m_Bounds.w - 1;
-            m_CollidingRight = true;
-        }
-
-    }
-
-
-    if (m_InAir)
-    {
-
-    }
+    if (tryMove())
+        applyVelocity();
 
     m_VelocityX = 0;
+    m_VelocityY = 0;
+}
 
-    if (m_Dir == RIGHT)
-        m_CollidingLeft = false;
+bool IKPlayer::tryMove()
+{
+    Collider temp({ m_Bounds.x + (int) m_VelocityX, m_Bounds.y + (int) m_VelocityY, m_Bounds.w, m_Bounds.h });
 
-    if (m_Dir == LEFT)
-        m_CollidingRight = false;
+    if(checkCollision(&temp) == nullptr)
+        return true;
 
-    m_Dir = NONE;
+    return false;
+}
 
-    //std::cout << m_Bounds.x << " " << m_Bounds.y + m_Map->getOffsetY() << std::endl;
+void IKPlayer::applyVelocity()
+{
+    m_Bounds.x += m_VelocityX;
+    m_Bounds.y += m_VelocityY;
 }
 
 void IKPlayer::render()
@@ -160,6 +119,22 @@ Collider* IKPlayer::checkCollision()
     for (auto collider : colLayer->getColliders())
     {
         if (collider->checkCollison(playerCollider))
+        {
+            return collider;
+        }
+    }
+    return nullptr;
+}
+
+Collider* IKPlayer::checkCollision(Collider* col)
+{
+    IKRenderLayer* colLayer = m_Map->getCollisionLayer();
+    //Collider playerCollider;
+    //playerCollider.m_OffsetY = 0;
+    //playerCollider.setRect(&m_Bounds);
+    for (auto collider : colLayer->getColliders())
+    {
+        if (collider->checkCollison(*col))
         {
             return collider;
         }

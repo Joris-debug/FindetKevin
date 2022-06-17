@@ -35,7 +35,11 @@ public:
 	void render();	// Uses the renderer of the map, to draw itself 
 	void walk(Direction dir);
 	Collider* checkCollision();
+	Collider* checkCollision(Collider* col);
 public:
 	void jump();
+private:
+	bool tryMove();
+	void applyVelocity();
 };
 
