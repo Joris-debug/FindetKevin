@@ -30,6 +30,7 @@ private:
 public:
 	CGamemaster();
 	~CGamemaster();
+	void initLevel0();
 	void initLevel1();
 	void initLevel2();
 	int getWidthOfWindow();

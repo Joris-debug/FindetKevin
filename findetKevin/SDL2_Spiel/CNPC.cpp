@@ -113,12 +113,12 @@ void CNPC::update(int y, int x)
 
 	int frame = movingDirection + (SDL_GetTicks() / delayPerFrame) % totalFrames;
 	textureCoords.x = frame * textureCoords.w;
-	textureCoords.y = 73;
+	textureCoords.y = 72;
 	if (y == 0 && x == 0)
 	{		
 		textureCoords.x = 16 * ((SDL_GetTicks() / 2000 ^ entityID) % 4);
 		textureCoords.y = 9;
-		textureCoords.h = 23;
+		textureCoords.h = 24;
 		textureCoords.w = 16;
 	}
 }
