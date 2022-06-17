@@ -47,7 +47,7 @@ void IKGameLogic::init()
 
                 case SDLK_d:
                 case SDLK_a:
-                    //x_axis = 0;
+                    //m_Player->walk(LEFT);
                     break;
                 case SDLK_SPACE:
                     //m_Player->jump();
@@ -68,7 +68,8 @@ void IKGameLogic::init()
                     break;
 
                 case SDLK_a:
-                    //x_axis = -1;
+                    //std::cout << "lol" << std::endl;
+                    //m_Player->walk(LEFT);
                     break;
                 case SDLK_d:
                     //x_axis = 1;
@@ -82,9 +83,23 @@ void IKGameLogic::init()
             }
         }
 
+
+        /* Checks for continues inputs */
+        const Uint8* keystates = SDL_GetKeyboardState(NULL);
+        if (keystates[SDL_SCANCODE_A])
+        {
+            m_Player->walk(LEFT);
+        }
+        else if (keystates[SDL_SCANCODE_D])
+        {
+            m_Player->walk(RIGHT);
+        }
+
+        /* Gameloop */
         update(deltaTime);
         render();
 
+        /* Restricting fps to 60 */
         if (deltaTime < float(1000 / 60)) //Limit FPS auf 60
         {
             SDL_Delay(float(1000 / 60) - deltaTime);

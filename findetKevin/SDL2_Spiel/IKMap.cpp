@@ -10,7 +10,7 @@
 IKMap::IKMap(SDL_Renderer* renderer)
 {
 	m_Renderer = renderer;
-	m_OffsetY = 0;
+	m_OffsetY = 10;
 }
 
 IKMap::~IKMap()
@@ -33,7 +33,10 @@ void IKMap::init()
 	m_BackgroundLayer->getColliders().push_back(floorCollider);
 
 	Collider* ceilingCollider = new Collider({ 0, 160, 800, 20 });  // x, y, w, h
-	m_BackgroundLayer->getColliders().push_back(ceilingCollider);
+	//m_BackgroundLayer->getColliders().push_back(ceilingCollider);
+
+	Collider* randomCollider = new Collider({ 0, 300, 100, 100 });  // x, y, w, h
+	m_BackgroundLayer->getColliders().push_back(randomCollider);
 }
 
 void IKMap::update(double dt)

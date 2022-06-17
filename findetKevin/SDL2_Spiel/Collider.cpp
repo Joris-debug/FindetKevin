@@ -38,7 +38,7 @@ void Collider::render(SDL_Renderer* renderer)
 	SDL_Rect renderBox{ m_Box.x, m_Box.y + m_OffsetY, m_Box.w, m_Box.h };
 
 	SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
+	SDL_SetRenderDrawColor(renderer, 100, 0, 100, 0);
 	SDL_RenderFillRect(renderer, &renderBox);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
