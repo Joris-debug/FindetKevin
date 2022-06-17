@@ -7,6 +7,7 @@ private:
 	SDL_Texture* texture;
 	list <CMapEntity*> listeVonMapEntitys;
 public:
+	~CMap();
 	CMap(SDL_Texture* textureTemp, SDL_Rect coords);
 	SDL_Texture* getTexture();
 	SDL_Rect* getPosition();

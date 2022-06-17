@@ -155,11 +155,13 @@
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CGamemaster.cpp" />
+    <ClCompile Include="CJohn.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMapEntity.cpp" />
     <ClCompile Include="CNPC.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CPlayer.cpp" />
+    <ClCompile Include="CQuestTrigger.cpp" />
     <ClCompile Include="CSavefile.cpp" />
     <ClCompile Include="IKGameLogic.cpp" />
     <ClCompile Include="IKMap.cpp" />
@@ -172,11 +174,13 @@
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CGamemaster.h" />
+    <ClInclude Include="CJohn.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMapEntity.h" />
     <ClInclude Include="CNPC.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="CQuestTrigger.h" />
     <ClInclude Include="CSavefile.h" />
     <ClInclude Include="IKGameLogic.h" />
     <ClInclude Include="IKMap.h" />

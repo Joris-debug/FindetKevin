@@ -1,6 +1,7 @@
 #include "CGamemaster.h"
 #include "Resources.h"
 #include "CEnemy.h"
+#include "CJohn.h"
 #include <SDL_ttf.h>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
@@ -8,7 +9,8 @@
 #include <string>
 #include <iomanip> 
 #include "IKGameLogic.h"
-
+#include "CQuestTrigger.h"
+#include "CNPC.h"
 CGamemaster::CGamemaster()
 {
     deltaTime = 1;
@@ -28,6 +30,7 @@ CGamemaster::CGamemaster()
     window = SDL_CreateWindow("Findet Kevin", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, 0);
     spielerPointer = nullptr;
+    currentSaveFile = nullptr;
     alleSaveFiles = CSavefile::EinlesenDerSpeicherdaten();
 }
 
@@ -42,17 +45,31 @@ CGamemaster::~CGamemaster()
 
 void CGamemaster::gameLoop()
 {
+    SDL_Event input;
     int y_axis = 0;
     int x_axis = 0;
     bool quit = false;
     Uint32 currentTime = SDL_GetTicks(); //Zum errechnen der Deltatime
     while (!quit)
-    {
+    {  
+        //-----------------------------------------------------------------Schauen ob das Level abgeschlossen wurde
+        bool everythingDone = true;
+        for (pair<bool*, int*> questScroller : levelQuests)
+        {
+            if (*questScroller.first == false)
+                everythingDone = false;
+        }
+        if (everythingDone == true)
+        {
+            deleteTheWholeLevel();
+            return;
+        }
+        //-----------------------------------------------------------------
         Uint32 lastTime = currentTime;
         currentTime = SDL_GetTicks();
         if (deltaTime == -1) //Wenn das Spiel pausiert ist, würde die DeltaTime in die Höhe springen. Mithilfe der Setmethode setze ich sie dann auf -1 und das wird hier abgefangen und eine neue und niedrige Deltatime wird berechnet
         {
-            deltaTime++;    //Sonst lande ich in einem endlosen Loop
+            deltaTime = 0;    //Sonst lande ich in einem endlosen Loop
             y_axis = 0;     //Movement-Anomalien verhindern
             x_axis = 0;
             continue;
@@ -111,28 +128,37 @@ void CGamemaster::gameLoop()
             SDL_Delay(float(1000 / 60) - deltaTime);
         }
 
-        for (auto cursor : listeVonEntitys)
-            cursor->update(0, 0);
+        if (deltaTime > 140) //Limit DeltaTime, damit man nicht durch wände laufen kann
+        {
+            deltaTime = 140;
+        }
 
         spielerPointer->animation(y_axis, x_axis, deltaTime);   //Neuer Frame für den Player
         spielerPointer->bewegen(y_axis * deltaTime * 0.225, x_axis * deltaTime * 0.225); //Neue location für den Player
-        SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());
-        
+        SDL_RenderCopy(renderer, currentMap->getTexture(), NULL, currentMap->getPosition());        
         
         NPC_Pathfinding(deltaTime * 0.1);   //alle NPC's werden bewgegt
         for (auto cursor : listeVonEntitys)
         {
             cursor->renderer(renderer);
         }
+
+        for (auto cursor : listeVonEntitys)
+            cursor->update(0, 0);
+
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
-        //for (auto cursor : currentMap->getListeVonEntitys())
-        //{
-        //    SDL_RenderDrawRect(renderer, cursor->getBounds());
-        //}
-        //for(auto cursor : listeVonEntitys)
-        //SDL_RenderDrawRect(renderer, cursor->getBounds());
-        //SDL_RenderDrawRect(renderer, spielerPointer->getBounds());
-        //SDL_RenderDrawRect(renderer, spielerPointer->getFootSpace());
+
+ /*     
+        for (auto cursor : currentMap->getListeVonEntitys())
+        {
+            SDL_RenderFillRect(renderer, cursor->getBounds());
+        }
+        for(auto cursor : listeVonEntitys)
+        SDL_RenderDrawRect(renderer, cursor->getBounds());
+        SDL_RenderDrawRect(renderer, spielerPointer->getBounds());
+        SDL_RenderDrawRect(renderer, spielerPointer->getFootSpace());
+ */
+
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
@@ -164,7 +190,6 @@ void CGamemaster::initLevel1()
     SDL_Rect dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
     SDL_RenderCopy(renderer, text_texture, NULL, &dest);
     SDL_RenderPresent(renderer);
-    
     SDL_Event e;
     while (SDL_PollEvent(&e) >= 0)
     {
@@ -224,7 +249,7 @@ void CGamemaster::initLevel1()
     }
     SDL_RenderPresent(renderer);
 
-    if (  charCounter > 0 && e.key.keysym.sym == SDLK_RETURN || charCounter == 9)
+    if (  charCounter > 0 && e.key.keysym.sym == SDLK_RETURN)
         break;
     if (e.type == SDL_KEYDOWN && e.key.keysym.sym != SDLK_RETURN)
     {
@@ -235,17 +260,19 @@ void CGamemaster::initLevel1()
             temp = '\0';            
             charCounter--;
         }
-        if (charCounter < 0)        //Wir wollen nicht den Speicher überschreiben
-            charCounter = 0;
+        if(charCounter < 10)
+        { 
+            if (charCounter < 0)        //Wir wollen nicht den Speicher überschreiben
+                charCounter = 0;
 
-        nameTemp[charCounter] = temp;
+            nameTemp[charCounter] = temp;
 
-        if(temp != '\0')        //Wir dürfen kein \0 mitten im String stehen haben
-            charCounter++;
-        
+            if(temp != '\0')        //Wir dürfen kein \0 mitten im String stehen haben
+                charCounter++;
+        }
     }
     else if (e.type == SDL_QUIT)
-         return;
+         exit(0);
     }
 
     string nameString = nameTemp;
@@ -254,16 +281,16 @@ void CGamemaster::initLevel1()
     while (SDL_PollEvent(&e) >= 0)
     {
         SDL_RenderClear(renderer);
-        text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 25);
+        text = TTF_RenderText_Blended_Wrapped(font, nameTemp, color, SCREEN_WIDTH - 10);
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
-        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 120,  text->w, text->h };
+        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 180,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &dest);
         SDL_DestroyTexture(text_texture);
         SDL_FreeSurface(text);
 
-        text = TTF_RenderText_Blended_Wrapped(font,"Erzähle mir etwas über dich, bist du ein beinharter Typ(1), ein Normalo(2) oder ein Dreikäsehoch(3)? Das Spielerlebnis könnte abhängig von deiner Antwort variieren.", color, SCREEN_WIDTH - 25);
+        text = TTF_RenderText_Blended_Wrapped(font,"Erzähle mir etwas über dich, du bist ein..?                                                                                         beinharter Typ(1)                                          Normalo(2)                                             Dreikäsehoch(3)                                                                   Das Spielerlebnis könnte abhängig von deiner Antwort variieren.", color, SCREEN_WIDTH - 25);
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
-        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
+        dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 40,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &dest);        
         SDL_DestroyTexture(text_texture);
         SDL_FreeSurface(text);
@@ -297,11 +324,16 @@ void CGamemaster::initLevel1()
     }
     TTF_CloseFont(font);        //Speicherplatz freigeben
 
-    CSavefile* newSavefile = new CSavefile(nameString, schwierigkeitsgradTemp[0] - 48);
-    newSavefile->setNextFile(alleSaveFiles);
-    alleSaveFiles = newSavefile;
-    alleSaveFiles->SchreibenDerSpeicherdaten();
+    this->currentSaveFile = new CSavefile(nameString, schwierigkeitsgradTemp[0] - 48);
+    this->currentSaveFile->setNextFile(alleSaveFiles);
+    this->alleSaveFiles = currentSaveFile;
+    this->alleSaveFiles->SchreibenDerSpeicherdaten();
 
+    //-----------------------------------------------------------------------------------------------Quest wird erstellt
+    bool* tempQuest = new bool(false);
+    int* tempQuestNumber = new int(1);
+    levelQuests.push_back(make_pair(tempQuest, tempQuestNumber));
+    //-----------------------------------------------------------------------------------------------
 
     SDL_Surface* tempSurface = IMG_Load(RSC_MAP1_SPRITE);    
     SDL_Rect tempBounds;
@@ -339,6 +371,13 @@ void CGamemaster::initLevel1()
     SDL_FreeSurface(tempSurface);
 
     CMapEntity* tempMapEntity;
+    tempBounds.x = -832 + 673 * 2;
+    tempBounds.y = -1264 + 256 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 5;
+    tempMapEntity = new CMapEntity(tempBounds); //Abgrenzung nord-Treppe (wird später gelöscht)
+    currentMap->addObjectToMap(tempMapEntity);
+
     tempBounds.x = -704;
     tempBounds.y = -1040;
     tempBounds.w = 16 * 2;
@@ -355,9 +394,9 @@ void CGamemaster::initLevel1()
 
     tempBounds.x = -608;
     tempBounds.y = -720;
-    tempBounds.w = 96 * 2;
+    tempBounds.w = 191;
     tempBounds.h = 16 * 2;
-    tempMapEntity = new CMapEntity(tempBounds); //Die dritte Kollisionszone wird erstellt
+    tempMapEntity = new CMapEntity(tempBounds); //Untere Wand von 0255
     currentMap->addObjectToMap(tempMapEntity);
 
     tempBounds.x = -672;
@@ -676,6 +715,13 @@ void CGamemaster::initLevel1()
     tempMapEntity = new CMapEntity(tempBounds); //Klausurraum 1 Tisch unter NPC
     currentMap->addObjectToMap(tempMapEntity);
 
+    tempBounds.x = -832 + 704 * 2;
+    tempBounds.y = -1264 + 784 * 2;
+    tempBounds.w = 32 * 1;
+    tempBounds.h = 32 * 4;
+    tempMapEntity = new CMapEntity(tempBounds); //Abgrenzung süd-Treppe
+    currentMap->addObjectToMap(tempMapEntity);
+
     //tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
     //tempBounds.x = -654;  //left of the window
     //tempBounds.y = -940; //top of the window
@@ -739,7 +785,7 @@ void CGamemaster::initLevel1()
 
     tempSurface = IMG_Load(RSC_NPC_ALEX_SPRITE);
     tempBounds.x = -832 + 528 * 2; //Extreme left of the window
-    tempBounds.y = -1264 + 128 * 2; //Very top of the window
+    tempBounds.y = -1264 + 92 * 2; //Very top of the window
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempTextureCoords.x = 0;
     tempTextureCoords.y = 0;
@@ -748,7 +794,7 @@ void CGamemaster::initLevel1()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
     tempBounds.h = 23 * 2;
-    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, true);
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
@@ -796,16 +842,122 @@ void CGamemaster::initLevel1()
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds.w = 16 * 2;
     tempBounds.h = 23 * 2;
-    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Herr_John", tempBounds, tempTextureCoords, false);
+    tempEntity = new CJohn(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Herr_John", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);    
     SDL_FreeSurface(tempSurface);
 
     tempBounds.x = -832 + 640 * 2;
     tempBounds.y = -1264 + 526 * 2;
-    tempEntity = new CCoin(this, NULL, "COIN1", tempBounds, tempTextureCoords, NULL);
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
     listeVonEntitys.push_back(tempEntity);
     
+    tempBounds.x = -832 + 624 * 2;
+    tempBounds.y = -1264 + 352 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -832 + 464 * 2;
+    tempBounds.y = -1264 + 295 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -832 + 400 * 2;
+    tempBounds.y = -1264 + 295 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -832 + 336 * 2;
+    tempBounds.y = -1264 + 295 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -832 + 272 * 2;
+    tempBounds.y = -1264 + 295 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -832 + 216 * 2;
+    tempBounds.y = -1264 + 208 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.w = 32;
+    tempBounds.h = 32 * 5;
+    tempBounds.x = -832 + 704 * 2;
+    tempBounds.y = -1264 + 256 * 2;
+    tempEntity = new CQuestTrigger(1, this, NULL, "STAIRS_DOWN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
     spielerPointer->setCurrentMap(currentMap);
+    this->gameLoop();
+}
+
+void CGamemaster::initLevel2()
+{
+
+    *this->currentSaveFile->getLevel() = 2;
+    this->alleSaveFiles->SchreibenDerSpeicherdaten();
+
+    *CNPC::getNumberOfNPCS() = 6;
+
+    //-----------------------------------------------------------------------------------------------Quest wird erstellt
+    bool* tempQuest = new bool(false);
+    int* tempQuestNumber = new int(1);
+    levelQuests.push_back(make_pair(tempQuest, tempQuestNumber));
+    //-----------------------------------------------------------------------------------------------
+
+    SDL_Surface* tempSurface = IMG_Load(RSC_MAP2_SPRITE);
+    SDL_Rect tempBounds;
+    SDL_Rect tempTextureSize;
+    SDL_Rect tempTextureCoords;
+    tempBounds.x = -940; //Extreme left of the window
+    tempBounds.y = -615; //Very top of the window
+    SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w *= 2;
+    tempBounds.h *= 2;
+    currentMap = new CMap(tempTexture, tempBounds);
+    SDL_FreeSurface(tempSurface);
+
+    tempSurface = IMG_Load(RSC_MAP2_SPRITE_TOP_LAYER);
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    currentMap_TopLayer = new CMap(tempTexture, tempBounds);//Nur die aktuelle Karte wird abgespeichert, damit nicht unötig Speicherplatz verschwendet wird
+    SDL_FreeSurface(tempSurface);
+
+    tempSurface = IMG_Load(RSC_PLAYER_SPRITE);
+    CEntity* tempEntity;
+    tempTextureCoords.w = 32;
+    tempTextureCoords.h = 32;
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempBounds.x = SCREEN_WIDTH / 2; //right of the window
+    tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 21 * 2;
+    spielerPointer = new CPlayer(this, tempTexture, "Player", tempBounds, tempTextureCoords);
+    SDL_FreeSurface(tempSurface);
+
+    CMapEntity* tempMapEntity;
+    tempBounds = { -940 + 576 * 2,-615 + 528 * 2,32 * 9,32 * 19 };
+    tempMapEntity = new CMapEntity(tempBounds); //Alle südlichen Räume
+    currentMap->addObjectToMap(tempMapEntity);
+
+
+    tempSurface = IMG_Load(RSC_NPC_AMELIA_SPRITE);
+    tempBounds.x = -404; //Extreme left of the window
+    tempBounds.y = -910; //Very top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 23 * 2;
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, false);
+    listeVonEntitys.push_back(tempEntity);
+    spielerPointer->setCurrentMap(currentMap);
+
+    SDL_FreeSurface(tempSurface);
     this->gameLoop();
 }
 
@@ -973,7 +1125,7 @@ void CGamemaster::titlescreen()
             if (SDL_HasIntersection(&cursor_Hitbox, &startGame))
             {
                 this->initLevel1();
-                return;
+                this->initLevel2();
             }
 
             if (SDL_HasIntersection(&cursor_Hitbox, &selectSavefile))
@@ -1010,7 +1162,20 @@ void CGamemaster::selectSavefile()
     TTF_Font* font;
     SDL_Event e;
     SDL_Surface* text;    // Set color to white
+    SDL_Rect forwardButton, backwardsButton, saveFileArea;
+    forwardButton.x = 263;
+    forwardButton.y = 480;
+    forwardButton.w = 123;
+    forwardButton.h = 36;
+    backwardsButton = forwardButton;
+    forwardButton.x = 423;
 
+    saveFileArea.x = 33;        //Wenn sich die Maus in diesem Bereich befindet wird ein Saveslot ausgewählt
+    saveFileArea.y = 138;
+    saveFileArea.w = 734;
+    saveFileArea.h = 320;
+
+    int pages = 0;
     while (SDL_PollEvent(&e) >= 0)
     {
         SDL_RenderClear(renderer);
@@ -1045,9 +1210,30 @@ void CGamemaster::selectSavefile()
         SDL_DestroyTexture(text_texture);       //Memory management
         SDL_FreeSurface(text);
         TTF_CloseFont(font);
- 
+        //-------------------------------------------HOVER_EFFEKT-----------------------------------------------------
+        SDL_Rect cursor_Hitbox;
+        SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
+        cursor_Hitbox.w = 8;
+        cursor_Hitbox.h = 4;
+        if (SDL_HasIntersection(&cursor_Hitbox, &saveFileArea))
+        {
+            SDL_SetRenderDrawColor(renderer, 90, 220, 90, 255);
+            SDL_Rect hoverRect;
+            hoverRect.w = saveFileArea.w;
+            hoverRect.h = saveFileArea.h / 8;
+            hoverRect.x = saveFileArea.x;
+            hoverRect.y = cursor_Hitbox.y - ((cursor_Hitbox.y - 138) % hoverRect.h);
+            SDL_RenderFillRect(renderer, &hoverRect);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        }
         //-------------------------------------------Anzeigen_aller_Savefiles-----------------------------------------
         CSavefile* nextSlot = alleSaveFiles;
+        for (int i = 0; i < 8 * pages ; i++)
+        {
+            if (nextSlot != nullptr)
+                nextSlot = nextSlot->getNextFile();
+        }
+
 
         font = TTF_OpenFont(RSC_FONT_PIXELSPLITTER, 30);
 
@@ -1055,23 +1241,47 @@ void CGamemaster::selectSavefile()
         {
             cout << "Failed to load font: " << TTF_GetError() << endl;
         }
-        int counterofSlots = 0;
 
-        string giantMergeSpace;
+        text = TTF_RenderText_Blended(font, "Name:                Date:                  Lvl:       Score:", { 255, 255, 255 });
+        if (!text)
+        {
+            cout << "Failed to render text: " << TTF_GetError() << endl;
+        }
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        dest = { 35,  90,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+        SDL_DestroyTexture(text_texture);       //Memory management
+        SDL_FreeSurface(text);
+        string giantMergeSpace = "Seite " + to_string(pages + 1);
         
-        while (nextSlot != nullptr)
+        text = TTF_RenderText_Blended(font, giantMergeSpace.c_str(), { 35, 35, 35 });
+        if (!text)
+        {
+            cout << "Failed to render text: " << TTF_GetError() << endl;
+        }
+        text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        dest = { SCREEN_WIDTH / 2 - text->w / 2,  560,  text->w, text->h };
+        SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+        SDL_DestroyTexture(text_texture);       //Memory management
+        SDL_FreeSurface(text);
+
+        int counterofSlots = 0;        
+        
+        while (nextSlot != nullptr && counterofSlots < 8)
         {
             string tempDate = nextSlot->getCreationDate();
 
-            giantMergeSpace = tempDate.substr(4, 7) + tempDate.substr(20) + to_string(nextSlot->getLevel()) + " " + nextSlot->getDifficultyString() + " " + to_string(nextSlot->getTotalScore());
+            giantMergeSpace = tempDate.substr(3, 7) + tempDate.substr(19) + " " + to_string(*nextSlot->getLevel()) + " " + nextSlot->getDifficultyString() + " " + to_string(*nextSlot->getTotalScore());
             text = TTF_RenderText_Blended(font, giantMergeSpace.c_str(), { 255, 255, 255 });
             if (!text)
             {
                 cout << "Failed to render text: " << TTF_GetError() << endl;
             }
             text_texture = SDL_CreateTextureFromSurface(renderer, text);
-            SDL_Rect saveFileSlot = { 235,  90 + 40 * counterofSlots,  text->w, text->h };
+            SDL_Rect saveFileSlot = { 235,  140 + 40 * counterofSlots,  text->w, text->h };
             SDL_RenderCopy(renderer, text_texture, NULL, &saveFileSlot);
+            SDL_DestroyTexture(text_texture);       //Memory management
+            SDL_FreeSurface(text);
 
             text = TTF_RenderText_Blended(font, nextSlot->getPlayername().c_str(), { 255, 255, 255 });  //Ausgabe des Namens
             if (!text)
@@ -1079,32 +1289,60 @@ void CGamemaster::selectSavefile()
                 cout << "Failed to render text: " << TTF_GetError() << endl;
             }
             text_texture = SDL_CreateTextureFromSurface(renderer, text);
-            saveFileSlot = { 35,  90 + 40 * counterofSlots,  text->w, text->h };
+            saveFileSlot = { 35,  140 + 40 * counterofSlots,  text->w, text->h };
             SDL_RenderCopy(renderer, text_texture, NULL, &saveFileSlot);
+            SDL_DestroyTexture(text_texture);       //Memory management
+            SDL_FreeSurface(text);
 
 
             counterofSlots++;
             nextSlot = nextSlot->getNextFile();
-            SDL_DestroyTexture(text_texture);       //Memory management
-            SDL_FreeSurface(text);
+
         }
         TTF_CloseFont(font);
         //---------------------------------------------------------------------------------------------------------
 
 
         SDL_RenderPresent(renderer);
-        SDL_Rect cursor_Hitbox;
-        SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
-        cursor_Hitbox.w = 8;
-        cursor_Hitbox.h = 4;
+
 
         SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
-
         if (e.type == SDL_MOUSEBUTTONDOWN)
         {
-            break;
+            if (SDL_HasIntersection(&cursor_Hitbox, &forwardButton))
+                pages++;
+            else if (SDL_HasIntersection(&cursor_Hitbox, &backwardsButton) && pages > 0)
+                pages--;
+            //-------------------------------------------------------------------------------------------------------Speicherstand wird ausgewählt
+            else if (SDL_HasIntersection(&cursor_Hitbox, &saveFileArea))
+            {
+                nextSlot = alleSaveFiles;
+                int numberOfChoosenFile = ((cursor_Hitbox.y - 138) / (saveFileArea.h / 8)) + 1 + 8 * pages;
+                for (int slotCounter = 1; slotCounter < numberOfChoosenFile; slotCounter++)
+                {
+                    if (nextSlot->getNextFile() == nullptr)
+                        return;
+                    nextSlot = nextSlot->getNextFile();
+                }
+
+                currentSaveFile = nextSlot;
+                switch (*currentSaveFile->getLevel())
+                {
+                case 1:
+                    initLevel1();
+                case 2:
+                    initLevel2();
+
+                default:
+                    break;
+                }
+
+            }
+            //-------------------------------------------------------------------------------------------------------
         }
 
+        if (e.key.keysym.sym == SDLK_ESCAPE)
+            break;
         if (e.type == SDL_QUIT)
             exit(0);
     }
@@ -1188,6 +1426,8 @@ char CGamemaster::detectKey(SDL_Event input)
     case SDLK_6:
         return '6';
     case SDLK_7:
+        return '7';
+    case SDLK_8:
         return '8';
     case SDLK_9:
         return '9';
@@ -1195,6 +1435,37 @@ char CGamemaster::detectKey(SDL_Event input)
     }
 
     return '*';
+}
+
+void CGamemaster::deleteTheWholeLevel()
+{
+    delete currentMap_TopLayer;
+    currentMap_TopLayer = nullptr;
+    while (levelQuests.size() > 0)
+    {
+        delete levelQuests.front().first;
+        delete levelQuests.front().second;
+        levelQuests.remove(levelQuests.front());
+    }
+
+    while (listeVonEnemies.size() > 0)
+        listeVonEnemies.remove(listeVonEnemies.front());
+
+    while (listeVonEntitys.size() > 0)
+    {
+        delete listeVonEntitys.front();
+        listeVonEntitys.remove(listeVonEntitys.front());
+    }
+    
+    delete spielerPointer;
+
+    for (auto cursor : currentMap->getListeVonEntitys())
+    {
+        delete cursor;
+    }
+
+    delete currentMap;
+    currentMap = nullptr;
 }
 
 CMap* CGamemaster::getMap()

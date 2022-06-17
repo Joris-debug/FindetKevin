@@ -41,10 +41,11 @@ void CNPC::messageBox(string text)
 	SDL_Rect dest = { 20,  game->getHeigthOfWindow() - 165,  text_surface->w, text_surface->h }; // 170 ist die Höhe des Textfensters
 	SDL_RenderCopy(renderer, text_texture, NULL, &dest);
 	SDL_RenderPresent(renderer);
-
 	//_______________________________________________________________________ ENDE TEXT
 	SDL_RenderPresent(renderer);
+	SDL_Delay(750);
 	SDL_Event input;
+	while (SDL_PollEvent(&input) > 0);
 	while (SDL_PollEvent(&input) >= 0)
 	{
 		if (input.type == SDL_KEYDOWN || input.type == SDL_MOUSEBUTTONDOWN)
@@ -54,6 +55,8 @@ void CNPC::messageBox(string text)
 		SDL_Delay(100);
 	}
 	game->setDeltaTime(-1);
+	SDL_DestroyTexture(text_texture);
+	SDL_FreeSurface(text_surface);
 }
 
 CNPC::CNPC(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving) : CEntity(game, textureTemp, tag, bounds, textureCoords, moving)
@@ -76,7 +79,6 @@ int CNPC::onInteract()
 		{		 
 			while (getline(dialogueFile, lineOfDialogue))
 			{
-				cout << lineOfDialogue << endl;
 				if (lineOfDialogue.substr(0, lineOfDialogue.find(";")) == to_string(dialogueNumber))
 					messageBox(lineOfDialogue.substr(lineOfDialogue.find(";") + 1));
 			}

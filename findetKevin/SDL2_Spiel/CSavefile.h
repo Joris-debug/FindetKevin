@@ -10,7 +10,7 @@ private:
 	int levelNmbr;
 	int currentHealth;
 	int gameDifficulty;
-	double totalScore;
+	unsigned long int totalScore;
 	char creationDate[26];
 public:
 	~CSavefile();
@@ -20,8 +20,8 @@ public:
 	void SchreibenDerSpeicherdaten(); 
 	inline void setNextFile(CSavefile* nextFile) { this->nextFile = nextFile; }
 	inline char* getCreationDate() { return creationDate; }
-	inline int getLevel() { return levelNmbr; }
-	inline int getTotalScore() { return totalScore; }
+	inline int* getLevel() { return &levelNmbr; }
+	inline unsigned long int* getTotalScore() { return &totalScore; }
 	inline int getDifficulty() { return gameDifficulty; }
 	inline string getDifficultyString() { if (this->gameDifficulty == 1) return "Schw"; if (this->gameDifficulty == 2) return "Mitt"; else return "Einf"; }
 	inline string getPlayername() { return playername; }

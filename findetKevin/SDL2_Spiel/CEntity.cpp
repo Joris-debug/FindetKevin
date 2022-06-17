@@ -43,11 +43,13 @@ CEntity::CEntity(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Re
     this->moving = moving;
     this->game = game;
 
+    cout << "Entity " << tag << ", ist gespawned" << endl;
 }
 
 CEntity::~CEntity()
 {
-    cout << "Entity " << entityID << " ist gestorben" << endl;
+    SDL_DestroyTexture(texture);
+    cout << "Entity " << tag << " ist eliminiert" << endl;
 }
 
 CEntity::CEntity()

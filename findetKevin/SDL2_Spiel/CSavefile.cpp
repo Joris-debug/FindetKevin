@@ -8,7 +8,7 @@ struct fileData		//Mehr brauche ich nicht in der externen Datei abzuspeichern
 	int levelNmbr;
 	int currentHealth;
 	int gameDifficulty;
-	double totalScore;
+	unsigned long int totalScore;
 	char creationDate[26];
 };
 

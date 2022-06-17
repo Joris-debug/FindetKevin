@@ -2,7 +2,6 @@
 #include "CGamemaster.h";
 CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords) : CEntity(game ,textureTemp, tag, bounds, textureCoords, false)
 {
-    this->score = 0;
 	healItems = 0;
 	healthPoints = 20; 
     footSpace.x = game->getWidthOfWindow() / 2; 
@@ -19,6 +18,11 @@ void CPlayer::setCurrentMap(CMap *map)
 SDL_Rect* CPlayer::getFootSpace()
 {
     return &footSpace;
+}
+
+void CPlayer::addPoints(int points)
+{
+    *game->getCurrentSaveFile()->getTotalScore() += points; 
 }
 
 int CPlayer::bewegen(int y, int x)

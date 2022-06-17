@@ -7,7 +7,6 @@ class CPlayer : public CEntity
 private:    
     int healthPoints;
     int healItems;
-    long score;
     SDL_Rect footSpace;
     CMap* currentmap;
 public:
@@ -18,6 +17,6 @@ public:
     CPlayer(CGamemaster * game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords);
     void setCurrentMap(CMap *map);
     SDL_Rect* getFootSpace();
-    inline void addPoints(int points) { score += points; }
+    void addPoints(int points);
 };
 
