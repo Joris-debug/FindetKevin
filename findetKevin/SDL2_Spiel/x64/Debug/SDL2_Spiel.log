@@ -1,22 +1,2 @@
-﻿  CCoin.cpp
-  CEntity.cpp
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEntity.cpp(118,11): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEntity.cpp(119,11): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-  CGamemaster.cpp
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(127,40): warning C4244: "Argument": Konvertierung von "double" in "Uint32", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(136,80): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(136,52): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(342,14): warning C4101: "tempTextureSize": Unreferenzierte lokale Variable
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(913,14): warning C4101: "tempTextureSize": Unreferenzierte lokale Variable
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1080,44): warning C4838: Konvertierung von "double" zu "int" erfordert eine einschränkende Konvertierung
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1080,44): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1239,44): warning C4838: Konvertierung von "double" zu "int" erfordert eine einschränkende Konvertierung
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1239,44): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-  CJohn.cpp
-  CNPC.cpp
-  CPlayer.cpp
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CPlayer.cpp(2,10): warning C4067: Unerwartete Token nach Präprozessordirektive - Zeilenvorschub erwartet.
-  CQuestTrigger.cpp
-  Quelle.cpp
-  Code wird generiert...
-  SDL2_Spiel.vcxproj -> C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
+﻿  IKMap.cpp
+  SDL2_Spiel.vcxproj -> C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe

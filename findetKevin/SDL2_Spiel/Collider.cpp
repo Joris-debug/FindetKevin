@@ -2,7 +2,7 @@
 
 #include <SDL.h>
 
-Collider::Collider(SDL_Rect other)
+Collider::Collider(SDL_Rect other, b2World* simulation)
 {
 	this->m_Box.w = other.w;
 	this->m_Box.h = other.h;
@@ -10,6 +10,31 @@ Collider::Collider(SDL_Rect other)
 	this->m_Box.y = other.y;
 
 	this->m_OffsetY = 0;
+
+	m_Simulation = simulation;
+
+	b2BodyDef bd;
+	bd.type = b2_staticBody;
+	bd.position = b2Vec2(m_Box.x, m_Box.y);
+
+	m_Body = simulation->CreateBody(&bd);
+
+	b2PolygonShape shape;
+	shape.SetAsBox(m_Box.w, m_Box.h);
+
+	/*b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shape;
+	fixtureDef.density = 15.0f;
+	fixtureDef.friction = 0.3f;*/
+
+	m_Body->CreateFixture(&shape, 0.0f);
+}
+
+void Collider::update(float dt)
+{
+	b2Vec2 pos = m_Body->GetPosition();
+	m_Box.x = pos.x;
+	m_Box.y = pos.y;
 }
 
 bool Collider::checkCollison(Collider& other)

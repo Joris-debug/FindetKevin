@@ -37,7 +37,8 @@ void IKRenderLayer::update(double dt)
     for (auto collider : m_Colliders)
     {
 
-        collider->m_OffsetY = m_Map->getOffsetY();
+        //collider->m_OffsetY = m_Map->getOffsetY();
+        collider->update(dt);
     }
 }
 

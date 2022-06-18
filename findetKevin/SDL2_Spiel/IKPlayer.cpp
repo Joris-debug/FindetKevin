@@ -25,6 +25,9 @@ IKPlayer::IKPlayer(IKMap* map)
 IKPlayer::~IKPlayer()
 {
     SDL_DestroyTexture(m_Texture);
+
+    m_Map->getSimulation()->DestroyBody(m_Body);
+    m_Body = nullptr;
 }
 
 void IKPlayer::init()
@@ -46,18 +49,42 @@ void IKPlayer::init()
 
     m_CollidingLeft = false;
     m_CollidingRight = false;
+
+    b2BodyDef bd;
+    bd.type = b2_dynamicBody;
+    bd.position = b2Vec2(m_Bounds.x, m_Bounds.y);
+
+    m_Body = m_Map->getSimulation()->CreateBody(&bd);
+
+    b2PolygonShape shape;
+    shape.SetAsBox(m_Bounds.w, m_Bounds.h);
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &shape;
+    fixtureDef.density = 15.0f;
+    fixtureDef.friction = 0.3f;
+
+    m_Body->CreateFixture(&fixtureDef);
 }
 
 void IKPlayer::update(double dt)
 {
     dt = dt / 4;
 
+    b2Vec2 bodyPos = m_Body->GetPosition();
+
+    m_Bounds.x = bodyPos.x;
+    m_Bounds.y = bodyPos.y;
+
+    std::cout << "Player X: " << m_Bounds.x << std::endl;
+    std::cout << "Player y: " << m_Bounds.y << std::endl;
+
     m_VelocityX *= dt;
     //m_VelocityY += m_Map->m_Gravity;
     m_VelocityX *= dt;
 
-    if (tryMove())
-        applyVelocity();
+    //if (tryMove())
+    //    applyVelocity();
 
     m_VelocityX = 0;
     m_VelocityY = 0;
@@ -65,7 +92,7 @@ void IKPlayer::update(double dt)
 
 bool IKPlayer::tryMove()
 {
-    Collider temp({ m_Bounds.x + (int) m_VelocityX, m_Bounds.y + (int) m_VelocityY, m_Bounds.w, m_Bounds.h });
+    Collider temp({ m_Bounds.x + (int) m_VelocityX, m_Bounds.y + (int) m_VelocityY, m_Bounds.w, m_Bounds.h }, m_Map->getSimulation());
 
     if(checkCollision(&temp) == nullptr)
         return true;
@@ -91,6 +118,9 @@ void IKPlayer::walk(Direction dir)
     //std::cout << dir << std::endl;
     m_VelocityX = (dir == LEFT) ? -2.0f : 2.0f;
     m_Dir = dir;
+
+    //m_Body->ApplyForceToCenter(b2Vec2(15.0f, 0.0f), false);
+
     /*if (dir == LEFT && !m_CollidingLeft)    // Want to go left and is NOT already colliding there, so go for if
     {
         m_VelocityX = -2.0f;
