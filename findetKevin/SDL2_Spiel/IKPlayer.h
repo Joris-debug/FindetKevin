@@ -18,6 +18,7 @@ private:
 	SDL_Rect m_Bounds;
 	SDL_Texture* m_Texture;
 	IKMap* m_Map;
+	b2Body* m_Body;
 private:
 	bool m_InAir;
 	float m_VelocityX;
