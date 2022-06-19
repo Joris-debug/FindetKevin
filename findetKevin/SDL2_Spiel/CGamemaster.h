@@ -44,6 +44,7 @@ public:
 	void selectSavefile();
 	char detectKey(SDL_Event input);
 	void deleteTheWholeLevel();
+	int deleteSavefile(CSavefile* fileToDelete);
 	CMap* getMap();
 	inline CPlayer* getPlayer() { return spielerPointer; }
 	void renderStillFrameOfTheGame();

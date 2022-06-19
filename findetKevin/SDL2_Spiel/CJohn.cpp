@@ -122,7 +122,8 @@ int CJohn::onInteract()
 		game->getlisteVonEntitys()->push_back(tempEntity);
 		SDL_FreeSurface(tempSurface);
 
-		delete *game->getCurrentMap()->getListeVonEntitys().begin();	//Erstes Element wird gelöscht und dies ist die Wand zur Treppe
+		*game->getCurrentMap()->getListeVonEntitys().front()->getBounds() = {0,0,0,0};
+		
 		
 	}
 	return 3;

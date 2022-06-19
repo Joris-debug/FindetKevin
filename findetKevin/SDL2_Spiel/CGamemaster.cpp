@@ -939,40 +939,64 @@ void CGamemaster::initLevel2()
     SDL_FreeSurface(tempSurface);
 
     CMapEntity* tempMapEntity;
-    tempBounds = { -940 + 576 * 2,-615 + 528 * 2,32 * 9,32 * 19 };
+    tempBounds = { -940 + 576 * 2,-615 + 528 * 2, 32 * 9,32 * 19 };
     tempMapEntity = new CMapEntity(tempBounds); //Alle südlichen Räume
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds = { -940 + 576 * 2,-615 + 192 * 2,32 * 9,32 * 16 };
+    tempBounds = { -940 + 576 * 2,-615 + 192 * 2, 32 * 9,32 * 16 };
     tempMapEntity = new CMapEntity(tempBounds); //Klo und Fahrstuhl
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds = { -940 + 544 * 2,-615 + 816 * 2,32 * 2, 32 * 1 };
+    tempBounds = { -940 + 544 * 2,-615 + 816 * 2, 32 * 2, 32 * 1 };
     tempMapEntity = new CMapEntity(tempBounds); //südliche Türen
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds = { -940 + 528 * 2,-615 + 192 * 2,32 * 3, 32 * 13 };
+    tempBounds = { -940 + 528 * 2,-615 + 192 * 2, 32 * 3, 32 * 13 };
     tempMapEntity = new CMapEntity(tempBounds); //Eingang S49
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds = { -940 + 528 * 2,-615 + 192 * 2,32 * 1, 32 * 18 };
+    tempBounds = { -940 + 528 * 2,-615 + 192 * 2, 32 * 1, 32 * 18 };
     tempMapEntity = new CMapEntity(tempBounds); //linke Hauswand oben
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds = { -940 + 528 * 2,-615 + 528 * 2,32 * 1, 32 * 19 };
+    tempBounds = { -940 + 528 * 2,-615 + 528 * 2, 32 * 1, 32 * 19 };
     tempMapEntity = new CMapEntity(tempBounds); //linke Hauswand unten
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds = { -940 + 256 * 2,-615 + 750 * 2,32 * 17, 32 * 1 };
+    tempBounds = { -940 + 256 * 2,-615 + 750 * 2, 32 * 17, 32 * 1 };
     tempMapEntity = new CMapEntity(tempBounds); //Zaun ganz unten
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds = { -940 + 244 * 2,-615 + 505 * 2,32 * 1, 32 * 16 };
+    tempBounds = { -940 + 244 * 2,-615 + 505 * 2, 32 * 1, 32 * 16 };
     tempMapEntity = new CMapEntity(tempBounds); //Zaun unten linke Seite
     currentMap->addObjectToMap(tempMapEntity);
 
-    tempBounds = { -940 + 256 * 2,-615 + 433 * 2,32 * 11, 32 * 5 };
+    tempBounds = { -940 + 256 * 2,-615 + 433 * 2, 32 * 11, 32 * 5 };
     tempMapEntity = new CMapEntity(tempBounds); //WC Gebäude
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds = { -940 + 229 * 2,-615 + 160 * 2, 32 * 12, 32 * 17 };
+    tempMapEntity = new CMapEntity(tempBounds); //Zaun oben
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds = { -940 + 720 * 2,-615 + 448 * 2, 32 * 1, 32 * 5 };
+    tempMapEntity = new CMapEntity(tempBounds); //Treppe Spawn
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds = { -940 + 448 * 2,-615 + 688 * 2, 32 * 2, 32 * 1 };
+    tempMapEntity = new CMapEntity(tempBounds); //Baum bei den 2 NPCS
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds = { -940 + 432 * 2,-615 + 288 * 2, 32 * 2, 32 * 1 };
+    tempMapEntity = new CMapEntity(tempBounds); //Baum oben auf dem Pfad
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds = { -940 + 323 * 2,-615 + 610 * 2, 26 * 1, 26 * 1 };
+    tempMapEntity = new CMapEntity(tempBounds); //Westlicher Stein unten
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds = { -940 + 415 * 2,-615 + 640 * 2, 26 * 1, 26 * 1 };
+    tempMapEntity = new CMapEntity(tempBounds); //Östlicher Stein unten
     currentMap->addObjectToMap(tempMapEntity);
 
     tempSurface = IMG_Load(RSC_NPC_ANDREAS_SPRITE);
@@ -985,6 +1009,30 @@ void CGamemaster::initLevel2()
     tempBounds = { -940 + 290 * 2,-615 + 533 * 2,16 * 2,  24 * 2 };
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
+    spielerPointer->setCurrentMap(currentMap);
+
+    tempSurface = IMG_Load(RSC_NPC_LUKE_SPRITE);
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds = { -940 + 300 * 2,-615 + 560 * 2,16 * 2,  24 * 2 };
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, true);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempSurface = IMG_Load(RSC_NPC_BOOK_SPRITE);
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds = { -940 + 544 * 2,-615 + 784 * 2,16 * 2,  24 * 2 };
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Buch", tempBounds, tempTextureCoords, false);
+    listeVonEntitys.push_back(tempEntity);
+
     spielerPointer->setCurrentMap(currentMap);
 
     SDL_FreeSurface(tempSurface);
@@ -1355,19 +1403,97 @@ void CGamemaster::selectSavefile()
                         return;
                     nextSlot = nextSlot->getNextFile();
                 }
-
-                currentSaveFile = nextSlot;
-                switch (*currentSaveFile->getLevel())
+                font = TTF_OpenFont(RSC_FONT_PIXELSPLITTER, 30);
+                SDL_Event e;
+                while (SDL_PollEvent(&e) >= 0)
                 {
-                case 1:
-                    initLevel1();
-                case 2:
-                    initLevel2();
+                    int selectedMode = 0;
+                    text = TTF_RenderText_Blended(font, "Was möchten sie mit dem", { 255, 255, 255 });
+                    text_texture = SDL_CreateTextureFromSurface(renderer, text);
 
-                default:
-                    break;
+                    dest = { SCREEN_WIDTH / 2 - 275,  SCREEN_HEIGHT / 2 - text->h - 10,  550, text->h + 100 };
+                    SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
+                    SDL_RenderFillRect(renderer, &dest);
+
+                    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - text->h,  text->w, text->h };
+                    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+                    SDL_DestroyTexture(text_texture);       //Memory management
+                    SDL_FreeSurface(text);
+
+                    text = TTF_RenderText_Blended(font, "Speicherstand tun?", { 255, 255, 255 });
+                    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+                    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2,  text->w, text->h };
+                    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+
+                    SDL_DestroyTexture(text_texture);       //Memory management
+                    SDL_FreeSurface(text);
+
+                    text = TTF_RenderText_Blended(font, "Starten", { 105, 255, 105 });
+                    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+                    dest = { 185,  SCREEN_HEIGHT / 2 + 40,  text->w, text->h };
+
+
+                    SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
+                    if (SDL_HasIntersection(&cursor_Hitbox, &dest))
+                    {
+                        selectedMode = 1;
+                        SDL_SetRenderDrawColor(renderer, 50, 125, 50, 255);
+                        SDL_RenderFillRect(renderer, &dest);
+                    }
+
+                    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+
+                    SDL_DestroyTexture(text_texture);       //Memory management
+                    SDL_FreeSurface(text);
+
+                    text = TTF_RenderText_Blended(font, "Löschen", { 255, 105, 105 });
+                    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+                    dest = { SCREEN_WIDTH - 185 - text->w,  SCREEN_HEIGHT / 2 + 40,  text->w, text->h };
+
+                    if (SDL_HasIntersection(&cursor_Hitbox, &dest))
+                    {
+                        selectedMode = 2;
+                        SDL_SetRenderDrawColor(renderer, 125, 50, 50, 255);
+                        SDL_RenderFillRect(renderer, &dest);
+                    }
+
+                    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+
+                    SDL_DestroyTexture(text_texture);       //Memory management
+                    SDL_FreeSurface(text);
+                    SDL_RenderPresent(renderer);
+                    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+                    if (e.type == SDL_MOUSEBUTTONDOWN)
+                    {
+                        switch (selectedMode)
+                        {
+                        case 1:
+                            currentSaveFile = nextSlot;
+                            switch (*currentSaveFile->getLevel())
+                            {
+                            case 1:
+                                initLevel1();
+                            case 2:
+                                initLevel2();
+                                
+                            }
+                            return;
+
+                        case 2:
+                            deleteSavefile(nextSlot);
+                            break;
+
+                        default:
+                            break;
+                        }
+                        break;
+                    }
+                    else if (e.type == SDL_QUIT)
+                        exit(0);
                 }
 
+                TTF_CloseFont(font);
             }
             //-------------------------------------------------------------------------------------------------------
         }
@@ -1497,6 +1623,42 @@ void CGamemaster::deleteTheWholeLevel()
 
     delete currentMap;
     currentMap = nullptr;
+}
+
+int CGamemaster::deleteSavefile(CSavefile* fileToDelete)
+{
+    CSavefile* scroller = alleSaveFiles;
+
+    if (fileToDelete == nullptr)
+        return 1;
+
+    if (scroller == nullptr)
+        return 1;
+
+    if (scroller == fileToDelete)
+    {
+        alleSaveFiles = scroller->getNextFile();
+        delete fileToDelete;
+        alleSaveFiles->SchreibenDerSpeicherdaten();
+        return 0;
+    }
+
+
+    while (scroller->getNextFile() != nullptr)
+    {
+        if (scroller->getNextFile() == fileToDelete)
+        {
+            scroller->setNextFile(scroller->getNextFile()->getNextFile());
+            delete fileToDelete;
+            alleSaveFiles->SchreibenDerSpeicherdaten();
+            return 0;
+        }
+        scroller = scroller->getNextFile();
+    }
+
+    
+
+    return 1;
 }
 
 CMap* CGamemaster::getMap()
