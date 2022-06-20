@@ -5,7 +5,6 @@ class CGamemaster;
 class CPlayer : public CEntity
 {
 private:    
-    int healthPoints;
     int healItems;
     SDL_Rect footSpace;
     CMap* currentmap;

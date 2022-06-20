@@ -11,6 +11,7 @@ void CNPC::messageBox(string text)
 {
 	SDL_RenderClear(game->getRenderer());
 	game->renderStillFrameOfTheGame();
+	game->renderHUD();
 	SDL_Renderer* renderer = game->getRenderer();
 	SDL_Surface* tempSurface = IMG_Load(RSC_BACKGROUND_OF_TEXTBOX);	
 	SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);

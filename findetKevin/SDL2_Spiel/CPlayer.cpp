@@ -3,7 +3,6 @@
 CPlayer::CPlayer(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords) : CEntity(game ,textureTemp, tag, bounds, textureCoords, false)
 {
 	healItems = 0;
-	healthPoints = 20; 
     footSpace.x = game->getWidthOfWindow() / 2; 
     footSpace.y = game->getHeigthOfWindow() / 2 + 14*2; 
     footSpace.w = 16 * 2;

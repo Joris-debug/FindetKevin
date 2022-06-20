@@ -25,6 +25,7 @@ public:
 	inline string getDifficultyString() { if (this->gameDifficulty == 1) return "Schw"; if (this->gameDifficulty == 2) return "Mitt"; else return "Einf"; }
 	inline string getPlayername() { return playername; }
 	inline CSavefile* getNextFile() { return nextFile; }
+	inline int getLives() { return currentHealth; }
 	inline void setNextFile(CSavefile* nextFile) { this->nextFile = nextFile; }
 	static CSavefile* EinlesenDerSpeicherdaten();
 };

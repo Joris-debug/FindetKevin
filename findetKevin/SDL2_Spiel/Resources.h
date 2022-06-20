@@ -20,6 +20,7 @@
 #define RSC_FONT_PIXELSPLITTER "./Fonts/PixelSplitter.ttf"
 #define RSC_PLAYER_SPRITE "./PlayerTextures/Adventurer Sprite Sheet v1.1.png"
 
+#define RSC_HUD_LAYER "./OtherTextures/HUD.png"
 #define RSC_COIN_SPRITE "./OtherTextures/coin_16x16.png"
 #define RSC_NPC_BOOK_SPRITE "./OtherTextures/book.png"
 #define RSC_IK_CHARAKTER_SPRITE "./PlayerTextures/Adam_16x16.png"

@@ -160,6 +160,7 @@ void CGamemaster::gameLoop()
  */
 
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
+        renderHUD();
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
 
@@ -1744,6 +1745,52 @@ void CGamemaster::renderStillFrameOfTheGame()
 SDL_Renderer* CGamemaster::getRenderer()
 {
     return renderer;
+}
+
+void CGamemaster::renderHUD()
+{
+    SDL_Surface* tempSurface = IMG_Load(RSC_HUD_LAYER);
+    SDL_Rect tempBounds;
+    SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempBounds.x = 0;
+    tempBounds.y = 0;
+    tempBounds.w = SCREEN_WIDTH;
+    tempBounds.h = 62;
+    SDL_RenderCopy(renderer, tempTexture, NULL, &tempBounds);
+    SDL_DestroyTexture(tempTexture);
+    SDL_FreeSurface(tempSurface);
+
+    TTF_Font * font = TTF_OpenFont(RSC_FONT_PIXELSPLITTER, 30);
+    if (!font)
+    {
+        cout << "Failed to load font: " << TTF_GetError() << endl;
+    }
+    SDL_Surface* text;
+
+    text = TTF_RenderText_Blended(font, to_string(currentSaveFile->getLives()).c_str(), { 179, 28, 28 });
+    if (!text)
+    {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    SDL_Texture* text_texture;
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    SDL_Rect dest = {50 - text->w,  12,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+    SDL_DestroyTexture(text_texture);       //Memory management
+    SDL_FreeSurface(text);
+
+    text = TTF_RenderText_Blended(font, to_string(*currentSaveFile->getTotalScore()).c_str(), { 255, 255, 255 });
+    if (!text)
+    {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    dest = { 605,  13,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+    SDL_DestroyTexture(text_texture);       //Memory management
+    SDL_FreeSurface(text);
+
+    TTF_CloseFont(font);
 }
 
 void CGamemaster::setDeltaTime(double deltaTime)

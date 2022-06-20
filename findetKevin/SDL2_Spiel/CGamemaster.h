@@ -49,6 +49,7 @@ public:
 	inline CPlayer* getPlayer() { return spielerPointer; }
 	void renderStillFrameOfTheGame();
 	SDL_Renderer* getRenderer();
+	void renderHUD();
 	inline CMap* getCurrentMap() { return currentMap; }
 	inline CSavefile* getCurrentSaveFile() { return currentSaveFile; }
 	inline list <pair<bool*, int*>>* getLevelQuests() { return &levelQuests; }
