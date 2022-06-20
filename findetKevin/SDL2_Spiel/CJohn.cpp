@@ -76,7 +76,8 @@ int CJohn::onInteract()
 		//_______________________________________________________________________ ENDE SCREAM
 
 		messageBox("Was war das? Also ich war es auf jeden fall nicht!");
-		messageBox("Kannst du dich bitte Mal los machen und nachsehen? Ich muss noch etwas mit Herr Schwaiger bereden.");
+		messageBox("Kannst du dich bitte Mal los machen und nachsehen? Ich muss noch etwas mit Herr Schwaiger bereden...");
+		messageBox("Und frag dich am besten schonmal im Gebäude herum, ob jemand Kevin gesehen hat!");
 
 		for (auto cursor : *game->getlisteVonEntitys())
 		{

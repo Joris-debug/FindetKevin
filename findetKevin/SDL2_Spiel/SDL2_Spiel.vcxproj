@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CBuch.cpp" />
     <ClCompile Include="CCoin.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEntity.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Quelle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CBuch.h" />
     <ClInclude Include="CCoin.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEntity.h" />
@@ -179,6 +181,7 @@
     <ClInclude Include="CMapEntity.h" />
     <ClInclude Include="CNPC.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="CoordinateConversions.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CQuestTrigger.h" />
     <ClInclude Include="CSavefile.h" />

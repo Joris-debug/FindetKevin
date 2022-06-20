@@ -49,7 +49,12 @@
     <ClCompile Include="CJohn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CQuestTrigger.cpp" />
+    <ClCompile Include="CQuestTrigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CBuch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resources.h">
@@ -100,7 +105,15 @@
     <ClInclude Include="CJohn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CQuestTrigger.h" />
+    <ClInclude Include="CQuestTrigger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CoordinateConversions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CBuch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

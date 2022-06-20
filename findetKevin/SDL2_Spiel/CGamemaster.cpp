@@ -11,6 +11,7 @@
 #include "IKGameLogic.h"
 #include "CQuestTrigger.h"
 #include "CNPC.h"
+#include "CBuch.h"
 CGamemaster::CGamemaster()
 {
     deltaTime = 1;
@@ -939,6 +940,11 @@ void CGamemaster::initLevel2()
     SDL_FreeSurface(tempSurface);
 
     CMapEntity* tempMapEntity;
+
+    tempBounds = { -940 + 421 * 2,-615 + 224 * 2, 32 * 5,32 * 1 };
+    tempMapEntity = new CMapEntity(tempBounds); //Abgrenzung zum nächsten Level
+    currentMap->addObjectToMap(tempMapEntity);
+
     tempBounds = { -940 + 576 * 2,-615 + 528 * 2, 32 * 9,32 * 19 };
     tempMapEntity = new CMapEntity(tempBounds); //Alle südlichen Räume
     currentMap->addObjectToMap(tempMapEntity);
@@ -995,8 +1001,24 @@ void CGamemaster::initLevel2()
     tempMapEntity = new CMapEntity(tempBounds); //Westlicher Stein unten
     currentMap->addObjectToMap(tempMapEntity);
 
+    tempBounds = { -940 + 434 * 2,-615 + 371 * 2, 26 * 1, 26 * 1 };
+    tempMapEntity = new CMapEntity(tempBounds); //Westlicher Stein oben
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds = { -940 + 514 * 2,-615 + 339 * 2, 26 * 1, 26 * 1 };
+    tempMapEntity = new CMapEntity(tempBounds); //Östlicher Stein oben
+    currentMap->addObjectToMap(tempMapEntity);
+
     tempBounds = { -940 + 415 * 2,-615 + 640 * 2, 26 * 1, 26 * 1 };
     tempMapEntity = new CMapEntity(tempBounds); //Östlicher Stein unten
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds = { -940 + 421 * 2,-615 + 224 * 2, 32 * 3, 32 * 1 };
+    tempMapEntity = new CMapEntity(tempBounds); //Stein ganz oben am Weg
+    currentMap->addObjectToMap(tempMapEntity);
+
+    tempBounds = { -940 + 496 * 2,-615 + 224 * 2, 32 * 3, 32 * 1 };
+    tempMapEntity = new CMapEntity(tempBounds); //Baum ganz oben am Weg
     currentMap->addObjectToMap(tempMapEntity);
 
     tempSurface = IMG_Load(RSC_NPC_ANDREAS_SPRITE);
@@ -1010,6 +1032,7 @@ void CGamemaster::initLevel2()
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
+    SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_NPC_LUKE_SPRITE);
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
@@ -1021,6 +1044,7 @@ void CGamemaster::initLevel2()
     tempBounds = { -940 + 300 * 2,-615 + 560 * 2,16 * 2,  24 * 2 };
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, true);
     listeVonEntitys.push_back(tempEntity);
+    SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_NPC_BOOK_SPRITE);
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
@@ -1030,12 +1054,30 @@ void CGamemaster::initLevel2()
     tempTextureCoords.h = 32;
     SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
     tempBounds = { -940 + 544 * 2,-615 + 784 * 2,16 * 2,  24 * 2 };
-    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Buch", tempBounds, tempTextureCoords, false);
+    tempEntity = new CBuch(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Buch", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
+    SDL_FreeSurface(tempSurface);
+
+    tempSurface = IMG_Load(RSC_NPC_FRED_SPRITE);
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds = { -940 + 464 * 2,-615 + 480 * 2,16 * 2,  24 * 2 };
+    tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, false);
+    listeVonEntitys.push_back(tempEntity);
+    SDL_FreeSurface(tempSurface);
+
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds = { -940 + 472 * 2,-615 + 210 * 2,16 * 2,  24 * 2 };
+    tempEntity = new CNPC(this, NULL, "InnerVoice", tempBounds, tempTextureCoords, false);
+    listeVonEntitys.push_back(tempEntity);
+
 
     spielerPointer->setCurrentMap(currentMap);
 
-    SDL_FreeSurface(tempSurface);
     this->gameLoop();
 }
 
@@ -1241,7 +1283,7 @@ void CGamemaster::selectSavefile()
     TTF_Font* font;
     SDL_Event e;
     SDL_Surface* text;    // Set color to white
-    SDL_Rect forwardButton, backwardsButton, saveFileArea;
+    SDL_Rect forwardButton, backwardsButton, saveFileArea, sortButtonDate, sortButtonName;
     forwardButton.x = 263;
     forwardButton.y = 480;
     forwardButton.w = 123;
@@ -1253,6 +1295,14 @@ void CGamemaster::selectSavefile()
     saveFileArea.y = 138;
     saveFileArea.w = 734;
     saveFileArea.h = 320;
+
+    sortButtonDate.x = 598;
+    sortButtonDate.y = 475;
+    sortButtonDate.w = 118;
+    sortButtonDate.h = 46;
+
+    sortButtonName = sortButtonDate;
+    sortButtonName.x = 84;
 
     int pages = 0;
     while (SDL_PollEvent(&e) >= 0)
@@ -1294,6 +1344,7 @@ void CGamemaster::selectSavefile()
         SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
         cursor_Hitbox.w = 8;
         cursor_Hitbox.h = 4;
+
         if (SDL_HasIntersection(&cursor_Hitbox, &saveFileArea))
         {
             SDL_SetRenderDrawColor(renderer, 90, 220, 90, 255);
@@ -1305,6 +1356,17 @@ void CGamemaster::selectSavefile()
             SDL_RenderFillRect(renderer, &hoverRect);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         }
+        else if (SDL_HasIntersection(&cursor_Hitbox, &sortButtonName))
+        {
+            SDL_SetRenderDrawColor(renderer, 105, 255, 105, 100);
+            SDL_RenderDrawRect(renderer, &sortButtonName);
+        }
+        else if (SDL_HasIntersection(&cursor_Hitbox, &sortButtonDate))
+        {
+            SDL_SetRenderDrawColor(renderer, 105, 255, 105, 100);
+            SDL_RenderDrawRect(renderer, &sortButtonDate);
+        }
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
         //-------------------------------------------Anzeigen_aller_Savefiles-----------------------------------------
         CSavefile* nextSlot = alleSaveFiles;
         for (int i = 0; i < 8 * pages ; i++)
