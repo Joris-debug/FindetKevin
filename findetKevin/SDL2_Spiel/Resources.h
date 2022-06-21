@@ -1,4 +1,8 @@
 #pragma once
+
+#define D_SCREEN_WIDTH 800
+#define D_SCREEN_HEIGHT 620
+
 #define RSC_NPC_ADAM_SPRITE "./PlayerTextures/Adam_16x16.png"
 #define RSC_MAP1_SPRITE "./Maps/KlasseBottomLayer.png"
 #define RSC_MAP1_SPRITE_TOP_LAYER "./Maps/KlasseTopLayer.png"

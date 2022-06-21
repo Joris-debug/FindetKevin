@@ -3,7 +3,9 @@
 #include "IKPlayer.h"
 #include "IKRenderLayer.h"
 
-#include "Resources.h"
+//#include "Resources.h"
+
+#include "CoordinateConversions.h"
 
 #include <iostream>
 
@@ -22,9 +24,9 @@ IKMap::~IKMap()
 void IKMap::init()
 {
 	b2Vec2 gravity;
-	gravity.Set(0.0f, 10.0f);
+	gravity.Set(0.0f, -15.0f);
 	m_Simulation = new b2World(gravity);
-	m_Simulation->ShiftOrigin(b2Vec2(0.0f, 620.0f));
+	//m_Simulation->ShiftOrigin(b2Vec2(0.0f, 620.0f));
 
 	m_Player = new IKPlayer(this);
 	m_Player->init();
@@ -35,20 +37,21 @@ void IKMap::init()
 
 	m_Gravity = 0.04f;
 
-	Collider* floorCollider = new Collider({ 0, 370, 800, 220 }, m_Simulation);  // x, y, w, h
+	Collider* floorCollider = new Collider({ 400, 600, 800, 220 }, m_Simulation);  // x, y, w, h
 	m_BackgroundLayer->getColliders().push_back(floorCollider);
 
-	//Collider* ceilingCollider = new Collider({ 0, 160, 800, 20 }, m_Simulation);  // x, y, w, h
-	//m_BackgroundLayer->getColliders().push_back(ceilingCollider);
+	Collider* ceilingCollider = new Collider({ 200, 160, 800, 20 }, m_Simulation);  // x, y, w, h
+	m_BackgroundLayer->getColliders().push_back(ceilingCollider);
 
-	//Collider* randomCollider = new Collider({ 0, 300, 100, 100 }, m_Simulation);  // x, y, w, h
-	//m_BackgroundLayer->getColliders().push_back(randomCollider);
+	Collider* randomCollider = new Collider({ 60, 440, 100, 100 }, m_Simulation);  // x, y, w, h
+	m_BackgroundLayer->getColliders().push_back(randomCollider);
 }
 
 void IKMap::update(double dt)
 {
 	//std::cout << dt << std::endl;
-	printf("%.5f \n", 1.0f / 60.0f);
+	//printf("%.5f \n", 1.0f / 60.0f);
+
 	m_Simulation->Step(1.0f/60.0f, 8, 3);
 	m_Player->update(dt);
 	m_BackgroundLayer->update(dt);

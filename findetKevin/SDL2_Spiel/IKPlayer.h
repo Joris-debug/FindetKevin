@@ -15,17 +15,15 @@ enum Direction
 class IKPlayer
 {
 private:
-	SDL_Rect m_Bounds;
+	int m_Width;
+	int m_Height;
+	int m_StartingX;
+	int m_StartingY;
 	SDL_Texture* m_Texture;
 	IKMap* m_Map;
 	b2Body* m_Body;
 private:
 	bool m_InAir;
-	float m_VelocityX;
-	float m_VelocityY;
-	float m_Inertia;
-	bool m_CollidingRight;
-	bool m_CollidingLeft;
 	Direction m_Dir;
 public:
 	IKPlayer(IKMap* map);
