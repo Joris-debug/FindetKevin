@@ -27,5 +27,8 @@
 #define RSC_HUD_LAYER "./OtherTextures/HUD.png"
 #define RSC_COIN_SPRITE "./OtherTextures/coin_16x16.png"
 #define RSC_NPC_BOOK_SPRITE "./OtherTextures/book.png"
+
+#define RSC_PROJECTILE_SPRITE "./EnemyTextures/Bandit_Bullet_extended.png"
+
 #define RSC_IK_CHARAKTER_SPRITE "./PlayerTextures/Adam_16x16.png"
 #define RSC_IK_BACKGROUND_IMAGE_OUTLINE "./IKTextures/Rand.png"
