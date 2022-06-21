@@ -8,6 +8,7 @@ protected:
     int dialogueNumber;
     bool hasTalkedToThePlayer;	 // Dieses Attribut hat keine der Tochterklassen, Gegner und Projektile reden nicht
 public:
+    inline int getDialogueNumber() { return dialogueNumber; }
     static inline int* getNumberOfNPCS() { return &numberOfNPCs; }
     CNPC(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving);
     virtual int onInteract();

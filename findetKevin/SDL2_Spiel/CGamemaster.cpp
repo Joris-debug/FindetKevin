@@ -4,7 +4,7 @@
 #include "CJohn.h"
 #include <SDL_ttf.h>
 #include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include <time.h>      /* time */
 #include "CCoin.h"
 #include <string>
 #include <iomanip> 
@@ -148,16 +148,16 @@ void CGamemaster::gameLoop()
 
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
 
- /*     
-        for (auto cursor : currentMap->getListeVonEntitys())
-        {
-            SDL_RenderFillRect(renderer, cursor->getBounds());
-        }
-        for(auto cursor : listeVonEntitys)
-        SDL_RenderDrawRect(renderer, cursor->getBounds());
-        SDL_RenderDrawRect(renderer, spielerPointer->getBounds());
-        SDL_RenderDrawRect(renderer, spielerPointer->getFootSpace());
- */
+      
+        //for (auto cursor : currentMap->getListeVonEntitys())
+        //{
+        //    SDL_RenderFillRect(renderer, cursor->getBounds());
+        //}
+        //for(auto cursor : listeVonEntitys)
+        //SDL_RenderDrawRect(renderer, cursor->getBounds());
+        //SDL_RenderDrawRect(renderer, spielerPointer->getBounds());
+        //SDL_RenderDrawRect(renderer, spielerPointer->getFootSpace());
+ 
 
         SDL_RenderCopy(renderer, currentMap_TopLayer->getTexture(), NULL, currentMap_TopLayer->getPosition());
         renderHUD();
@@ -891,7 +891,6 @@ void CGamemaster::initLevel1()
     tempBounds.y = -1264 + 256 * 2;
     tempEntity = new CQuestTrigger(1, this, NULL, "STAIRS_DOWN", tempBounds, tempTextureCoords, NULL);
     listeVonEntitys.push_back(tempEntity);
-
     spielerPointer->setCurrentMap(currentMap);
     this->gameLoop();
 }
@@ -1076,6 +1075,48 @@ void CGamemaster::initLevel2()
     tempEntity = new CNPC(this, NULL, "InnerVoice", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
 
+
+    tempBounds = { -940 + 421 * 2,-615 + 208 * 2, 32 * 5,32 * 1 };
+    tempEntity = new CQuestTrigger(1, this, NULL, "ExitPath", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -940 + 528 * 2;
+    tempBounds.y = -615 + 487 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -940 + 498 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -940 + 558 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -940 + 368 * 2;
+    tempBounds.y = -615 + 624 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -940 + 416 * 2;
+    tempBounds.y = -615 + 688 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -940 + 272 * 2;
+    tempBounds.y = -615 + 656 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -940 + 496 * 2;
+    tempBounds.y = -615 + 592 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    tempBounds.x = -940 + 480 * 2;
+    tempBounds.y = -615 + 320 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
 
     spielerPointer->setCurrentMap(currentMap);
 
@@ -1284,7 +1325,7 @@ void CGamemaster::selectSavefile()
     TTF_Font* font;
     SDL_Event e;
     SDL_Surface* text;    // Set color to white
-    SDL_Rect forwardButton, backwardsButton, saveFileArea, sortButtonDate, sortButtonName;
+    SDL_Rect forwardButton, backwardsButton, saveFileArea, sortButtonScore, sortButtonName;
     forwardButton.x = 263;
     forwardButton.y = 480;
     forwardButton.w = 123;
@@ -1297,13 +1338,13 @@ void CGamemaster::selectSavefile()
     saveFileArea.w = 734;
     saveFileArea.h = 320;
 
-    sortButtonDate.x = 598;
-    sortButtonDate.y = 475;
-    sortButtonDate.w = 118;
-    sortButtonDate.h = 46;
+    sortButtonScore.x = 84;
+    sortButtonScore.y = 475;
+    sortButtonScore.w = 118;
+    sortButtonScore.h = 46;
 
-    sortButtonName = sortButtonDate;
-    sortButtonName.x = 84;
+    sortButtonName = sortButtonScore;
+    sortButtonName.x = 598;
 
     int pages = 0;
     while (SDL_PollEvent(&e) >= 0)
@@ -1362,10 +1403,10 @@ void CGamemaster::selectSavefile()
             SDL_SetRenderDrawColor(renderer, 105, 255, 105, 100);
             SDL_RenderDrawRect(renderer, &sortButtonName);
         }
-        else if (SDL_HasIntersection(&cursor_Hitbox, &sortButtonDate))
+        else if (SDL_HasIntersection(&cursor_Hitbox, &sortButtonScore))
         {
             SDL_SetRenderDrawColor(renderer, 105, 255, 105, 100);
-            SDL_RenderDrawRect(renderer, &sortButtonDate);
+            SDL_RenderDrawRect(renderer, &sortButtonScore);
         }
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
         //-------------------------------------------Anzeigen_aller_Savefiles-----------------------------------------
@@ -1559,6 +1600,10 @@ void CGamemaster::selectSavefile()
                 TTF_CloseFont(font);
             }
             //-------------------------------------------------------------------------------------------------------
+            else if (SDL_HasIntersection(&cursor_Hitbox, &sortButtonName))
+                sortSavefilesByName();
+            else if (SDL_HasIntersection(&cursor_Hitbox, &sortButtonScore))
+            sortSavefilesByScore();
         }
 
         if (e.key.keysym.sym == SDLK_ESCAPE)
@@ -1796,5 +1841,63 @@ void CGamemaster::renderHUD()
 void CGamemaster::setDeltaTime(double deltaTime)
 {
     this->deltaTime = deltaTime;
+}
+
+void CGamemaster::sortSavefilesByName()
+{
+    if (alleSaveFiles == nullptr || alleSaveFiles->getNextFile() == nullptr)
+        return;
+
+    list <CSavefile*> listeVonSavefiles;
+    while (alleSaveFiles != nullptr)
+    {
+        listeVonSavefiles.push_back(alleSaveFiles);
+        alleSaveFiles = alleSaveFiles->getNextFile();
+    }
+
+    
+    while (listeVonSavefiles.size() > 0)
+    { 
+        CSavefile* temp = listeVonSavefiles.front();
+        for (auto cursor : listeVonSavefiles)
+        {
+            if (cursor->getPlayername() > temp->getPlayername())
+                temp = cursor;
+        }
+        temp->setNextFile(alleSaveFiles);
+        alleSaveFiles = temp;
+        listeVonSavefiles.remove(temp);
+    }
+    alleSaveFiles->SchreibenDerSpeicherdaten();
+
+}
+
+void CGamemaster::sortSavefilesByScore()
+{
+    if (alleSaveFiles == nullptr || alleSaveFiles->getNextFile() == nullptr)
+        return;
+
+    list <CSavefile*> listeVonSavefiles;
+    while (alleSaveFiles != nullptr)
+    {
+        listeVonSavefiles.push_back(alleSaveFiles);
+        alleSaveFiles = alleSaveFiles->getNextFile();
+    }
+
+
+    while (listeVonSavefiles.size() > 0)
+    {
+        CSavefile* temp = listeVonSavefiles.front();
+        for (auto cursor : listeVonSavefiles)
+        {
+            if (*cursor->getTotalScore() < *temp->getTotalScore())
+                temp = cursor;
+        }
+        temp->setNextFile(alleSaveFiles);
+        alleSaveFiles = temp;
+        listeVonSavefiles.remove(temp);
+    }
+    alleSaveFiles->SchreibenDerSpeicherdaten();
+
 }
 

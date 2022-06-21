@@ -54,5 +54,7 @@ public:
 	inline CSavefile* getCurrentSaveFile() { return currentSaveFile; }
 	inline list <pair<bool*, int*>>* getLevelQuests() { return &levelQuests; }
 	void setDeltaTime(double deltaTime);
+	void sortSavefilesByName();
+	void sortSavefilesByScore();
 };
 

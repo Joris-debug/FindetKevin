@@ -59,6 +59,7 @@ int CJohn::onInteract()
 		text_texture = SDL_CreateTextureFromSurface(renderer, text_surface);
 		SDL_Rect dest = { 20,  game->getHeigthOfWindow() - 165,  text_surface->w, text_surface->h }; // 170 ist die Höhe des Textfensters
 		SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+		game->renderHUD();
 		SDL_RenderPresent(renderer);
 		SDL_Delay(750);
 		SDL_Event input;
@@ -83,7 +84,6 @@ int CJohn::onInteract()
 		{
 			if (cursor->getID() == 1)
 			{
-				game->getlisteVonEnemies()->remove(cursor);
 				game->getlisteVonEntitys()->remove(cursor);
 				delete cursor;
 				break;
