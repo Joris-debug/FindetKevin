@@ -47,7 +47,7 @@ void IKGameLogic::init()
 
                 case SDLK_d:
                 case SDLK_a:
-                    //m_Player->walk(LEFT);
+                    m_Player->walk(LEFT);
                     break;
                 case SDLK_SPACE:
                     //m_Player->jump();
