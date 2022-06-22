@@ -2,7 +2,7 @@
 
 #include "Resources.h"
 
-Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY, float speed)
+Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY, float speed, float maxDist)
 {
 	SDL_Surface* tempSurface = IMG_Load(RSC_PROJECTILE_SPRITE);
 	SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(game->getRenderer(), tempSurface);
@@ -15,6 +15,11 @@ Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY,
 	this->texture = tempTexture;
 
 	this->tag = "projectile";
+
+	this->maxTravelDist = maxDist;
+
+	this->startPos.x = startX;
+	this->startPos.y = startY;
 
 	this->bounds.x = startX;
 	this->bounds.x = startY;

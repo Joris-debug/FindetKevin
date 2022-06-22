@@ -75,8 +75,43 @@ void CEnemy::update(int y, int x)
         textureCoords.h = 16;
         textureCoords.w = 16;
     }
+}
 
+void CEnemy::shouldShoot()
+{
+    SDL_Rect* playerBounds = this->game->getPlayer()->getBounds();
+    vec2 playerCenter(playerBounds->x + (playerBounds->w / 2), playerBounds->y + (playerBounds->h / 2));
+    vec2 ownCenter(bounds.x + (bounds.w / 2), bounds.y + (bounds.h / 2));
 
+    float xDist = ownCenter.getXDist(playerCenter);
+    float yDist = ownCenter.getYDist(playerCenter);
+    float dist = ownCenter.getDist(playerCenter);
+
+    float agroWidth = 40.0f;
+    float agroRadius = 200;
+    float passRadius = 60;
+
+    if (xDist < agroWidth && dist < agroRadius && dist > passRadius)
+    {
+        if (ownCenter.y < playerCenter.y)    // Over the player
+        {
+            game->getlisteVonEntitys()->push_back(new Projectile(game, DOWN, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+        }
+        else if (ownCenter.y > playerCenter.y)    // Under the player
+        {
+            game->getlisteVonEntitys()->push_back(new Projectile(game, UP, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+        }
+    }else if(yDist < agroWidth && dist < agroRadius && dist > passRadius)
+    {
+        if (ownCenter.x < playerCenter.x)    // Left of the player
+        {
+            game->getlisteVonEntitys()->push_back(new Projectile(game, RIGHT, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+        }
+        else if (ownCenter.x > playerCenter.x)    // Right of the player
+        {
+            game->getlisteVonEntitys()->push_back(new Projectile(game, LEFT, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+        }
+    }
 
 }
 

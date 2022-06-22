@@ -1,5 +1,8 @@
 #pragma once
 #include "CEntity.h"
+
+#include "Projectile.h"
+
 class CEnemy :    public CEntity
 {
 private:
@@ -13,6 +16,7 @@ private:
 	int deathFrames;
 public:
 	void shoot();
+	void shouldShoot();
 	int onInteract();
 	int getHealth();
 	void setHealth(int healthpoints);
