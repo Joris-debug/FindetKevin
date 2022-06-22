@@ -26,13 +26,13 @@ private:
 	list <pair<bool*, int*>> levelQuests;		//Jedes Level könnte mehrere Quests haben und braucht mindestens eine um das nächste Level zu starten
 	const int SCREEN_WIDTH = 800;
 	const int SCREEN_HEIGHT = 620;
-	void gameLoop();
+	int gameLoop();
 public:
 	CGamemaster();
 	~CGamemaster();
 	void initLevel0();
-	void initLevel1();
-	void initLevel2();
+	int initLevel1();
+	int initLevel2();
 	int getWidthOfWindow();
 	int getHeigthOfWindow();
 	void moveMaps(int x, int y);
@@ -56,5 +56,6 @@ public:
 	void setDeltaTime(double deltaTime);
 	void sortSavefilesByName();
 	void sortSavefilesByScore();
+	void gameOverScreen();
 };
 

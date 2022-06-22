@@ -26,6 +26,7 @@ public:
 	inline string getPlayername() { return playername; }
 	inline CSavefile* getNextFile() { return nextFile; }
 	inline int getLives() { return currentHealth; }
+	inline void setLives(int lives) { this->currentHealth = lives; }
 	inline void setNextFile(CSavefile* nextFile) { this->nextFile = nextFile; }
 	static CSavefile* EinlesenDerSpeicherdaten();
 };

@@ -44,7 +44,7 @@ CGamemaster::~CGamemaster()
     TTF_Quit();
 }
 
-void CGamemaster::gameLoop()
+int CGamemaster::gameLoop()
 {
     SDL_Event input;
     int y_axis = 0;
@@ -62,7 +62,14 @@ void CGamemaster::gameLoop()
         if (everythingDone == true)
         {
             deleteTheWholeLevel();
-            return;
+            return 0;
+        }
+        if(currentSaveFile->getLives() <= 0)
+        {
+            gameOverScreen();
+            deleteTheWholeLevel();
+            alleSaveFiles = CSavefile::EinlesenDerSpeicherdaten();
+            return 1;
         }
         //-----------------------------------------------------------------
         Uint32 lastTime = currentTime;
@@ -197,7 +204,7 @@ void CGamemaster::initLevel0()
         if (e.type == SDL_KEYDOWN || e.type == SDL_MOUSEBUTTONDOWN)
             break;
         else if (e.type == SDL_QUIT)
-            return;
+            exit(0);
         SDL_Delay(100);
     }
     SDL_DestroyTexture(text_texture);
@@ -218,7 +225,7 @@ void CGamemaster::initLevel0()
         if (e.type == SDL_KEYDOWN || e.type == SDL_MOUSEBUTTONDOWN)
             break;
         else if (e.type == SDL_QUIT)
-            return;
+            exit(0);
         SDL_Delay(100);
     }
     SDL_DestroyTexture(text_texture);
@@ -321,8 +328,29 @@ void CGamemaster::initLevel0()
             }
         }
         else if (e.type == SDL_QUIT)
-            return;
+            exit(0);
     }
+
+    SDL_RenderClear(renderer);
+    text = TTF_RenderText_Blended_Wrapped(font, "Deine Geschichte beginnt an dem Ort den Viele fürchten und wenige lieben:                    die Schule. ", color, SCREEN_WIDTH - 25);
+    if (!text) {
+        cout << "Failed to render text: " << TTF_GetError() << endl;
+    }
+    text_texture = SDL_CreateTextureFromSurface(renderer, text);
+    dest = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 - 50,  text->w, text->h };
+    SDL_RenderCopy(renderer, text_texture, NULL, &dest);
+    SDL_RenderPresent(renderer);
+    while (SDL_PollEvent(&e) >= 0)
+    {
+        if (e.type == SDL_KEYDOWN || e.type == SDL_MOUSEBUTTONDOWN)
+            break;
+        else if (e.type == SDL_QUIT)
+            exit(0);
+        SDL_Delay(100);
+    }
+    SDL_DestroyTexture(text_texture);
+    SDL_FreeSurface(text);
+
     TTF_CloseFont(font);        //Speicherplatz freigeben
 
     this->currentSaveFile = new CSavefile(nameString, schwierigkeitsgradTemp[0] - 48);
@@ -331,7 +359,7 @@ void CGamemaster::initLevel0()
     this->alleSaveFiles->SchreibenDerSpeicherdaten();
 }
 
-void CGamemaster::initLevel1()
+int CGamemaster::initLevel1()
 {
     //-----------------------------------------------------------------------------------------------Quest wird erstellt
     bool* tempQuest = new bool(false);
@@ -892,10 +920,11 @@ void CGamemaster::initLevel1()
     tempEntity = new CQuestTrigger(1, this, NULL, "STAIRS_DOWN", tempBounds, tempTextureCoords, NULL);
     listeVonEntitys.push_back(tempEntity);
     spielerPointer->setCurrentMap(currentMap);
-    this->gameLoop();
+
+    return this->gameLoop();
 }
 
-void CGamemaster::initLevel2()
+int CGamemaster::initLevel2()
 {
 
     *this->currentSaveFile->getLevel() = 2;
@@ -1120,7 +1149,7 @@ void CGamemaster::initLevel2()
 
     spielerPointer->setCurrentMap(currentMap);
 
-    this->gameLoop();
+    return this->gameLoop();
 }
 
 int CGamemaster::getWidthOfWindow()
@@ -1287,8 +1316,8 @@ void CGamemaster::titlescreen()
             if (SDL_HasIntersection(&cursor_Hitbox, &startGame))
             {
                 this->initLevel0();
-                this->initLevel1();
-                this->initLevel2();
+                if (!this->initLevel1())
+                    if (!this->initLevel2());
             }
 
             if (SDL_HasIntersection(&cursor_Hitbox, &selectSavefile))
@@ -1577,9 +1606,11 @@ void CGamemaster::selectSavefile()
                             switch (*currentSaveFile->getLevel())
                             {
                             case 1:
-                                initLevel1();
+                                if (initLevel1())
+                                    return;
                             case 2:
-                                initLevel2();
+                                if (initLevel2())
+                                    return;
                                 
                             }
                             return;
@@ -1899,5 +1930,31 @@ void CGamemaster::sortSavefilesByScore()
     }
     alleSaveFiles->SchreibenDerSpeicherdaten();
 
+}
+
+void CGamemaster::gameOverScreen()
+{
+    SDL_RenderClear(renderer);
+    SDL_Surface* tempSurface = IMG_Load(RSC_GAME_OVER_SCREEN);
+    SDL_Rect tempBounds;
+    SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempBounds.x = 0;
+    tempBounds.y = 0;
+    tempBounds.w = SCREEN_WIDTH;
+    tempBounds.h = SCREEN_HEIGHT;
+    SDL_RenderCopy(renderer, tempTexture, NULL, &tempBounds);
+    SDL_RenderPresent(renderer);
+    SDL_Event e;
+    while (SDL_PollEvent(&e) >= 0)
+    {
+        if (e.type == SDL_KEYDOWN || e.type == SDL_MOUSEBUTTONDOWN)
+            break;
+        else if (e.type == SDL_QUIT)
+            exit(0);
+        SDL_Delay(100);
+    }
+
+    SDL_DestroyTexture(tempTexture);
+    SDL_FreeSurface(tempSurface);
 }
 

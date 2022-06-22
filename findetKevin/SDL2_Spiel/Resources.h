@@ -12,6 +12,7 @@
 #define RSC_ANGRY_SPROUT_SPRITE "./EnemyTextures/SproutSheet.png"
 #define RSC_NPC_AMELIA_SPRITE "./PlayerTextures/Amelia_16x16.png"
 #define RSC_FONT_ARIAL "./Fonts/arial.ttf"
+#define RSC_GAME_OVER_SCREEN "./OtherTextures/GameOverScreen.png"
 #define RSC_BACKGROUND_OF_TITLESCREEN "./OtherTextures/TitlescreenBackground.png"
 #define RSC_BACKGROUND_OF_SELECTSAVEFILE "./OtherTextures/SelectSaveFileBackground.png"
 #define RSC_BACKGROUND_OF_TEXTBOX "./OtherTextures/TextboxForNPCs.png"
@@ -27,8 +28,6 @@
 #define RSC_HUD_LAYER "./OtherTextures/HUD.png"
 #define RSC_COIN_SPRITE "./OtherTextures/coin_16x16.png"
 #define RSC_NPC_BOOK_SPRITE "./OtherTextures/book.png"
-
 #define RSC_PROJECTILE_SPRITE "./EnemyTextures/Bandit_Bullet_extended.png"
-
 #define RSC_IK_CHARAKTER_SPRITE "./PlayerTextures/Adam_16x16.png"
 #define RSC_IK_BACKGROUND_IMAGE_OUTLINE "./IKTextures/Rand.png"
