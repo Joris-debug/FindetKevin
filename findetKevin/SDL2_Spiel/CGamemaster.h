@@ -4,12 +4,17 @@
 #include <iostream>
 #include "CGamemaster.h"
 #include <list>
+#include <set>
 #include "CPlayer.h"
 #include "CMap.h"
 #include "CEnemy.h"
 #include "CSavefile.h"
 #include <typeinfo>
 #include "CNPC.h"
+//#include "Projectile.h"
+
+class Projectile;
+
 class CGamemaster
 {
 private:
@@ -20,6 +25,7 @@ private:
 	SDL_Renderer* renderer;
 	list <CEntity*> listeVonEntitys;
 	list <CEntity*> listeVonEnemies;
+	std::set<Projectile*> allProjectiles;
 	CMap* currentMap;
 	CMap* currentMap_TopLayer;
 	CPlayer * spielerPointer;
@@ -57,5 +63,6 @@ public:
 	void sortSavefilesByName();
 	void sortSavefilesByScore();
 	void gameOverScreen();
+	inline std::set<Projectile*>* getAllProjectiles() { return &allProjectiles; };
 };
 

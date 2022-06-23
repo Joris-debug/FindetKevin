@@ -14,8 +14,6 @@ Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY,
 
 	this->texture = tempTexture;
 
-	this->tag = "projectile";
-
 	this->maxTravelDist = maxDist;
 
 	this->startPos.x = startX;
@@ -26,7 +24,7 @@ Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY,
 	this->bounds.w = 10;
 	this->bounds.h = 10;
 
-	this->moving = true;
+	this->isActive = true;
 
 	switch (dir)
 	{
@@ -46,12 +44,32 @@ Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY,
 		break;
 	}
 
-	game->getlisteVonEntitys()->push_back(this);
+	//game->getlisteVonEntitys()->push_back(this);
+	game->getAllProjectiles()->emplace(this);
 }
 
 void Projectile::update(int y, int x)
 {
+	if (!isActive)
+		return;
 	this->speed.addTo(&(this->bounds));
+
+	vec2 pos(bounds.x, bounds.y);
+
+	lifeTime++;
+
+	if (lifeTime > maxTravelDist)
+	{
+		std::cout << "Projectile deactivated" << std::endl;
+		isActive = false;
+		game->getAllProjectiles()->erase(this);
+		delete this;
+	}
+}
+
+void Projectile::render(SDL_Renderer* renderer)
+{
+
 }
 
 int Projectile::onInteract()

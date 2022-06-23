@@ -3,6 +3,7 @@ CMap::~CMap()
 {
 	SDL_DestroyTexture(texture);
 }
+
 CMap::CMap(SDL_Texture* textureTemp, SDL_Rect coords)
 {
 	position = coords;

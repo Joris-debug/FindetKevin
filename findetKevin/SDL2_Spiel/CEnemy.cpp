@@ -9,6 +9,9 @@ CEnemy::CEnemy(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect
     this->attackFrames = attackFrames;
     this->idleFrames = idleFrames;
     this->deathFrames = deathFrames;
+
+    this->cooldown = -1;
+    this->framesAfterLastAttack = 0;
 }
 
 int CEnemy::onInteract()
@@ -75,6 +78,14 @@ void CEnemy::update(int y, int x)
         textureCoords.h = 16;
         textureCoords.w = 16;
     }
+
+    framesAfterLastAttack++;
+    if (cooldown < 0)
+        return;
+    if (framesAfterLastAttack >= cooldown)
+    {
+        shouldShoot();
+    }
 }
 
 void CEnemy::shouldShoot()
@@ -93,25 +104,35 @@ void CEnemy::shouldShoot()
 
     if (xDist < agroWidth && dist < agroRadius && dist > passRadius)
     {
+        std::cout << "Player in Raduis" << std::endl;
         if (ownCenter.y < playerCenter.y)    // Over the player
         {
+            //std::cout << "Shooting down" << std::endl;
             game->getlisteVonEntitys()->push_back(new Projectile(game, DOWN, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+            framesAfterLastAttack = 0;
         }
         else if (ownCenter.y > playerCenter.y)    // Under the player
         {
+            //std::cout << "Shooting up" << std::endl;
             game->getlisteVonEntitys()->push_back(new Projectile(game, UP, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+            framesAfterLastAttack = 0;
         }
     }else if(yDist < agroWidth && dist < agroRadius && dist > passRadius)
     {
         if (ownCenter.x < playerCenter.x)    // Left of the player
         {
+            //std::cout << "Shooting right" << std::endl;
             game->getlisteVonEntitys()->push_back(new Projectile(game, RIGHT, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+            framesAfterLastAttack = 0;
         }
         else if (ownCenter.x > playerCenter.x)    // Right of the player
         {
+            //std::cout << "Shooting left" << std::endl;
             game->getlisteVonEntitys()->push_back(new Projectile(game, LEFT, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+            framesAfterLastAttack = 0;
         }
     }
 
+    return;
 }
 

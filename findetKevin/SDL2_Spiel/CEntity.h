@@ -37,6 +37,7 @@ public:
 	void setBounds(int y, int x);//x oder y wird lediglich dazu gerechnet
 	SDL_Rect* getBounds();
 	int getID();
+	inline string& getTag() { return tag; };
 	virtual void entityPathfinding(double deltaTime);
 };
 

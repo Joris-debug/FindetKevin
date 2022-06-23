@@ -64,15 +64,23 @@ struct vec2
 	}
 };
 
-class Projectile : public CEntity
+class Projectile
 {
 private:
 	vec2 speed;
 	vec2 startPos;
 	float maxTravelDist;
+	bool isActive;
+	int lifeTime;
+	CGamemaster* game;
+	SDL_Rect bounds;
+	SDL_Rect textureCoords;
+	SDL_Texture* texture;
 public:
 	Projectile(CGamemaster* game, Direction dir, int startX, int startY, float speed, float maxDist);
-	void update(int y, int x) override;
-	int onInteract() override;
+	void update(int y, int x);
+	int onInteract();
+	void render(SDL_Renderer* renderer);
+	inline bool getIsActive() const { return isActive; };
 };
 

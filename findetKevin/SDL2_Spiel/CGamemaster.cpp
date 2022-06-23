@@ -147,11 +147,29 @@ int CGamemaster::gameLoop()
         NPC_Pathfinding(deltaTime * 0.1);   //alle NPC's werden bewgegt
         for (auto cursor : listeVonEntitys)
         {
-            cursor->renderer(renderer);
+            if(cursor != nullptr)
+                cursor->renderer(renderer);
         }
 
+        int proCounter = 0;
+
         for (auto cursor : listeVonEntitys)
+            if (cursor != nullptr)
+            {
+                cursor->update(0, 0);
+                if (cursor->getTag() == "projectile")
+                {
+                    proCounter++;
+                }
+            }
+
+        std::cout << proCounter << std::endl;
+
+        for (auto cursor : allProjectiles)
+        {
             cursor->update(0, 0);
+            cursor->renderer(renderer);
+        }
 
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
 
