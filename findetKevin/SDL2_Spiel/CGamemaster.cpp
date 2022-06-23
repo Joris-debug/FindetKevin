@@ -167,8 +167,8 @@ int CGamemaster::gameLoop()
 
         for (auto cursor : allProjectiles)
         {
-            cursor->update(0, 0);
-            cursor->renderer(renderer);
+            //cursor->update(0, 0);
+            //cursor->renderer(renderer);
         }
 
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
