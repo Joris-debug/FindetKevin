@@ -99,7 +99,7 @@ void CEntity::entityPathfinding(double deltaTime)
         return;     
     int walkingDirectionX = walkingDirections.xDirection;  //Ich hole mir die Aktuelle Laufrichtung
     int walkingDirectionY = walkingDirections.yDirection;
-    srand(SDL_GetTicks() * entityID);
+    srand(SDL_GetTicks());
     if (SDL_GetTicks() % 2000 <= 100)         //Alle 2000 Ticks wird ein check gemacht ob die Richtung geändert wird(außerdem runde ich da nicht alle Computer gleich performen)
     {
         if (rand() % 5 == 1)   //Nur in 20% der Fällen wird wirklich die richtung verändert
@@ -125,6 +125,7 @@ void CEntity::entityPathfinding(double deltaTime)
         if (SDL_HasIntersection(&bounds, cursorMapEntity->getBounds()))
         {
             x_collision = false;
+            break;
         }
     }
 
@@ -133,6 +134,7 @@ void CEntity::entityPathfinding(double deltaTime)
         if (SDL_HasIntersection(&bounds, cursor->getBounds()) && cursor->getID() != entityID)  //Der Gegner soll nicht in andere Gegner laufen, aber er selbst befindet sich auch in der Liste, das muss abgefangen werden
         {
             x_collision = false;
+            break;
         }
 
     }
@@ -143,7 +145,7 @@ void CEntity::entityPathfinding(double deltaTime)
         if (rand() % 4 == 3)
             walkingDirections.xDirection = 0;
         else
-            walkingDirections.xDirection = walkingDirections.xDirection * (-1); //Nachdem er gegen eine Wand läuft soll er umkehren oder stehen bleiben, das macht den Gegner dynamischer
+            walkingDirections.xDirection *= -1; //Nachdem er gegen eine Wand läuft soll er umkehren oder stehen bleiben, das macht den Gegner dynamischer
 
     }
 
@@ -154,6 +156,7 @@ void CEntity::entityPathfinding(double deltaTime)
         {
 
             y_collision = false;
+            break;
         }
     }
 
@@ -162,6 +165,7 @@ void CEntity::entityPathfinding(double deltaTime)
         if (SDL_HasIntersection(&bounds, cursor->getBounds()) && cursor->getID() != entityID)
         {
             y_collision = false;
+            break;
         }
 
     }
