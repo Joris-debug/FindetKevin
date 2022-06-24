@@ -5,6 +5,7 @@ bool CEntity::getMovingStatus()
 {
     return moving;
 }
+
 void CEntity::update(int y, int x)
 {
 
@@ -17,6 +18,7 @@ int CEntity::onInteract()
 
 void CEntity::renderer(SDL_Renderer* renderer)
 {
+    //std::cout << "Rendering: " << tag << std::endl;
 
     if (textureCoords.w * 2 != bounds.w && textureCoords.h * 2 != bounds.h) //Entity befindet sich in der Mitte des Sprites
     {
@@ -25,10 +27,17 @@ void CEntity::renderer(SDL_Renderer* renderer)
         tempRect.h = textureCoords.h * 2;
         tempRect.x = bounds.x - bounds.w / 2;
         tempRect.y = bounds.y - bounds.h / 2;
+
+        //std::cout << "Player bounds: " << tempRect.x << " " << tempRect.y << std::endl;
+
         SDL_RenderCopy(renderer, texture, &textureCoords, &tempRect);
     }
     else
-    SDL_RenderCopy(renderer, texture, &textureCoords, &bounds);
+    {
+        //if (tag == "ANGRY_SPROUT")
+            //std::cout << bounds.x << " " << bounds.y << std::endl;
+        SDL_RenderCopy(renderer, texture, &textureCoords, &bounds);
+    }
 }
 
 CEntity::CEntity(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords, bool moving)
@@ -42,6 +51,7 @@ CEntity::CEntity(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Re
     this->walkingDirections = { 0,0 };
     this->moving = moving;
     this->game = game;
+    this->killFlag = false;
 
     cout << "Entity " << tag << ", ist gespawned" << endl;
 }
@@ -179,6 +189,8 @@ void CEntity::entityPathfinding(double deltaTime)
             walkingDirections.yDirection = walkingDirections.yDirection * (-1); //Nachdem er gegen eine Wand läuft soll er umkehren oder stehen bleiben, das macht den Gegner dynamischer
     }
     update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
+    if(tag == "projectile")
+        std::cout << "lol" << std::endl;
     return;
 }
 

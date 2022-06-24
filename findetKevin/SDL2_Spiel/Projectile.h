@@ -37,7 +37,7 @@ struct vec2
 	void addTo(SDL_Rect* rect) const
 	{
 		rect->x += this->x;
-		rect->y += this->y;
+		rect->y -= this->y;
 	}
 
 	float getXDist(const vec2& other)
@@ -64,7 +64,7 @@ struct vec2
 	}
 };
 
-class Projectile
+class Projectile : public CEntity
 {
 private:
 	vec2 speed;
@@ -72,15 +72,16 @@ private:
 	float maxTravelDist;
 	bool isActive;
 	int lifeTime;
-	CGamemaster* game;
-	SDL_Rect bounds;
-	SDL_Rect textureCoords;
-	SDL_Texture* texture;
+	//CGamemaster* game;
+	//SDL_Rect bounds;
+	//SDL_Rect textureCoords;
+	//SDL_Texture* texture;
 public:
 	Projectile(CGamemaster* game, Direction dir, int startX, int startY, float speed, float maxDist);
-	void update(int y, int x);
-	int onInteract();
-	void render(SDL_Renderer* renderer);
+	void update(int y, int x) override;
+	int onInteract() override;
+	void entityPathfinding(double dt) override;
+	//void render(SDL_Renderer* renderer);
 	inline bool getIsActive() const { return isActive; };
+	inline bool getKillFlag() const { return killFlag; };
 };
-

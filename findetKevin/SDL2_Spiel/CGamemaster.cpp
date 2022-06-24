@@ -163,7 +163,7 @@ int CGamemaster::gameLoop()
                 }
             }
 
-        std::cout << proCounter << std::endl;
+        //std::cout << proCounter << std::endl;
 
         for (auto cursor : allProjectiles)
         {
@@ -1210,13 +1210,28 @@ list<CEntity*>* CGamemaster::getlisteVonEnemies()
 
 void CGamemaster::NPC_Pathfinding(double deltaTime)
 {
-    for (CEntity* cursorEntity : listeVonEntitys)
+    //for (CEntity* cursorEntity : listeVonEntitys)
+    //std::list<CEntity*>::iterator it;
+    for (auto it = listeVonEntitys.begin(); it != listeVonEntitys.end(); it++)
     {
-        cursorEntity->entityPathfinding(deltaTime);
+        //cursorEntity->entityPathfinding(deltaTime);
+        (*it)->entityPathfinding(deltaTime);
+
+        if ((*it)->getTag() == "projectile")
+        {
+            if (((Projectile*)(*it))->getKillFlag())
+            {
+                std::cout << "Entity count:" << listeVonEntitys.size() << std::endl;
+                std::cout << "Removing projectile" << std::endl;
+                delete (*it);
+                listeVonEntitys.erase(it--);
+                std::cout << "Entity count:" << listeVonEntitys.size() << std::endl;
+            }
+        }
+        //it->entityPathfinding(deltaTime);
     }
     return;
 }
-
 void CGamemaster::titlescreen()
 {
     TTF_Font* font;

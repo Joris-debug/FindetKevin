@@ -21,6 +21,7 @@ protected:
 	string tag;
 	int entityID;
 	static int entityCount;
+	bool killFlag;
 	CGamemaster* game;
 public:
 	bool getMovingStatus();

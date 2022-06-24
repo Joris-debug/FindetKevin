@@ -105,7 +105,7 @@ int CJohn::onInteract()
 		tempEntity = new CEnemy(game, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
 		game->getlisteVonEnemies()->push_back(tempEntity);
 		game->getlisteVonEntitys()->push_back(tempEntity);
-		((CEnemy*)tempEntity)->setCooldown(60);
+		((CEnemy*)tempEntity)->setCooldown(60*3);
 		SDL_FreeSurface(tempSurface);
 
 		tempBounds = this->bounds;

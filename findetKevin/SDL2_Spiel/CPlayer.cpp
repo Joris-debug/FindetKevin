@@ -133,3 +133,12 @@ void CPlayer::animation(int y, int x, double deltaTime)
     }
     
 }
+
+void CPlayer::takeDmg(int dmg)
+{
+    game->getCurrentSaveFile()->setLives(game->getCurrentSaveFile()->getLives() - 1);
+    if (game->getCurrentSaveFile()->getLives() == 0)
+    {
+        game->gameOverScreen();
+    }
+}

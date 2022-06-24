@@ -12,6 +12,8 @@ CEnemy::CEnemy(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Rect
 
     this->cooldown = -1;
     this->framesAfterLastAttack = 0;
+
+    this->game = game;
 }
 
 int CEnemy::onInteract()
@@ -102,36 +104,42 @@ void CEnemy::shouldShoot()
     float agroRadius = 200;
     float passRadius = 60;
 
-    //if (xDist < agroWidth && dist < agroRadius && dist > passRadius)
-    //{
-    //    std::cout << "Player in Raduis" << std::endl;
-    //    if (ownCenter.y < playerCenter.y)    // Over the player
-    //    {
-    //        //std::cout << "Shooting down" << std::endl;
-    //        game->getlisteVonEntitys()->push_back(new Projectile(game, DOWN, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
-    //        framesAfterLastAttack = 0;
-    //    }
-    //    else if (ownCenter.y > playerCenter.y)    // Under the player
-    //    {
-    //        //std::cout << "Shooting up" << std::endl;
-    //        game->getlisteVonEntitys()->push_back(new Projectile(game, UP, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
-    //        framesAfterLastAttack = 0;
-    //    }
-    //}else if(yDist < agroWidth && dist < agroRadius && dist > passRadius)
-    //{
-    //    if (ownCenter.x < playerCenter.x)    // Left of the player
-    //    {
-    //        //std::cout << "Shooting right" << std::endl;
-    //        game->getlisteVonEntitys()->push_back(new Projectile(game, RIGHT, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
-    //        framesAfterLastAttack = 0;
-    //    }
-    //    else if (ownCenter.x > playerCenter.x)    // Right of the player
-    //    {
-    //        //std::cout << "Shooting left" << std::endl;
-    //        game->getlisteVonEntitys()->push_back(new Projectile(game, LEFT, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
-    //        framesAfterLastAttack = 0;
-    //    }
-    //}
+    float speed = 1.0f;
+
+    if (xDist < agroWidth && dist < agroRadius && dist > passRadius)
+    {
+        //std::cout << "Player in Raduis" << std::endl;
+        if (ownCenter.y < playerCenter.y)    // Over the player
+        {
+            //std::cout << "Shooting down" << std::endl;
+            new Projectile(game, DOWN, ownCenter.x, ownCenter.y, speed, 300.0f);
+            //game->getAllProjectiles()->insert(new Projectile(game, DOWN, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+            framesAfterLastAttack = 0;
+        }
+        else if (ownCenter.y > playerCenter.y)    // Under the player
+        {
+            //std::cout << "Shooting up" << std::endl;
+            new Projectile(game, UP, ownCenter.x, ownCenter.y, speed, 300.0f);
+            //game->getAllProjectiles()->insert(new Projectile(game, UP, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+            framesAfterLastAttack = 0;
+        }
+    }else if(yDist < agroWidth && dist < agroRadius && dist > passRadius)
+    {
+        if (ownCenter.x < playerCenter.x)    // Left of the player
+        {
+            //std::cout << "Shooting right" << std::endl;
+            //game->getlisteVonEntitys()->push_back(new Projectile(game, RIGHT, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+            new Projectile(game, RIGHT, ownCenter.x, ownCenter.y, speed, 300.0f);
+            framesAfterLastAttack = 0;
+        }
+        else if (ownCenter.x > playerCenter.x)    // Right of the player
+        {
+            //std::cout << "Shooting left" << std::endl;
+            //game->getlisteVonEntitys()->push_back(new Projectile(game, LEFT, ownCenter.x, ownCenter.y, 5.0f, 300.0f));
+            new Projectile(game, LEFT, ownCenter.x, ownCenter.y, speed, 300.0f);
+            framesAfterLastAttack = 0;
+        }
+    }
 
     return;
 }

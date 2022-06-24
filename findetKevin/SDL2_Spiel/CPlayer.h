@@ -12,6 +12,7 @@ public:
     void onDeath();
     int bewegen(int y, int x);
     int interagieren();
+    void takeDmg(int dmg);
     void animation(int y, int x, double deltaTime);
     CPlayer(CGamemaster * game, SDL_Texture* textureTemp, string tag, SDL_Rect bounds, SDL_Rect textureCoords);
     void setCurrentMap(CMap *map);
