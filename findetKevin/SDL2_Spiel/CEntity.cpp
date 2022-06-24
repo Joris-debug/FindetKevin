@@ -109,7 +109,7 @@ void CEntity::entityPathfinding(double deltaTime)
         return;     
     int walkingDirectionX = walkingDirections.xDirection;  //Ich hole mir die Aktuelle Laufrichtung
     int walkingDirectionY = walkingDirections.yDirection;
-    srand(SDL_GetTicks());
+    srand(SDL_GetTicks() * entityID);
     if (SDL_GetTicks() % 2000 <= 100)         //Alle 2000 Ticks wird ein check gemacht ob die Richtung geändert wird(außerdem runde ich da nicht alle Computer gleich performen)
     {
         if (rand() % 5 == 1)   //Nur in 20% der Fällen wird wirklich die richtung verändert

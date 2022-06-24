@@ -1067,6 +1067,20 @@ int CGamemaster::initLevel2()
     tempMapEntity = new CMapEntity(tempBounds); //Baum ganz oben am Weg
     currentMap->addObjectToMap(tempMapEntity);
 
+    tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 16;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds = { -940 + 557 * 2,-615 + 414 * 2, 16 * 2,  16 * 2 };
+    tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
+    listeVonEnemies.push_back(tempEntity);
+    listeVonEntitys.push_back(tempEntity);
+    SDL_FreeSurface(tempSurface);
+    ((CEnemy*)tempEntity)->setCooldown(60 * 3);
+
     tempSurface = IMG_Load(RSC_NPC_ANDREAS_SPRITE);
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempTextureCoords.x = 0;
