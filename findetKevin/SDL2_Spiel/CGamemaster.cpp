@@ -830,7 +830,6 @@ int CGamemaster::initLevel1()
     tempBounds.h = 24 * 2;
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schuelerin", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
-    spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_NPC_ALEX_SPRITE);
@@ -846,7 +845,6 @@ int CGamemaster::initLevel1()
     tempBounds.h = 24 * 2;
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
-    spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_NPC_ADAM_SPRITE);
@@ -862,7 +860,6 @@ int CGamemaster::initLevel1()
     tempBounds.h = 24 * 2;
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Schueler", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
-    spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_NPC_BOB_SPRITE);
@@ -878,7 +875,8 @@ int CGamemaster::initLevel1()
     tempBounds.h = 24 * 2;
     tempEntity = new CNPC(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Herr_Schwaiger", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
-    spielerPointer->setCurrentMap(currentMap);
+
+    
     SDL_FreeSurface(tempSurface);
 
     tempSurface = IMG_Load(RSC_NPC_JOHN_SPRITE);
@@ -937,6 +935,7 @@ int CGamemaster::initLevel1()
     tempBounds.y = -1264 + 256 * 2;
     tempEntity = new CQuestTrigger(1, this, NULL, "STAIRS_DOWN", tempBounds, tempTextureCoords, NULL);
     listeVonEntitys.push_back(tempEntity);
+
     spielerPointer->setCurrentMap(currentMap);
 
     return this->gameLoop();
@@ -1764,14 +1763,14 @@ void CGamemaster::deleteTheWholeLevel()
 
     while (listeVonEnemies.size() > 0)
         listeVonEnemies.remove(listeVonEnemies.front());
+        
+    delete spielerPointer;
 
     while (listeVonEntitys.size() > 0)
     {
         delete listeVonEntitys.front();
         listeVonEntitys.remove(listeVonEntitys.front());
     }
-    
-    delete spielerPointer;
 
     for (auto cursor : currentMap->getListeVonEntitys())
     {
