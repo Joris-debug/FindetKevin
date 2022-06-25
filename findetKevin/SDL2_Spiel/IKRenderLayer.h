@@ -19,7 +19,7 @@ private:
 	std::list<Collider*> m_Colliders;
 	IKMap* m_Map;
 public:
-	void init(const std::string& path, SDL_Renderer* renderer, float distance, IKMap* map);
+	void init(const std::string& path, SDL_Renderer* renderer, float distance, IKMap* map, int height);
 	void update(double dt);
 	void render(bool renderCols);
 public:

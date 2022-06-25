@@ -25,7 +25,7 @@ Collider::Collider(SDL_Rect other, b2World* simulation)
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
 	fixtureDef.density = 0.0f;
-	fixtureDef.friction = 0.2f;
+	fixtureDef.friction = 0.6f;
 
 	m_Body->CreateFixture(&shape, 0.0f);
 }
@@ -37,7 +37,7 @@ void Collider::update(float dt)
 	//m_Box.y = pos.y;
 }
 
-void Collider::render(SDL_Renderer* renderer)
+void Collider::render(SDL_Renderer* renderer, float yOffset)
 {
 	Uint8 r, g, b, a;
 
@@ -48,7 +48,7 @@ void Collider::render(SDL_Renderer* renderer)
 	b2Vec2 center = m_Body->GetWorldCenter();
 
 	center.x = center.x * m2p;
-	center.y = center.y * m2p;
+	center.y = (center.y - yOffset) * m2p;
 
 	dstRect.x = center.x - (m_Width / 2);
 	dstRect.y = u_b2ToSdl(center.y + (m_Height / 2));

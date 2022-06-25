@@ -48,27 +48,66 @@ void IKPlayer::init()
 
     m_InAir = false;
 
+    m_Speed = 200.0f * m2p;
+
+    /* Rect */
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
+    bd.allowSleep = true;
+    bd.awake = true;
     bd.fixedRotation = true;
-
-    //SDL_Rect b2Bounds = u_SdlRectToB2(m_Bounds);
-
-    bd.position = b2Vec2(m_StartingX * p2m, m_StartingY * p2m);
+    bd.position = b2Vec2((D_SCREEN_WIDTH / 2) * p2m, (D_SCREEN_HEIGHT / 2) * p2m);
 
     m_Body = m_Map->getSimulation()->CreateBody(&bd);
 
-    b2PolygonShape shape;
-    shape.SetAsBox(m_Width / 2 * p2m, m_Height / 2 * p2m);
+    b2PolygonShape shapeRect;
+    shapeRect.SetAsBox(m_Width / 2 * p2m, m_Height / 2 * p2m);
 
     b2FixtureDef fixtureDef;
-    fixtureDef.shape = &shape;
-    fixtureDef.density = 5.0f;
+    fixtureDef.shape = &shapeRect;
+    fixtureDef.density = 3.0f;
     fixtureDef.friction = 0.3f;
 
     m_Body->CreateFixture(&fixtureDef);
 
-    std::cout << "Starting center: " << m_Body->GetWorldCenter().x << " " << u_b2ToSdl(m_Body->GetWorldCenter().x) << std::endl;
+    /* Wheel */
+    /*
+    b2CircleShape shapeCircle;
+    shapeCircle.m_radius = 46 * p2m;
+
+    fixtureDef.shape = &shapeCircle;
+
+    bd.position = b2Vec2(m_StartingX * p2m, (m_StartingY - 5) * p2m);
+    bd.fixedRotation = false;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.9f;
+    m_Wheel = m_Map->getSimulation()->CreateBody(&bd);
+    m_Wheel->CreateFixture(&fixtureDef);
+
+    float hertz = 4.0f;
+    float dampingRatio = .7f;
+    float omega = 2.0f * b2_pi * hertz;
+
+    */
+    /*
+    b2Vec2 axis(0.0f, 1.0f);
+    b2WheelJointDef jd;
+    jd.Initialize(m_Body, m_Wheel, m_Wheel->GetPosition(), axis);
+    jd.motorSpeed = 0.0f;
+    jd.maxMotorTorque = 20.0f;
+    jd.enableMotor = true;
+    jd.stiffness = m_Wheel->GetMass() * omega * omega;
+    jd.damping = 2.0f * m_Wheel->GetMass() * dampingRatio * omega;
+    jd.lowerTranslation = -0.5f;
+    jd.upperTranslation = 0.5f;
+    jd.enableLimit = true;
+    m_Spring = (b2WheelJoint*)m_Map->getSimulation()->CreateJoint(&jd);
+
+    */
+
+    m_lastYValue = m_Body->GetPosition().y;
+
+    //std::cout << "Starting center: " << m_Body->GetWorldCenter().x << " " << u_b2ToSdl(m_Body->GetWorldCenter().x) << std::endl;
 }
 
 void IKPlayer::update(double dt)
@@ -143,29 +182,37 @@ void IKPlayer::render()
     b2Vec2 center = m_Body->GetWorldCenter();
 
     center.x = center.x * m2p;
-    center.y = center.y * m2p;
+    center.y = center.y * m2p - m_Map->getOffsetY() * m2p;
 
-    std::cout << "center of player: " << center.x << " " << center.y << std::endl;
+    //std::cout << "center of player: " << center.x << " " << center.y << std::endl;
 
     dstRect.x = center.x - (m_Width / 2);
     dstRect.y = u_b2ToSdl(center.y + (m_Height / 2));
     dstRect.w = m_Width;
     dstRect.h = m_Height;
 
+    //std::cout << "y: (normal)" << u_b2ToSdl(center.y + (m_Height / 2)) << " (yOff)" << m_Map->getOffsetY() << " (+)" << u_b2ToSdl(center.y + (m_Height / 2)) + m_Map->getOffsetY() << std::endl;
+
     SDL_RenderCopyEx(m_Map->getRenderer(), m_Texture, &srcRect, &dstRect, angle, nullptr, SDL_FLIP_NONE);
 }
 
 void IKPlayer::walk(Direction dir)
 {
-    std::cout << "walking: " << dir << std::endl;
+    //std::cout << "walking: " << dir << std::endl;
     if (dir == LEFT)
     {
         //m_Body->ApplyForceToCenter(b2Vec2(50.0f * p2m, 1.0f), true);
-        m_Body->ApplyLinearImpulseToCenter(b2Vec2(-50.0f * p2m, 1.0f), true);
+        m_Body->ApplyLinearImpulseToCenter(b2Vec2(-50.0f * p2m, 1.0f), false);
+        //m_Spring->SetMotorSpeed(m_Speed);
     }
     else if (dir == RIGHT)
     {
-        m_Body->ApplyLinearImpulseToCenter(b2Vec2(50.0f * p2m, 1.0f), true);
+        m_Body->ApplyLinearImpulseToCenter(b2Vec2(50.0f * p2m, 1.0f), false);
+        //m_Spring->SetMotorSpeed(-m_Speed);
+    }
+    else if (dir == NONE)
+    {
+        //m_Spring->SetMotorSpeed(0);
     }
 }
 
@@ -180,7 +227,14 @@ void IKPlayer::jump()
         m_InAir = true;
     }
 
-    m_Body->ApplyLinearImpulseToCenter(b2Vec2(0, 300.0f), true);
+    if (!m_Body->IsAwake())
+    {
+        int x = 0;
+        int y = 0;
+        //SDL_GetMouseState(&x, &y);
+
+        m_Body->ApplyLinearImpulseToCenter(b2Vec2(0, 400.0f), true);
+    }
 }
 
 Collider* IKPlayer::checkCollision()

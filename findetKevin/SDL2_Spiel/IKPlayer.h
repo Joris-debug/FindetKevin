@@ -22,7 +22,11 @@ private:
 	SDL_Texture* m_Texture;
 	IKMap* m_Map;
 	b2Body* m_Body;
+	b2Body* m_Wheel;
+	b2WheelJoint* m_Spring;
 private:
+	float m_Speed;
+	float m_lastYValue;
 	bool m_InAir;
 	Direction m_Dir;
 public:
@@ -32,10 +36,14 @@ public:
 	void init();
 	void update(double dt);
 	void render();	// Uses the renderer of the map, to draw itself 
-	void walk(Direction dir);
+	inline b2Vec2 getPosB2() { return m_Body->GetPosition(); };
+	inline float getLastY() { return m_lastYValue; };
+	inline void setLastY(float y) { m_lastYValue = y; };
 	Collider* checkCollision();
 	Collider* checkCollision(Collider* col);
+	inline int getHeight() { return m_Height; };
 public:
+	void walk(Direction dir);
 	void jump();
 private:
 	bool tryMove();
