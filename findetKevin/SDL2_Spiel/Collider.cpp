@@ -37,7 +37,7 @@ void Collider::update(float dt)
 	//m_Box.y = pos.y;
 }
 
-void Collider::render(SDL_Renderer* renderer, float yOffset)
+void Collider::render(SDL_Renderer* renderer, float yOffset, float sOffsetY)
 {
 	Uint8 r, g, b, a;
 
@@ -48,7 +48,7 @@ void Collider::render(SDL_Renderer* renderer, float yOffset)
 	b2Vec2 center = m_Body->GetWorldCenter();
 
 	center.x = center.x * m2p;
-	center.y = (center.y - yOffset) * m2p;
+	center.y = (center.y - yOffset) * m2p + sOffsetY * m2p;
 
 	dstRect.x = center.x - (m_Width / 2);
 	dstRect.y = u_b2ToSdl(center.y + (m_Height / 2));

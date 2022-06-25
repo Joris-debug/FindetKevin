@@ -36,3 +36,4 @@
 #define RSC_IK_MEMBRAN_1_IMAGE "./IKTextures/Membran 1.png"
 #define RSC_IK_ORGANS_IMAGE "./IKTextures/MergedOrgans.png"
 #define RSC_IK_BACKGROUND_IMAGE "./IKTextures/Membran 2.png"
+#define RSC_IK_BLOCKER_IMAGE "./IKTextures/Blocker.png"

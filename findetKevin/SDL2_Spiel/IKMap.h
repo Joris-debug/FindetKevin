@@ -21,7 +21,10 @@ private:
 	std::unique_ptr<IKRenderLayer> m_GeometryLayer;
 	std::unique_ptr<IKRenderLayer> m_Membran1Layer;
 	std::unique_ptr<IKRenderLayer> m_BackgroundLayer;
+	std::unique_ptr<IKRenderLayer> m_TopBlockerLayer;
+	std::unique_ptr<IKRenderLayer> m_BottomBlockerLayer;
 	float m_OffsetY;
+	float m_StartingOffsetY;
 	b2World* m_Simulation;
 public:
 	float m_Gravity;
@@ -37,5 +40,6 @@ public:
 	inline b2World* getSimulation() const { return m_Simulation; };
 	inline float getOffsetY() { return m_OffsetY; };
 	inline void setOffsetY(float newOffset) { m_OffsetY = newOffset; };
+	inline float getStartingOffsetY() const { return m_StartingOffsetY; };
 };
 

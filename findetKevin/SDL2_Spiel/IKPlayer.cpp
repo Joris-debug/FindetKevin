@@ -56,7 +56,7 @@ void IKPlayer::init()
     bd.allowSleep = true;
     bd.awake = true;
     bd.fixedRotation = true;
-    bd.position = b2Vec2((D_SCREEN_WIDTH / 2) * p2m, (D_SCREEN_HEIGHT / 2) * p2m);
+    bd.position = b2Vec2((D_SCREEN_WIDTH / 2) * p2m, -148.0f);
 
     m_Body = m_Map->getSimulation()->CreateBody(&bd);
 
@@ -115,6 +115,7 @@ void IKPlayer::update(double dt)
     dt = dt / 4;
 
     b2Vec2 bodyPos = m_Body->GetPosition();
+    std::cout << bodyPos.y << std::endl;
 
     //m_Bounds = u_B2RectToSdl({(int)bodyPos.x, (int)bodyPos.y, m_Bounds.w, m_Bounds.h});
 

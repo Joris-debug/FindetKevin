@@ -18,8 +18,9 @@ private:
 	float m_Distance;
 	std::list<Collider*> m_Colliders;
 	IKMap* m_Map;
+	float m_PersOffsetY;
 public:
-	void init(const std::string& path, SDL_Renderer* renderer, float distance, IKMap* map, int height);
+	void init(const std::string& path, SDL_Renderer* renderer, float distance, IKMap* map, int height, float yOffset);
 	void update(double dt);
 	void render(bool renderCols);
 public:

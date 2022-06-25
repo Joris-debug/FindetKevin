@@ -35,16 +35,21 @@ void IKMap::init()
 	m_GeometryLayer = std::make_unique<IKRenderLayer>();
 	m_Membran1Layer = std::make_unique<IKRenderLayer>();
 	m_BackgroundLayer = std::make_unique<IKRenderLayer>();
+	m_TopBlockerLayer = std::make_unique<IKRenderLayer>();
+	m_BottomBlockerLayer = std::make_unique<IKRenderLayer>();
 
 	//m_BackgroundLayer->init(RSC_IK_BACKGROUND_IMAGE_OUTLINE, m_Renderer, 0.8f, this);
-	m_BorderLayer->init(RSC_IK_BORDER_IMAGE_OUTLINE, m_Renderer, 1.0f * 0.8f, this, 720);
-	m_GeometryLayer->init(RSC_IK_GEOMETRY_IMAGE, m_Renderer, 1.0f, this, 720);
-	m_Membran1Layer->init(RSC_IK_MEMBRAN_1_IMAGE, m_Renderer, 1.0f * 0.8f, this, 720);
-	m_OrganLayer->init(RSC_IK_ORGANS_IMAGE, m_Renderer, 0.768f, this, 553);
-	m_BackgroundLayer->init(RSC_IK_BACKGROUND_IMAGE, m_Renderer, 398.0f/720.0f * 0.78f, this, 398);
+	m_BorderLayer->init(RSC_IK_BORDER_IMAGE_OUTLINE, m_Renderer, 1.0f * 0.8f, this, 720, 0);
+	m_GeometryLayer->init(RSC_IK_GEOMETRY_IMAGE, m_Renderer, 1.0f, this, 720, 0);
+	m_Membran1Layer->init(RSC_IK_MEMBRAN_1_IMAGE, m_Renderer, 1.0f * 0.8f, this, 720, 0);
+	m_OrganLayer->init(RSC_IK_ORGANS_IMAGE, m_Renderer, 0.768f, this, 553, 0);
+	m_BackgroundLayer->init(RSC_IK_BACKGROUND_IMAGE, m_Renderer, 398.0f/720.0f * 0.78f, this, 398, 0);
+	m_TopBlockerLayer->init(RSC_IK_BLOCKER_IMAGE, m_Renderer, 0.8f, this, 400, -397 * 4);
+	m_BottomBlockerLayer->init(RSC_IK_BLOCKER_IMAGE, m_Renderer, 1.0f, this, 400, 720 * 4);
 
 	m_Gravity = 0.04f;
-	m_OffsetY = 0;
+	m_OffsetY = (D_SCREEN_HEIGHT / 2) * p2m - 182.0f;
+	m_StartingOffsetY = 0.0f;
 
 	Collider* floorCollider = new Collider({ 9 * 4 + 65 * 2, 644 * 4 + 27 * 2, 65 * 4, 27 * 4 }, m_Simulation);  // x, y, w, h
 	m_GeometryLayer->getColliders().push_back(floorCollider);
@@ -82,8 +87,14 @@ void IKMap::init()
 	Collider* collider11 = new Collider({ 165 * 4 + 31 * 2, 165 * 4 + 25 * 2, 31 * 4, 25 * 4 }, m_Simulation);  // x, y, w, h
 	m_GeometryLayer->getColliders().push_back(collider11);
 
-	Collider* collider12 = new Collider({ 74 * 4 + 49 * 2, 89 * 4 + 37 * 2, 49 * 4, 37 * 4 }, m_Simulation);  // x, y, w, h
+	Collider* collider12 = new Collider({ 72 * 4 + 49 * 2, 89 * 4 + 37 * 2, 49 * 4, 37 * 4 }, m_Simulation);  // x, y, w, h
 	m_GeometryLayer->getColliders().push_back(collider12);
+
+	Collider* colliderLeft = new Collider({ 2 * 2, 37 * 4, 2 * 4, 720 * 8 }, m_Simulation);  // x, y, w, h
+	m_BorderLayer->getColliders().push_back(colliderLeft);
+
+	Collider* colliderRight = new Collider({ 198 * 4 + 2 * 2, 0 * 720 + 37 * 4, 2 * 4, 720 * 8 }, m_Simulation);  // x, y, w, h
+	m_BorderLayer->getColliders().push_back(colliderRight);
 }
 
 void IKMap::update(double dt)
@@ -100,6 +111,8 @@ void IKMap::update(double dt)
 	m_Membran1Layer->update(dt);
 	m_OrganLayer->update(dt);
 	m_BackgroundLayer->update(dt);
+	m_TopBlockerLayer->update(dt);
+	m_BottomBlockerLayer->update(dt);
 }
 
 void IKMap::render()
@@ -110,4 +123,6 @@ void IKMap::render()
 	m_Player->render();
 	m_GeometryLayer->render(false);
 	m_BorderLayer->render(false);
+	m_TopBlockerLayer->render(false);
+	m_BottomBlockerLayer->render(false);
 }

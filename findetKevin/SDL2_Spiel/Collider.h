@@ -15,7 +15,7 @@ private:
 	b2World* m_Simulation;
 public:
 	int m_OffsetY;
-	void render(SDL_Renderer* renderer, float yOffset);
+	void render(SDL_Renderer* renderer, float yOffset, float sOffsetY);
 	void update(float dt);
 public:
 	Collider(SDL_Rect other, b2World* simulation);
