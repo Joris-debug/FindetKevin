@@ -167,38 +167,6 @@ void IKPlayer::jump()
     }
 }
 
-Collider* IKPlayer::checkCollision()
-{
-    IKRenderLayer* colLayer = m_Map->getCollisionLayer();
-    Collider playerCollider;
-    playerCollider.m_OffsetY = 0;
-    //playerCollider.setRect(&m_Bounds);
-    for (auto collider : colLayer->getColliders())
-    {
-        //if (collider->checkCollison(playerCollider))
-        {
-            return collider;
-        }
-    }
-    return nullptr;
-}
-
-Collider* IKPlayer::checkCollision(Collider* col)
-{
-    IKRenderLayer* colLayer = m_Map->getCollisionLayer();
-    //Collider playerCollider;
-    //playerCollider.m_OffsetY = 0;
-    //playerCollider.setRect(&m_Bounds);
-    for (auto collider : colLayer->getColliders())
-    {
-        //if (collider->checkCollison(*col))
-        {
-            return collider;
-        }
-    }
-    return nullptr;
-}
-
 void IKPlayer::animate(int y, int x)
 {
     int totalFrames = 8;   // Animation besteht jeweils aus 6 sprites

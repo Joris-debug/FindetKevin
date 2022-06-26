@@ -166,12 +166,6 @@ int CGamemaster::gameLoop()
 
         //std::cout << proCounter << std::endl;
 
-        for (auto cursor : allProjectiles)
-        {
-            //cursor->update(0, 0);
-            //cursor->renderer(renderer);
-        }
-
         spielerPointer->renderer(renderer); // Den Spieler jeden Frame rendern
 
       

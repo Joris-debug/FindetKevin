@@ -141,4 +141,7 @@
       <UniqueIdentifier>{15ae97b7-c89e-4dde-86f0-6c85e6d9bdeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>

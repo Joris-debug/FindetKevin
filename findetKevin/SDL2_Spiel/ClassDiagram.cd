@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="CBuch">
+    <Position X="36.25" Y="5.25" Width="7.75" />
+    <InheritanceLine Type="CNPC" FixedFromPoint="true">
+      <Path>
+        <Point X="35.25" Y="6.062" />
+        <Point X="36.25" Y="6.062" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CBuch.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CCoin">
+    <Position X="17" Y="0.5" Width="7.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAEAAgAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>CCoin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEnemy">
+    <Position X="0.5" Y="0.5" Width="13.5" />
+    <InheritanceLine Type="CEntity" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="26.625" Y="7.75" />
+        <Point X="26.625" Y="7.344" />
+        <Point X="24.833" Y="7.344" Type="JumpStart" />
+        <Point X="24.667" Y="7.344" Type="JumpEnd" />
+        <Point X="20.861" Y="7.344" />
+        <Point X="20.861" Y="4.688" />
+        <Point X="14" Y="4.688" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EAAhAgAAQAGggEAAAAAAAACAADAAIAACIAAAAAAEAAE=</HashCode>
+      <FileName>CEnemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEntity">
+    <Position X="22.75" Y="7.75" Width="7.75" />
+    <AssociationLine Name="game" Type="CGamemaster" FixedToPoint="true">
+      <Path>
+        <Point X="22.75" Y="12.25" />
+        <Point X="3.5" Y="12.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>gIAgCTABAQEgAQCAAAAAAAABAIAAAgAKIAADAAAEgBA=</HashCode>
+      <FileName>CEntity.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="game" />
+      <Field Name="walkingDirections" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CGamemaster">
+    <Position X="0.5" Y="10.75" Width="3" />
+    <AssociationLine Name="currentMap_TopLayer" Type="CMap" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="19.805" />
+        <Point X="3.25" Y="21.5" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="currentMap" Type="CMap" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="19.805" />
+        <Point X="1.25" Y="21.5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AEAAAVA0AAEAB4AHAEBIAQGgCJEAAAAIEBwigHBBgCg=</HashCode>
+      <FileName>CGamemaster.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="alleSaveFiles" />
+      <Field Name="currentMap_TopLayer" />
+      <Field Name="currentMap" />
+      <Field Name="currentSaveFile" />
+      <Field Name="spielerPointer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CJohn">
+    <Position X="36.5" Y="3.25" Width="7.75" />
+    <InheritanceLine Type="CNPC" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="31.375" Y="3.5" />
+        <Point X="31.375" Y="3.312" />
+        <Point X="36.562" Y="3.312" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CJohn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CKevin">
+    <Position X="31.75" Y="7.25" Width="7.75" />
+    <InheritanceLine Type="CNPC" FixedFromPoint="true">
+      <Path>
+        <Point X="35.25" Y="6.062" />
+        <Point X="35.75" Y="6.062" />
+        <Point X="35.75" Y="7.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CKevin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMap">
+    <Position X="0.5" Y="21.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AABAIAAAAAFAAgBAAAAAIAAAAAAAAiAAAAAAAAAAAAA=</HashCode>
+      <FileName>CMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMapEntity">
+    <Position X="8.5" Y="14" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAEAAAAAAAACAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>CMapEntity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CNPC">
+    <Position X="27.5" Y="3.5" Width="7.75" />
+    <TypeIdentifier>
+      <HashCode>EAgAAAAAAAUAAAAAIAAAAAAAABQAABAAIAAAAAAEAAA=</HashCode>
+      <FileName>CNPC.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Collider">
+    <Position X="23.25" Y="22.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAABAAAAAAAAAAAAIACwAAAAAAAUAAA=</HashCode>
+      <FileName>Collider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CPlayer">
+    <Position X="0.5" Y="6.25" Width="7" />
+    <InheritanceLine Type="CEntity" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="22.75" Y="8.188" />
+        <Point X="7.5" Y="8.219" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AIAAABAQAAAAgBAAAAEAAIAhAACAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>CPlayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CQuestTrigger">
+    <Position X="25.25" Y="0.5" Width="9.25" />
+    <InheritanceLine Type="CEntity" FixedToPoint="true">
+      <Path>
+        <Point X="26.625" Y="7.75" />
+        <Point X="26.625" Y="2.569" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAEAAAAAQAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>CQuestTrigger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSavefile">
+    <Position X="5.75" Y="13.25" Width="8.5" />
+    <AssociationLine Name="nextFile" Type="CSavefile" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.25" Y="18.651" />
+        <Point X="11.25" Y="18.901" />
+        <Point X="13.188" Y="18.901" />
+        <Point X="13.188" Y="18.651" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AABAAMUAEAMAAQAABAUAAEAAAAAEAAAAAGEIAAIAACA=</HashCode>
+      <FileName>CSavefile.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="nextFile" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="IKGameLogic">
+    <Position X="17" Y="14" Width="6.5" />
+    <AssociationLine Name="m_Map" Type="IKMap" FixedFromPoint="true">
+      <Path>
+        <Point X="23.5" Y="14.812" />
+        <Point X="34.25" Y="14.812" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>iAAAALAAAACAAAAAAAAMCQAAAAAAAAIAAAAAAUAUAAA=</HashCode>
+      <FileName>IKGameLogic.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="m_FirstSavefile" />
+      <Field Name="m_Map" />
+      <Field Name="m_Player" />
+      <Field Name="m_Savefile" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="IKMap">
+    <Position X="34.25" Y="10" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AYABgAAAQAAAAQAAAAIEAACAAQAIIAIABUEgAQAUgAQ=</HashCode>
+      <FileName>IKMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IKPlayer">
+    <Position X="27.5" Y="15" Width="2.75" />
+    <AssociationLine Name="m_Dir" Type="Direction" FixedFromPoint="true">
+      <Path>
+        <Point X="30.25" Y="18.438" />
+        <Point X="31" Y="18.438" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAICASAAAAAQAAABIgAgAAJAQoQEQgOgQGAEAAAUAAA=</HashCode>
+      <FileName>IKPlayer.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="m_Map" />
+      <Field Name="m_Dir" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="IKRenderLayer">
+    <Position X="10" Y="20.25" Width="6.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAgCIQAAAAQACAABAIAQIAAAAAAAIAACAAAQAUAIA=</HashCode>
+      <FileName>IKRenderLayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IKVirus">
+    <Position X="17.5" Y="22" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAABQAAAAAAAABAgAAIgAIAACAAAAEAAAACAQAUAAA=</HashCode>
+      <FileName>IKVirus.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile">
+    <Position X="11" Y="8.75" Width="5.75" />
+    <InheritanceLine Type="CEntity" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="22.75" Y="9.938" />
+        <Point X="16.75" Y="9.938" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAQAQABAAEAQAAAEAAAABAAAAAAAQAAAAAAAAAEIAI=</HashCode>
+      <FileName>Projectile.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="startPos" />
+    </ShowAsAssociation>
+  </Class>
+  <Struct Name="structForWalkingDirections">
+    <Position X="24" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CEntity.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="vec2">
+    <Position X="7.75" Y="8.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAIAAAAAAAAAAAAAAAAAAAAAAAABgAAIEAAE=</HashCode>
+      <FileName>Projectile.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Direction">
+    <Position X="31" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAQAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>IKPlayer.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -25,7 +25,6 @@ private:
 	SDL_Renderer* renderer;
 	list <CEntity*> listeVonEntitys;
 	list <CEntity*> listeVonEnemies;
-	std::set<Projectile*> allProjectiles;
 	CMap* currentMap;
 	CMap* currentMap_TopLayer;
 	CPlayer * spielerPointer;

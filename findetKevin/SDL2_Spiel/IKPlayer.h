@@ -22,8 +22,6 @@ private:
 	SDL_Texture* m_Texture;
 	IKMap* m_Map;
 	b2Body* m_Body;
-	b2Body* m_Wheel;
-	b2WheelJoint* m_Spring;
 private:
 	SDL_Rect m_TextureCoords;
 	SDL_Rect m_DstRect;
@@ -43,8 +41,6 @@ public:
 	inline float getLastY() { return m_lastYValue; };
 	inline void setLastY(float y) { m_lastYValue = y; };
 	inline SDL_Rect getDstRect() const { return m_DstRect; };
-	Collider* checkCollision();
-	Collider* checkCollision(Collider* col);
 	inline int getHeight() { return m_Height; };
 public:
 	void walk(Direction dir);
