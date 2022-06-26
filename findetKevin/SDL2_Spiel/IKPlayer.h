@@ -25,6 +25,8 @@ private:
 	b2Body* m_Wheel;
 	b2WheelJoint* m_Spring;
 private:
+	SDL_Rect m_TextureCoords;
+private:
 	float m_Speed;
 	float m_lastYValue;
 	bool m_InAir;
@@ -48,5 +50,6 @@ public:
 private:
 	bool tryMove();
 	void applyVelocity();
+	void animate(int x, int y);
 };
 

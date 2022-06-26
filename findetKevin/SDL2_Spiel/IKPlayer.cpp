@@ -14,7 +14,7 @@
 IKPlayer::IKPlayer(IKMap* map)
 {
     m_Width = 16 * 2;
-    m_Height = 23 * 2;
+    m_Height = 21 * 2;
     //m_StartingX = 800 / 2 - (m_Width / 2)+10;
     //m_StartingY = 620 / 2 - (m_Height / 2);
 
@@ -37,7 +37,7 @@ IKPlayer::~IKPlayer()
 void IKPlayer::init()
 {
     /* Loading the texture */
-    SDL_Surface* surf = IMG_Load(RSC_IK_CHARAKTER_SPRITE);
+    SDL_Surface* surf = IMG_Load(RSC_PLAYER_SPRITE);
     if (surf == NULL)
     {
         std::cout << "Unable to load image " << RSC_IK_CHARAKTER_SPRITE << "!SDL_image Error : " << IMG_GetError() << std::endl;
@@ -65,45 +65,10 @@ void IKPlayer::init()
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shapeRect;
-    fixtureDef.density = 3.0f;
+    fixtureDef.density = 3.3f;
     fixtureDef.friction = 0.3f;
 
     m_Body->CreateFixture(&fixtureDef);
-
-    /* Wheel */
-    /*
-    b2CircleShape shapeCircle;
-    shapeCircle.m_radius = 46 * p2m;
-
-    fixtureDef.shape = &shapeCircle;
-
-    bd.position = b2Vec2(m_StartingX * p2m, (m_StartingY - 5) * p2m);
-    bd.fixedRotation = false;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.9f;
-    m_Wheel = m_Map->getSimulation()->CreateBody(&bd);
-    m_Wheel->CreateFixture(&fixtureDef);
-
-    float hertz = 4.0f;
-    float dampingRatio = .7f;
-    float omega = 2.0f * b2_pi * hertz;
-
-    */
-    /*
-    b2Vec2 axis(0.0f, 1.0f);
-    b2WheelJointDef jd;
-    jd.Initialize(m_Body, m_Wheel, m_Wheel->GetPosition(), axis);
-    jd.motorSpeed = 0.0f;
-    jd.maxMotorTorque = 20.0f;
-    jd.enableMotor = true;
-    jd.stiffness = m_Wheel->GetMass() * omega * omega;
-    jd.damping = 2.0f * m_Wheel->GetMass() * dampingRatio * omega;
-    jd.lowerTranslation = -0.5f;
-    jd.upperTranslation = 0.5f;
-    jd.enableLimit = true;
-    m_Spring = (b2WheelJoint*)m_Map->getSimulation()->CreateJoint(&jd);
-
-    */
 
     m_lastYValue = m_Body->GetPosition().y;
 
@@ -115,7 +80,19 @@ void IKPlayer::update(double dt)
     dt = dt / 4;
 
     b2Vec2 bodyPos = m_Body->GetPosition();
-    std::cout << bodyPos.y << std::endl;
+    //std::cout << bodyPos.y << std::endl;
+    //m_Body->GetLinearVelocity().x
+    b2Vec2 bodyVelocity = m_Body->GetLinearVelocity();
+
+
+    int xAxis = 0;
+    int yAxis = 0;
+    if (bodyVelocity.x < 0)
+        xAxis = -1;
+    else if (bodyVelocity.x > 0)
+        xAxis = 1;
+    std::cout << xAxis << std::endl;
+    animate(yAxis, xAxis);
 
     //m_Bounds = u_B2RectToSdl({(int)bodyPos.x, (int)bodyPos.y, m_Bounds.w, m_Bounds.h});
 
@@ -194,7 +171,7 @@ void IKPlayer::render()
 
     //std::cout << "y: (normal)" << u_b2ToSdl(center.y + (m_Height / 2)) << " (yOff)" << m_Map->getOffsetY() << " (+)" << u_b2ToSdl(center.y + (m_Height / 2)) + m_Map->getOffsetY() << std::endl;
 
-    SDL_RenderCopyEx(m_Map->getRenderer(), m_Texture, &srcRect, &dstRect, angle, nullptr, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(m_Map->getRenderer(), m_Texture, &m_TextureCoords, &dstRect, angle, nullptr, SDL_FLIP_NONE);
 }
 
 void IKPlayer::walk(Direction dir)
@@ -203,12 +180,12 @@ void IKPlayer::walk(Direction dir)
     if (dir == LEFT)
     {
         //m_Body->ApplyForceToCenter(b2Vec2(50.0f * p2m, 1.0f), true);
-        m_Body->ApplyLinearImpulseToCenter(b2Vec2(-50.0f * p2m, 1.0f), false);
+        m_Body->ApplyLinearImpulseToCenter(b2Vec2(-50.0f * p2m, 1.0f), true);
         //m_Spring->SetMotorSpeed(m_Speed);
     }
     else if (dir == RIGHT)
     {
-        m_Body->ApplyLinearImpulseToCenter(b2Vec2(50.0f * p2m, 1.0f), false);
+        m_Body->ApplyLinearImpulseToCenter(b2Vec2(50.0f * p2m, 1.0f), true);
         //m_Spring->SetMotorSpeed(-m_Speed);
     }
     else if (dir == NONE)
@@ -268,4 +245,29 @@ Collider* IKPlayer::checkCollision(Collider* col)
         }
     }
     return nullptr;
+}
+
+void IKPlayer::animate(int y, int x)
+{
+    int totalFrames = 8;   // Animation besteht jeweils aus 6 sprites
+    int delayPerFrame = 130;
+    int movingDirection = 0;
+
+    if (x > 0)
+        movingDirection = 0; // Anfangsprite ist eins weiter Rechts auf dem Spritesheet
+    else
+        movingDirection = 8;// Anfangsprite ist 8 weiter Rechts auf dem Spritesheet
+
+
+    int frame = movingDirection + (SDL_GetTicks() / delayPerFrame) % totalFrames;
+    m_TextureCoords.x = frame * m_TextureCoords.w;
+    m_TextureCoords.y = 64;
+    if (y == 0 && x == 0)
+    {
+        m_TextureCoords.x = 0 + 32 * ((SDL_GetTicks() / delayPerFrame) % 13);
+        m_TextureCoords.y = 0;
+        m_TextureCoords.h = 32;
+        m_TextureCoords.w = 32;
+    }
+
 }
