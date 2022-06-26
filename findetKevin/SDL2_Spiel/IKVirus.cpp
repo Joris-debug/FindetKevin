@@ -69,13 +69,13 @@ int IKVirus::update()
         m_FrameCounter = 0;
     }
 
-    std::cout << m_TextureCoords.y << " " << m_FrameCounter << std::endl;
+    //std::cout << m_TextureCoords.y << " " << m_FrameCounter << std::endl;
 
     SDL_Rect playerRect = m_ParentLayer->getMap()->getPlayer()->getDstRect();
 
     if (SDL_HasIntersection(&playerRect, &m_DstRect))
     {
-        std::cout << "g<fsdddddddddddddd" << std::endl;
+        //std::cout << "g<fsdddddddddddddd" << std::endl;
         gettingKilled();
         IKVirus::s_KilledViruses++;
         return 1;
