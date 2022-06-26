@@ -42,7 +42,7 @@ void IKGameLogic::init()
 
                 case SDLK_w:
                 case SDLK_s:
-                    //y_axis = 0;
+                    m_Player->walk(NONE);
                     break;
 
                 case SDLK_d:

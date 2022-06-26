@@ -4,11 +4,14 @@
 
 #include <iostream>
 
-void IKRenderLayer::init(const std::string& path, SDL_Renderer* renderer, float distance, IKMap* map)
+#include "CoordinateConversions.h"
+
+void IKRenderLayer::init(const std::string& path, SDL_Renderer* renderer, float distance, IKMap* map, int height, float yOffset)
 {
     m_Renderer = renderer;
     m_Map = map;
     m_Distance = distance;
+    m_PersOffsetY = yOffset;
 
     SDL_Surface* surf = IMG_Load(path.c_str());
     if (surf == NULL)
@@ -21,18 +24,18 @@ void IKRenderLayer::init(const std::string& path, SDL_Renderer* renderer, float 
 
     m_SrcRect.x = 0;
     m_SrcRect.y = 0;
-    m_SrcRect.w = 400;
-    m_SrcRect.h = 1000;
+    m_SrcRect.w = 200;
+    m_SrcRect.h = height;
 
     m_DstRect.x = 0;
-    m_DstRect.y = m_Map->getOffsetY();
-    m_DstRect.w = 800;
-    m_DstRect.h = 2000;
+    m_DstRect.y = m_Map->getOffsetY() + m_PersOffsetY;
+    m_DstRect.w = 200*4;
+    m_DstRect.h = height*4;
 }
 
 void IKRenderLayer::update(double dt)
 {
-    m_DstRect.y = m_Map->getOffsetY() * m_Distance;
+    m_DstRect.y = m_Map->getOffsetY() * m2p * m_Distance + m_PersOffsetY + m_Map->getStartingOffsetY() * m2p;
 
     for (auto collider : m_Colliders)
     {
@@ -44,14 +47,13 @@ void IKRenderLayer::update(double dt)
 
 void IKRenderLayer::render(bool renderCols)
 {
-
     SDL_RenderCopy(m_Renderer, m_Image, NULL, &m_DstRect);
 
     if (renderCols)
     {
         for (auto col : m_Colliders)
         {
-            col->render(m_Renderer);
+            col->render(m_Renderer, m_Map->getOffsetY(), m_Map->getStartingOffsetY());
         }
     }
 }

@@ -2,9 +2,11 @@
 
 #include "Resources.h"
 
+#include <stdlib.h>
+
 Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY, float speed, float maxDist)
 {
-	SDL_Surface* tempSurface = IMG_Load(RSC_PROJECTILE_SPRITE);
+	SDL_Surface* tempSurface = IMG_Load(RSC_COVID_PROJECTILE_SPRITE);
 	SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(game->getRenderer(), tempSurface);
 
 	//std::cout << dir << std::endl;
@@ -29,41 +31,25 @@ Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY,
 
 	this->isActive = true;
 
+	this->textureCoords.x = 0;
+	this->textureCoords.y = rand() % 2 == 1 ? 0 : 9;
+	this->textureCoords.w = 8;
+	this->textureCoords.h = 8;
+
 	if (dir == RIGHT)
 	{
-		//this->speed.x = speed;
-		this->textureCoords.x = 6;
-		this->textureCoords.y = 7;
-		this->textureCoords.w = 5;
-		this->textureCoords.h = 3;
 		this->walkingDirections.xDirection = speed;
 	}
 	else if (dir == LEFT)
 	{
-		//this->speed.x = -speed;
-		this->textureCoords.x = 5;
-		this->textureCoords.y = 23;
-		this->textureCoords.w = 5;
-		this->textureCoords.h = 3;
 		this->walkingDirections.xDirection = -speed;
 	}
 	else if (dir == UP)
 	{
-		//this->speed.y = -speed;
-		this->textureCoords.x = 7;
-		this->textureCoords.y = 37;
-		this->textureCoords.w = 3;
-		this->textureCoords.h = 5;
 		this->walkingDirections.yDirection = speed * (-1);
-		this->walkingDirections.xDirection = 0;
 	}
 	else if (dir == DOWN)
 	{
-		//this->speed.y = speed;
-		this->textureCoords.x = 7;
-		this->textureCoords.y = 54;
-		this->textureCoords.w = 3;
-		this->textureCoords.h = 5;
 		this->walkingDirections.yDirection = speed;
 	}
 
@@ -74,12 +60,6 @@ Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY,
 
 	//std::cout << "walking dir " << walkingDirections.xDirection << " " << walkingDirections.yDirection << std::endl;
 	game->getlisteVonEntitys()->push_back(this);
-
-	/*
-	int tempY = walkingDirections.yDirection;
-	walkingDirections.yDirection = walkingDirections.xDirection;
-	walkingDirections.xDirection = tempY;
-	*/
 
 	//game->getAllProjectiles()->emplace(this);
 }
