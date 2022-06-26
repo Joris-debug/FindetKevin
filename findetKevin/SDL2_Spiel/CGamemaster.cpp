@@ -1367,7 +1367,7 @@ void CGamemaster::titlescreen()
     SDL_Color colorNG = { 255, 255, 255 };      //Damit können wir einen "Hover-Effekt" machen, der den jeweiligen Button highligted
     SDL_Color colorSS = { 255, 255, 255 };
     SDL_Color colorQG = { 255, 255, 255 };
-    SDL_Color colorEG = { 255, 255, 255 };
+    //SDL_Color colorEG = { 255, 255, 255 };
     while (SDL_PollEvent(&e) >= 0)
     { 
         SDL_RenderClear(renderer);              
@@ -1441,6 +1441,7 @@ void CGamemaster::titlescreen()
         SDL_FreeSurface(text);
 
         /* -------------- Test Endgame --------------------- */
+        /*
         text = TTF_RenderText_Blended(font, "Endgame", colorEG);
         if (!text)
         {
@@ -1449,6 +1450,7 @@ void CGamemaster::titlescreen()
         text_texture = SDL_CreateTextureFromSurface(renderer, text);
         SDL_Rect endgameButton = { SCREEN_WIDTH / 2 - text->w / 2,  SCREEN_HEIGHT / 2 + 55,  text->w, text->h };
         SDL_RenderCopy(renderer, text_texture, NULL, &endgameButton);
+        */
         /* ------------------------------------------------ */
 
         SDL_RenderPresent(renderer);
@@ -1456,14 +1458,14 @@ void CGamemaster::titlescreen()
         SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
         cursor_Hitbox.w = 8;
         cursor_Hitbox.h = 4;
-        SDL_DestroyTexture(text_texture);      //Memory management
-        SDL_FreeSurface(text);
+        //SDL_DestroyTexture(text_texture);      //Memory management
+        //SDL_FreeSurface(text);
         TTF_CloseFont(font);
 
         colorNG = { 255, 255, 255 };
         colorSS = { 255, 255, 255 };
         colorQG = { 255, 255, 255 };
-        colorEG = { 255, 255, 255 };
+        //colorEG = { 255, 255, 255 };
 
         SDL_GetMouseState(&cursor_Hitbox.x, &cursor_Hitbox.y);
 
@@ -1490,6 +1492,7 @@ void CGamemaster::titlescreen()
                 this->selectSavefile();
             }
 
+            /*
             if (SDL_HasIntersection(&cursor_Hitbox, &endgameButton))
             {
                 cout << "Entering endgame!" << endl;
@@ -1497,6 +1500,7 @@ void CGamemaster::titlescreen()
                 ikgamelogic->init();
                 //return;
             }
+            */
         }
 
         if (SDL_HasIntersection(&cursor_Hitbox, &closeButton))  //Farbe der Buttons wird geändert
@@ -1505,8 +1509,11 @@ void CGamemaster::titlescreen()
             colorNG = { 100, 255, 100 };
         if (SDL_HasIntersection(&cursor_Hitbox, &selectSavefile))
             colorSS = { 100, 255, 100 };
+        /*
         if (SDL_HasIntersection(&cursor_Hitbox, &endgameButton))
             colorEG = { 100, 255, 100 };
+
+        */
 
         if (e.type == SDL_QUIT)
            return;
