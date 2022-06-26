@@ -77,13 +77,7 @@ void IKPlayer::init()
 
 void IKPlayer::update(double dt)
 {
-    dt = dt / 4;
-
-    b2Vec2 bodyPos = m_Body->GetPosition();
-    //std::cout << bodyPos.y << std::endl;
-    //m_Body->GetLinearVelocity().x
     b2Vec2 bodyVelocity = m_Body->GetLinearVelocity();
-
 
     int xAxis = 0;
     int yAxis = 0;
@@ -91,49 +85,11 @@ void IKPlayer::update(double dt)
         xAxis = -1;
     else if (bodyVelocity.x > 0)
         xAxis = 1;
-    std::cout << xAxis << std::endl;
     animate(yAxis, xAxis);
-
-    //m_Bounds = u_B2RectToSdl({(int)bodyPos.x, (int)bodyPos.y, m_Bounds.w, m_Bounds.h});
-
-    //m_Bounds.x = bodyPos.x;
-    //m_Bounds.y = bodyPos.y;
-
-    /*
-    std::cout << "In SDL space:" << std::endl;
-    std::cout << "Player X: " << m_Bounds.x << std::endl;
-    std::cout << "Player y: " << m_Bounds.y << std::endl;
-
-    m_Bounds = u_SdlRectToB2(m_Bounds);
-
-    std::cout << "In B2 space:" << std::endl;
-    std::cout << "Player X: " << m_Bounds.x << std::endl;
-    std::cout << "Player y: " << m_Bounds.y << std::endl;
-
-    m_Bounds = u_B2RectToSdl(m_Bounds);
-
-    std::cout << "In SDL space:" << std::endl;
-    std::cout << "Player X: " << m_Bounds.x << std::endl;
-    std::cout << "Player y: " << m_Bounds.y << std::endl;
-
-    m_VelocityX *= dt;
-    //m_VelocityY += m_Map->m_Gravity;
-    m_VelocityX *= dt;
-    */
-
-    //if (tryMove())
-    //    applyVelocity();
-
 }
 
 bool IKPlayer::tryMove()
 {
-    /*Collider temp({ m_Bounds.x + (int) m_VelocityX, m_Bounds.y + (int) m_VelocityY, m_Bounds.w, m_Bounds.h }, m_Map->getSimulation());
-
-    if(checkCollision(&temp) == nullptr)
-        return true;
-
-    */
     return false;
 }
 
@@ -145,7 +101,7 @@ void IKPlayer::applyVelocity()
 void IKPlayer::render()
 {
     SDL_Rect srcRect = {48, 9, 16, 23};     // pixel in the image
-    SDL_Rect dstRect;                       // bounds in screen space 
+    //SDL_Rect dstRect;                       // bounds in screen space 
 
     /*
     b2Vec2 vertices[4];
@@ -162,16 +118,12 @@ void IKPlayer::render()
     center.x = center.x * m2p;
     center.y = center.y * m2p - m_Map->getOffsetY() * m2p;
 
-    //std::cout << "center of player: " << center.x << " " << center.y << std::endl;
+    m_DstRect.x = center.x - (m_Width / 2);
+    m_DstRect.y = u_b2ToSdl(center.y + (m_Height / 2));
+    m_DstRect.w = m_Width;
+    m_DstRect.h = m_Height;
 
-    dstRect.x = center.x - (m_Width / 2);
-    dstRect.y = u_b2ToSdl(center.y + (m_Height / 2));
-    dstRect.w = m_Width;
-    dstRect.h = m_Height;
-
-    //std::cout << "y: (normal)" << u_b2ToSdl(center.y + (m_Height / 2)) << " (yOff)" << m_Map->getOffsetY() << " (+)" << u_b2ToSdl(center.y + (m_Height / 2)) + m_Map->getOffsetY() << std::endl;
-
-    SDL_RenderCopyEx(m_Map->getRenderer(), m_Texture, &m_TextureCoords, &dstRect, angle, nullptr, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(m_Map->getRenderer(), m_Texture, &m_TextureCoords, &m_DstRect, angle, nullptr, SDL_FLIP_NONE);
 }
 
 void IKPlayer::walk(Direction dir)

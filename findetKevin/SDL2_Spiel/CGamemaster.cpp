@@ -1451,7 +1451,7 @@ void CGamemaster::titlescreen()
                 cout << "Entering endgame!" << endl;
                 IKGameLogic* ikgamelogic = new IKGameLogic(renderer, window);
                 ikgamelogic->init();
-                return;
+                //return;
             }
         }
 

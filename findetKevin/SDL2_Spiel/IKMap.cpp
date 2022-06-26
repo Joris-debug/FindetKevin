@@ -2,6 +2,7 @@
 
 #include "IKPlayer.h"
 #include "IKRenderLayer.h"
+#include "IKVirus.h"
 
 //#include "Resources.h"
 
@@ -50,6 +51,15 @@ void IKMap::init()
 	m_Gravity = 0.04f;
 	m_OffsetY = (D_SCREEN_HEIGHT / 2) * p2m - 182.0f;
 	m_StartingOffsetY = 0.0f;
+
+	IKVirus* virus1 = new IKVirus(m_GeometryLayer.get(), { 19 * 4, 510 * 4, 32, 32 }, m_Renderer);
+	m_GeometryLayer->getViruses().push_back(virus1);
+
+	IKVirus* virus2 = new IKVirus(m_GeometryLayer.get(), { 110 * 4, 233 * 4, 32, 32 }, m_Renderer);
+	m_GeometryLayer->getViruses().push_back(virus2);
+
+	IKVirus* virus3 = new IKVirus(m_GeometryLayer.get(), { 87 * 4, 37 * 4, 32, 32 }, m_Renderer);
+	m_GeometryLayer->getViruses().push_back(virus3);
 
 	Collider* floorCollider = new Collider({ 9 * 4 + 65 * 2, 644 * 4 + 27 * 2, 65 * 4, 27 * 4 }, m_Simulation);  // x, y, w, h
 	m_GeometryLayer->getColliders().push_back(floorCollider);

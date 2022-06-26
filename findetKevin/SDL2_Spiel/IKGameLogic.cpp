@@ -2,10 +2,13 @@
 
 #include "IKPlayer.h"
 
+#include "IKVirus.h"
+
 IKGameLogic::IKGameLogic(SDL_Renderer* renderer, SDL_Window* window)
 {
 	m_Renderer = renderer;
 	m_Window = window;
+    m_GameBeat = false;
 }
 
 void IKGameLogic::init()
@@ -108,7 +111,12 @@ void IKGameLogic::init()
         SDL_RenderPresent(m_Renderer);
         SDL_RenderClear(m_Renderer);
 
+        if (m_GameBeat)
+        {
+            return;
+        }
     }
+
 }
 
 IKGameLogic::~IKGameLogic()
@@ -119,6 +127,11 @@ IKGameLogic::~IKGameLogic()
 void IKGameLogic::update(double& dt)
 {
     m_Map->update(dt);
+    if (IKVirus::s_KilledViruses == 3)
+    {
+        std::cout << "Congrats! You beat the game!" << std::endl;
+        m_GameBeat = true;
+    }
 }
 
 void IKGameLogic::render()

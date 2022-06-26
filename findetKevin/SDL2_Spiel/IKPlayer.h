@@ -26,6 +26,7 @@ private:
 	b2WheelJoint* m_Spring;
 private:
 	SDL_Rect m_TextureCoords;
+	SDL_Rect m_DstRect;
 private:
 	float m_Speed;
 	float m_lastYValue;
@@ -41,6 +42,7 @@ public:
 	inline b2Vec2 getPosB2() { return m_Body->GetPosition(); };
 	inline float getLastY() { return m_lastYValue; };
 	inline void setLastY(float y) { m_lastYValue = y; };
+	inline SDL_Rect getDstRect() const { return m_DstRect; };
 	Collider* checkCollision();
 	Collider* checkCollision(Collider* col);
 	inline int getHeight() { return m_Height; };
