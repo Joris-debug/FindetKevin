@@ -18,6 +18,7 @@ public:
 	static int s_KilledViruses;
 public:
 	IKVirus(IKRenderLayer* layer, SDL_Rect bounds, SDL_Renderer* renderer);
+	~IKVirus();
 	void render();
 	int update();
 	void gettingKilled();

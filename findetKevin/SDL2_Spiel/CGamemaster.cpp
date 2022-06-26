@@ -1476,8 +1476,13 @@ void CGamemaster::titlescreen()
             {
                 this->initLevel0();
                 if (!this->initLevel1())
-                    if (!this->initLevel2());
-                        if (!this->initLevel3());
+                    if (!this->initLevel2())
+                        if (!this->initLevel3())
+                        {
+                            IKGameLogic* ik = new IKGameLogic(renderer, window, currentSaveFile);
+                            ik->init();
+                            delete ik;
+                        }
             }
 
             if (SDL_HasIntersection(&cursor_Hitbox, &selectSavefile))
@@ -1488,7 +1493,7 @@ void CGamemaster::titlescreen()
             if (SDL_HasIntersection(&cursor_Hitbox, &endgameButton))
             {
                 cout << "Entering endgame!" << endl;
-                IKGameLogic* ikgamelogic = new IKGameLogic(renderer, window);
+                IKGameLogic* ikgamelogic = new IKGameLogic(renderer, window, currentSaveFile);
                 ikgamelogic->init();
                 //return;
             }
@@ -1774,6 +1779,11 @@ void CGamemaster::selectSavefile()
                             case 3:
                                 if (initLevel3())
                                     return;
+                            case 4:
+                                IKGameLogic * ik = new IKGameLogic(renderer, window, currentSaveFile);
+                                ik->init();
+                                delete ik;
+                                return;
                             }
                             return;
 

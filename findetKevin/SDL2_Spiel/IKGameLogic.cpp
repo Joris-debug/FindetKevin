@@ -4,11 +4,14 @@
 
 #include "IKVirus.h"
 
-IKGameLogic::IKGameLogic(SDL_Renderer* renderer, SDL_Window* window)
+#include "CSavefile.h"
+
+IKGameLogic::IKGameLogic(SDL_Renderer* renderer, SDL_Window* window, CSavefile* savefile)
 {
 	m_Renderer = renderer;
 	m_Window = window;
     m_GameBeat = false;
+    m_Savefile = savefile;
 }
 
 void IKGameLogic::init()
@@ -122,6 +125,8 @@ void IKGameLogic::init()
 IKGameLogic::~IKGameLogic()
 {
     delete m_Map;
+    *(m_Savefile->getLevel()) = 4;
+    IKVirus::s_KilledViruses = 0;
 }
 
 void IKGameLogic::update(double& dt)

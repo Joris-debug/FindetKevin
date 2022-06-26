@@ -36,6 +36,11 @@ IKVirus::IKVirus(IKRenderLayer* layer, SDL_Rect bounds, SDL_Renderer* renderer)
     m_FrameCounter = 0;
 }
 
+IKVirus::~IKVirus()
+{
+    SDL_DestroyTexture(m_Texture);
+}
+
 void IKVirus::render()
 {
     //SDL_Rect dstRect;

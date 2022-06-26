@@ -169,6 +169,7 @@
     <ClCompile Include="IKMap.cpp" />
     <ClCompile Include="IKPlayer.cpp" />
     <ClCompile Include="IKRenderLayer.cpp" />
+    <ClCompile Include="IKVirus.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Quelle.cpp" />
   </ItemGroup>
@@ -192,6 +193,7 @@
     <ClInclude Include="IKMap.h" />
     <ClInclude Include="IKPlayer.h" />
     <ClInclude Include="IKRenderLayer.h" />
+    <ClInclude Include="IKVirus.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Resources.h" />
   </ItemGroup>
