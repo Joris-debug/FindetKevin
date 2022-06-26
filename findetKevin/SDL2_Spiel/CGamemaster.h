@@ -39,6 +39,7 @@ public:
 	void initLevel0();
 	int initLevel1();
 	int initLevel2();
+	int initLevel3();
 	int getWidthOfWindow();
 	int getHeigthOfWindow();
 	void moveMaps(int x, int y);

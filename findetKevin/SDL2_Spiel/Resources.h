@@ -8,6 +8,9 @@
 #define RSC_MAP1_SPRITE_TOP_LAYER "./Maps/KlasseTopLayer.png"
 #define RSC_MAP2_SPRITE "./Maps/SchuleBottomLayer.png"
 #define RSC_MAP2_SPRITE_TOP_LAYER "./Maps/SchuleTopLayer.png"
+
+#define RSC_MAP3_SPRITE "./Maps/WieseABSBottom.png"
+#define RSC_MAP3_SPRITE_TOP_LAYER "./Maps/WieseABSTop.png"
 #define RSC_BANDIT_SPRITE "./EnemyTextures/BanditSpritesheet.png"
 #define RSC_ANGRY_SPROUT_SPRITE "./EnemyTextures/SproutSheet.png"
 #define RSC_NPC_AMELIA_SPRITE "./PlayerTextures/Amelia_16x16.png"

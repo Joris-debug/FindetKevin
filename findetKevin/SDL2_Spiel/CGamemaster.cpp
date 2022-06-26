@@ -1183,6 +1183,80 @@ int CGamemaster::initLevel2()
     return this->gameLoop();
 }
 
+int CGamemaster::initLevel3()
+{
+
+    *this->currentSaveFile->getLevel() = 3;
+    this->alleSaveFiles->SchreibenDerSpeicherdaten();
+
+    *CNPC::getNumberOfNPCS() = 11;
+
+    //-----------------------------------------------------------------------------------------------Quest wird erstellt
+    bool* tempQuest = new bool(false);
+    int* tempQuestNumber = new int(1);
+    levelQuests.push_back(make_pair(tempQuest, tempQuestNumber));
+    //-----------------------------------------------------------------------------------------------
+
+    SDL_Surface* tempSurface = IMG_Load(RSC_MAP3_SPRITE);
+    SDL_Rect tempBounds;
+    SDL_Rect tempTextureSize;
+    SDL_Rect tempTextureCoords;
+    tempBounds.x = -320; //Extreme left of the window
+    tempBounds.y = -800; //Very top of the window
+    SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w *= 2;
+    tempBounds.h *= 2;
+    currentMap = new CMap(tempTexture, tempBounds);
+    SDL_FreeSurface(tempSurface);
+
+    tempSurface = IMG_Load(RSC_MAP3_SPRITE_TOP_LAYER);
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    currentMap_TopLayer = new CMap(tempTexture, tempBounds);//Nur die aktuelle Karte wird abgespeichert, damit nicht unötig Speicherplatz verschwendet wird
+    SDL_FreeSurface(tempSurface);
+
+    tempSurface = IMG_Load(RSC_PLAYER_SPRITE);
+    CEntity* tempEntity;
+    tempTextureCoords.w = 32;
+    tempTextureCoords.h = 32;
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempBounds.x = SCREEN_WIDTH / 2; //right of the window
+    tempBounds.y = SCREEN_HEIGHT / 2; //bottom of the window
+    tempBounds.w = 16 * 2;
+    tempBounds.h = 21 * 2;
+    spielerPointer = new CPlayer(this, tempTexture, "Player", tempBounds, tempTextureCoords);
+    SDL_FreeSurface(tempSurface);
+
+   
+    tempBounds.x = -320;
+    tempBounds.y = -800;
+    tempBounds.w = 736 * 2;
+    tempBounds.h = 190 * 2;
+    currentMap->addObjectToMap(new CMapEntity(tempBounds)); //Wald Oberseite mit Schule
+
+    tempBounds.w = 221 * 2;
+    tempBounds.h = 821 * 2;
+    currentMap->addObjectToMap(new CMapEntity(tempBounds)); //Wald links
+
+    tempBounds.x = -320 + 522 * 2;
+    currentMap->addObjectToMap(new CMapEntity(tempBounds)); //Wald rechts
+
+    tempBounds.x = -320;
+    tempBounds.y = -800 + 592 * 2;
+    tempBounds.w = 736 * 2;
+    tempBounds.h = 190 * 2;
+    currentMap->addObjectToMap(new CMapEntity(tempBounds)); //Wald Unterseite
+
+    tempBounds.x = -320 + 432 * 2;
+    tempBounds.y = -800 + 416 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
+    spielerPointer->setCurrentMap(currentMap);
+
+    return this->gameLoop();
+}
+
 int CGamemaster::getWidthOfWindow()
 {
     return SCREEN_WIDTH;
@@ -1364,6 +1438,7 @@ void CGamemaster::titlescreen()
                 this->initLevel0();
                 if (!this->initLevel1())
                     if (!this->initLevel2());
+                        if (!this->initLevel3());
             }
 
             if (SDL_HasIntersection(&cursor_Hitbox, &selectSavefile))
@@ -1657,7 +1732,9 @@ void CGamemaster::selectSavefile()
                             case 2:
                                 if (initLevel2())
                                     return;
-                                
+                            case 3:
+                                if (initLevel3())
+                                    return;
                             }
                             return;
 
