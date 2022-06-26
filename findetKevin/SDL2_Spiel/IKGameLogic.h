@@ -12,6 +12,8 @@ private:
 	SDL_Event m_Event;
 	IKPlayer* m_Player;
 	IKMap* m_Map;
+private:
+	bool m_GameBeat;
 public:
 	void init();
 	void update(double& dt);

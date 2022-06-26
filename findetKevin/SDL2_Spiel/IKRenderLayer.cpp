@@ -6,6 +6,8 @@
 
 #include "CoordinateConversions.h"
 
+#include "IKVirus.h"
+
 void IKRenderLayer::init(const std::string& path, SDL_Renderer* renderer, float distance, IKMap* map, int height, float yOffset)
 {
     m_Renderer = renderer;
@@ -37,9 +39,21 @@ void IKRenderLayer::update(double dt)
 {
     m_DstRect.y = m_Map->getOffsetY() * m2p * m_Distance + m_PersOffsetY + m_Map->getStartingOffsetY() * m2p;
 
+    //for (auto virus : m_Viruses)
+    auto virus = m_Viruses.begin();
+    while(virus != m_Viruses.cend())
+    {
+        if ((*virus)->update() == 1)
+        {
+            virus = m_Viruses.erase(virus);
+        }
+        else {
+            ++virus;
+        }
+    }
+
     for (auto collider : m_Colliders)
     {
-
         //collider->m_OffsetY = m_Map->getOffsetY();
         collider->update(dt);
     }
@@ -47,8 +61,14 @@ void IKRenderLayer::update(double dt)
 
 void IKRenderLayer::render(bool renderCols)
 {
-    SDL_RenderCopy(m_Renderer, m_Image, NULL, &m_DstRect);
 
+    for (auto virus : m_Viruses)
+    {
+        virus->render();
+    }
+
+    SDL_RenderCopy(m_Renderer, m_Image, NULL, &m_DstRect);
+            
     if (renderCols)
     {
         for (auto col : m_Colliders)
@@ -63,4 +83,5 @@ IKRenderLayer::~IKRenderLayer()
     SDL_DestroyTexture(m_Image);
 
     m_Colliders.clear();
+    m_Viruses.clear();
 }

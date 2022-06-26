@@ -41,3 +41,4 @@
 #define RSC_IK_ORGANS_IMAGE "./IKTextures/MergedOrgans.png"
 #define RSC_IK_BACKGROUND_IMAGE "./IKTextures/Membran 2.png"
 #define RSC_IK_BLOCKER_IMAGE "./IKTextures/Blocker.png"
+#define RSC_IK_ENEMY_SPRITE "./EnemyTextures/CovidEnemy.png"
