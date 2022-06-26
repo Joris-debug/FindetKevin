@@ -1080,7 +1080,7 @@ int CGamemaster::initLevel2()
     listeVonEnemies.push_back(tempEntity);
     listeVonEntitys.push_back(tempEntity);
     SDL_FreeSurface(tempSurface);
-    ((CEnemy*)tempEntity)->setCooldown(60 * 3);
+    ((CEnemy*)tempEntity)->setCooldown(60 * 7);
 
     tempSurface = IMG_Load(RSC_NPC_ANDREAS_SPRITE);
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
@@ -1136,10 +1136,34 @@ int CGamemaster::initLevel2()
     tempEntity = new CNPC(this, NULL, "InnerVoice", tempBounds, tempTextureCoords, false);
     listeVonEntitys.push_back(tempEntity);
 
-
     tempBounds = { -940 + 421 * 2,-615 + 208 * 2, 32 * 5,32 * 1 };
     tempEntity = new CQuestTrigger(1, this, NULL, "ExitPath", tempBounds, tempTextureCoords, NULL);
     listeVonEntitys.push_back(tempEntity);
+
+    tempSurface = IMG_Load(RSC_ANGRY_SPROUT_SPRITE);
+    tempBounds.x = -940 + 464 * 2;  //left of the window
+    tempBounds.y = -615 + 352 * 2; //top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 16;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds.w = 32; // Breite geteilt durch anzahl Frames
+    tempBounds.h = 32; // Hoehe geteilt durch anzahl der Zeilen von Frames
+    tempEntity = new CEnemy(this, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
+    listeVonEnemies.push_back(tempEntity);
+    listeVonEntitys.push_back(tempEntity);
+    ((CEnemy*)tempEntity)->setCooldown(60 * 7);
+
+    tempBounds.x = -940 + 380 * 2;  //left of the window
+    tempBounds.y = -615 + 650 * 2; //top of the window
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempEntity = new CEnemy(this, tempTexture, "ANGRY_SPROUT", tempBounds, tempTextureCoords, false, 100, 1, 0, 5, 6, 2);
+    listeVonEnemies.push_back(tempEntity);
+    listeVonEntitys.push_back(tempEntity);
+    ((CEnemy*)tempEntity)->setCooldown(60 * 7);
+    SDL_FreeSurface(tempSurface);
 
     tempBounds.x = -940 + 528 * 2;
     tempBounds.y = -615 + 487 * 2;
@@ -1228,7 +1252,7 @@ int CGamemaster::initLevel3()
     spielerPointer = new CPlayer(this, tempTexture, "Player", tempBounds, tempTextureCoords);
     SDL_FreeSurface(tempSurface);
 
-   
+
     tempBounds.x = -320;
     tempBounds.y = -800;
     tempBounds.w = 736 * 2;
@@ -1277,6 +1301,11 @@ int CGamemaster::initLevel3()
     tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
     listeVonEntitys.push_back(tempEntity);
 
+    tempBounds.x = -320 + 300 * 2;
+    tempBounds.y = -800 + 330 * 2;
+    tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
+    listeVonEntitys.push_back(tempEntity);
+
     tempSurface = IMG_Load(RSC_NPC_KEVIN_SPRITE);
     tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     tempTextureCoords.x = 0;
@@ -1290,6 +1319,32 @@ int CGamemaster::initLevel3()
     spielerPointer->setCurrentMap(currentMap);
     SDL_FreeSurface(tempSurface);
 
+    tempSurface = IMG_Load(RSC_BANDIT_SPRITE);
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 16;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds = { -320 + 473 * 2,-800 + 460 * 2,16 * 2,  16 * 2 };
+    tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
+    listeVonEnemies.push_back(tempEntity);
+    listeVonEntitys.push_back(tempEntity);
+    ((CEnemy*)tempEntity)->setCooldown(60 * 5);
+
+
+    tempBounds = { -320 + 316 * 2,-800 + 266 * 2,16 * 2,  16 * 2 };
+    tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
+    listeVonEnemies.push_back(tempEntity);
+    listeVonEntitys.push_back(tempEntity);
+    ((CEnemy*)tempEntity)->setCooldown(60 * 5);
+
+    tempBounds = { -320 + 445 * 2,-800 + 238 * 2,16 * 2,  16 * 2 };
+    tempEntity = new CEnemy(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Masked_Bandit", tempBounds, tempTextureCoords, true, 100, 1, 6, 4, 4, 2);
+    listeVonEnemies.push_back(tempEntity);
+    listeVonEntitys.push_back(tempEntity);
+    ((CEnemy*)tempEntity)->setCooldown(60 * 5);
+    SDL_FreeSurface(tempSurface);
 
     spielerPointer->setCurrentMap(currentMap);
 

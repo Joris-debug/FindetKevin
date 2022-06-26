@@ -86,6 +86,7 @@ int CPlayer::bewegen(int y, int x)
                     if (cursor->onInteract() == 0)                 //Wenn der Gegner durch interaction schaden nimmt,....
                         if (cursor->getHealth() <= 0)
                         {
+                            addPoints(100);
                             game->getlisteVonEntitys()->remove(cursor);             //Gegner getroffen, ZEIT IHN ZU VERNICHTEN MUHAHAHAHAHA (Capslock war an, ups)
                             if (typeid(*cursor) == typeid(CEnemy))//Ich nehme typeid um möglichst schnell zu schauen ob das objekt in der liste ist                                             
                             game->getlisteVonEnemies()->remove(cursor);
@@ -137,8 +138,5 @@ void CPlayer::animation(int y, int x, double deltaTime)
 void CPlayer::takeDmg(int dmg)
 {
     game->getCurrentSaveFile()->setLives(game->getCurrentSaveFile()->getLives() - 1);
-    if (game->getCurrentSaveFile()->getLives() == 0)
-    {
-        game->gameOverScreen();
-    }
+
 }
