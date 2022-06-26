@@ -157,6 +157,7 @@
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CGamemaster.cpp" />
     <ClCompile Include="CJohn.cpp" />
+    <ClCompile Include="CKevin.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMapEntity.cpp" />
     <ClCompile Include="CNPC.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CGamemaster.h" />
     <ClInclude Include="CJohn.h" />
+    <ClInclude Include="CKevin.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMapEntity.h" />
     <ClInclude Include="CNPC.h" />

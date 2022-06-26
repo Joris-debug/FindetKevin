@@ -32,7 +32,7 @@ Projectile::Projectile(CGamemaster* game, Direction dir, int startX, int startY,
 	this->isActive = true;
 
 	this->textureCoords.x = 0;
-	this->textureCoords.y = rand() % 2 == 1 ? 0 : 9;
+	this->textureCoords.y = rand() % 2 == 1 ? 0 : 8;
 	this->textureCoords.w = 8;
 	this->textureCoords.h = 8;
 

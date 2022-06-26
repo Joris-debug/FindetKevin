@@ -25,6 +25,7 @@
 #define RSC_NPC_FRED_SPRITE "./PlayerTextures/Fred_16x16.png"
 #define RSC_NPC_ANDREAS_SPRITE "./PlayerTextures/ANDREAS_16x16.png"
 #define RSC_NPC_JOHN_SPRITE "./PlayerTextures/John_16x16.png"
+#define RSC_NPC_KEVIN_SPRITE "./PlayerTextures/Kevin.png"
 #define RSC_FONT_PIXELSPLITTER "./Fonts/PixelSplitter.ttf"
 #define RSC_PLAYER_SPRITE "./PlayerTextures/Adventurer Sprite Sheet v1.1.png"
 

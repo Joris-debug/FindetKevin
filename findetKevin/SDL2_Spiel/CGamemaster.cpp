@@ -12,6 +12,7 @@
 #include "CQuestTrigger.h"
 #include "CNPC.h"
 #include "CBuch.h"
+#include "CKevin.h"
 CGamemaster::CGamemaster()
 {
     deltaTime = 1;
@@ -1248,9 +1249,47 @@ int CGamemaster::initLevel3()
     currentMap->addObjectToMap(new CMapEntity(tempBounds)); //Wald Unterseite
 
     tempBounds.x = -320 + 432 * 2;
+    tempBounds.y = -800 + 496 * 2;
+    tempBounds.w = 32 * 2;
+    tempBounds.h = 32 * 1;
+    currentMap->addObjectToMap(new CMapEntity(tempBounds)); //Baum unten rechts
+
+    tempBounds.x = -320 + 288 * 2;
+    tempBounds.y = -800 + 448 * 2;
+    tempBounds.w = 32 * 2;
+    tempBounds.h = 32 * 1;
+    currentMap->addObjectToMap(new CMapEntity(tempBounds)); //Baum unten links
+
+    tempBounds.x = -320 + 448 * 2;
+    tempBounds.y = -800 + 336 * 2;
+    tempBounds.w = 32 * 2;
+    tempBounds.h = 32 * 1;
+    currentMap->addObjectToMap(new CMapEntity(tempBounds)); //Baum oben rechts
+
+    tempBounds.x = -320 + 272 * 2;
+    tempBounds.y = -800 + 304 * 2;
+    tempBounds.w = 32 * 2;
+    tempBounds.h = 32 * 1;
+    currentMap->addObjectToMap(new CMapEntity(tempBounds)); //Baum oben links
+
+    tempBounds.x = -320 + 432 * 2;
     tempBounds.y = -800 + 416 * 2;
     tempEntity = new CCoin(this, NULL, "COIN", tempBounds, tempTextureCoords, NULL);
     listeVonEntitys.push_back(tempEntity);
+
+    tempSurface = IMG_Load(RSC_NPC_KEVIN_SPRITE);
+    tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+    tempTextureCoords.x = 0;
+    tempTextureCoords.y = 0;
+    tempTextureCoords.w = 16;
+    tempTextureCoords.h = 32;
+    SDL_QueryTexture(tempTexture, NULL, NULL, &tempBounds.w, &tempBounds.h); //Größe wird automatisch erkannt
+    tempBounds = { -320 + 360 * 2,-800 + 197 * 2,16 * 2,  24 * 2 };
+    tempEntity = new CKevin(this, SDL_CreateTextureFromSurface(renderer, tempSurface), "Kevin", tempBounds, tempTextureCoords, true);
+    listeVonEntitys.push_back(tempEntity);
+    spielerPointer->setCurrentMap(currentMap);
+    SDL_FreeSurface(tempSurface);
+
 
     spielerPointer->setCurrentMap(currentMap);
 
