@@ -1481,7 +1481,7 @@ void CGamemaster::titlescreen()
                     if (!this->initLevel2())
                         if (!this->initLevel3())
                         {
-                            IKGameLogic* ik = new IKGameLogic(renderer, window, currentSaveFile);
+                            IKGameLogic* ik = new IKGameLogic(renderer, window, currentSaveFile, alleSaveFiles);
                             ik->init();
                             delete ik;
                         }
@@ -1787,7 +1787,7 @@ void CGamemaster::selectSavefile()
                                 if (initLevel3())
                                     return;
                             case 4:
-                                IKGameLogic * ik = new IKGameLogic(renderer, window, currentSaveFile);
+                                IKGameLogic * ik = new IKGameLogic(renderer, window, currentSaveFile, alleSaveFiles);
                                 ik->init();
                                 delete ik;
                                 return;

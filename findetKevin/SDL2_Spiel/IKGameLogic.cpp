@@ -10,13 +10,14 @@
 
 #include <SDL_image.h>
 
-IKGameLogic::IKGameLogic(SDL_Renderer* renderer, SDL_Window* window, CSavefile* savefile)
+IKGameLogic::IKGameLogic(SDL_Renderer* renderer, SDL_Window* window, CSavefile* savefile, CSavefile* firstSavefile)
 {
 	m_Renderer = renderer;
 	m_Window = window;
     m_GameBeat = false;
     m_ShowEndingScreen = false;
     m_Savefile = savefile;
+    m_FirstSavefile = firstSavefile;
 }
 
 void IKGameLogic::init()
@@ -53,6 +54,9 @@ void IKGameLogic::init()
             {
             case SDL_QUIT:
                 quit = true;
+                *(m_Savefile->getLevel()) = 4;
+                m_FirstSavefile->SchreibenDerSpeicherdaten();
+                exit(0);
                 break;
 
             case SDL_KEYUP:
@@ -141,6 +145,8 @@ void IKGameLogic::init()
 
         if (m_GameBeat)
         {
+            *(m_Savefile->getLevel()) = 4;
+            m_FirstSavefile->SchreibenDerSpeicherdaten();
             return;
         }
     }

@@ -65,5 +65,6 @@ public:
 	void sortSavefilesByScore();
 	void gameOverScreen();
 	inline std::set<Projectile*>* getAllProjectiles() { return &allProjectiles; };
+	inline CSavefile* getFirstSavefile() const { return alleSaveFiles; };
 };
 

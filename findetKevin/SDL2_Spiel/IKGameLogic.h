@@ -14,6 +14,7 @@ private:
 	IKPlayer* m_Player;
 	IKMap* m_Map;
 	CSavefile* m_Savefile;
+	CSavefile* m_FirstSavefile;
 	SDL_Texture* m_EndingScreen;
 private:
 	bool m_GameBeat;
@@ -24,7 +25,7 @@ public:
 	void render();
 	void renderEndingScreen();
 public:
-	IKGameLogic(SDL_Renderer* renderer, SDL_Window* window, CSavefile* savefile);
+	IKGameLogic(SDL_Renderer* renderer, SDL_Window* window, CSavefile* savefile, CSavefile* firstSavefile);
 	~IKGameLogic();
 };
 
