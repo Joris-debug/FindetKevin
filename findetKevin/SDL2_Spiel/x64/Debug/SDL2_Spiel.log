@@ -1,47 +1,94 @@
 ﻿  CBuch.cpp
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: "+=": Konvertierung von "const float" in "int", möglicher Datenverlust
-C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: "+=": Konvertierung von "const float" in "int", möglicher Datenverlust
-box2d.lib(b2_broad_phase.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_broad_phase.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_chain_shape.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_chain_shape.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_collide_circle.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_collide_circle.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_collide_edge.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_collide_edge.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_collide_polygon.obj) : warning LNK4099: PDB "" wurde nicht mit "box2d.lib(b2_collide_polygon.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_collision.obj) : warning LNK4099: PDB "" wurde nicht mit "box2d.lib(b2_collision.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_distance.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_distance.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_dynamic_tree.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_dynamic_tree.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_edge_shape.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_edge_shape.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_polygon_shape.obj) : warning LNK4099: PDB "" wurde nicht mit "box2d.lib(b2_polygon_shape.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_time_of_impact.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_time_of_impact.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_block_allocator.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_block_allocator.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_draw.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_draw.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_math.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_math.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_settings.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_settings.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_stack_allocator.obj) : warning LNK4099: PDB "" wurde nicht mit "box2d.lib(b2_stack_allocator.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_timer.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_timer.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_body.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_body.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_chain_circle_contact.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_chain_circle_contact.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_chain_polygon_contact.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_chain_polygon_contact.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_circle_contact.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_circle_contact.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_contact.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_contact.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_contact_manager.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_contact_manager.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_contact_solver.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_contact_solver.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_distance_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_distance_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_edge_circle_contact.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_edge_circle_contact.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_edge_polygon_contact.obj) : warning LNK4099: PDB "" wurde nicht mit "box2d.lib(b2_edge_polygon_contact.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_fixture.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_fixture.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_friction_joint.obj) : warning LNK4099: PDB "" wurde nicht mit "box2d.lib(b2_friction_joint.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_gear_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_gear_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_island.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_island.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_motor_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_motor_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_mouse_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_mouse_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_polygon_circle_contact.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_polygon_circle_contact.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_polygon_contact.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_polygon_contact.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_prismatic_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_prismatic_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_pulley_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_pulley_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_revolute_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_revolute_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_weld_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_weld_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_wheel_joint.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_wheel_joint.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_world.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_world.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-box2d.lib(b2_world_callbacks.obj) : warning LNK4099: PDB "box2d.pdb" wurde nicht mit "box2d.lib(b2_world_callbacks.obj)" oder an "C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\box2d.pdb" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
-  SDL2_Spiel.vcxproj -> C:\Users\joris\Documents\GitHub\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+  CCoin.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+  CEnemy.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(96,80): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(96,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(97,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(97,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(115,62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(115,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(122,60): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(122,47): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(132,63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(132,50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(139,62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEnemy.cpp(139,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  CEntity.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEntity.cpp(128,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CEntity.cpp(129,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  CGamemaster.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(136,40): warning C4244: 'argument': conversion from 'double' to 'Uint32', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(145,80): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(145,52): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(391,14): warning C4101: 'tempTextureSize': unreferenced local variable
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(961,14): warning C4101: 'tempTextureSize': unreferenced local variable
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1203,14): warning C4101: 'tempTextureSize': unreferenced local variable
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1400,44): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1400,44): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1580,44): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CGamemaster.cpp(1580,44): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  CJohn.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+  CKevin.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+  CMap.cpp
+  CMapEntity.cpp
+  CNPC.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+  Collider.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Collider.cpp(53,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Collider.cpp(54,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  CPlayer.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CPlayer.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+  CQuestTrigger.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+  CSavefile.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CSavefile.cpp(52,21): warning C4244: '=': conversion from 'double' to 'unsigned long', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\CSavefile.cpp(66,11): warning C4101: 'tempSaveFile': unreferenced local variable
+  IKGameLogic.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKGameLogic.cpp(136,40): warning C4244: 'argument': conversion from 'double' to 'Uint32', possible loss of data
+  IKMap.cpp
+  IKPlayer.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKPlayer.cpp(121,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKPlayer.cpp(122,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  IKRenderLayer.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKRenderLayer.cpp(33,39): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKRenderLayer.cpp(40,74): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKRenderLayer.cpp(58,26): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  IKVirus.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\IKVirus.cpp(49,116): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Projectile.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.cpp(26,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.cpp(27,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.cpp(41,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.cpp(45,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.cpp(49,46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.cpp(53,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.cpp(71,76): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.cpp(71,41): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+  Compiling...
+  Quelle.cpp
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(39,1): warning C4244: '+=': conversion from 'const float' to 'int', possible loss of data
+C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\SDL2_Spiel\Projectile.h(40,1): warning C4244: '-=': conversion from 'const float' to 'int', possible loss of data
+  Generating Code...
+  LINK : C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe not found or not built by the last incremental link; performing full link
+  SDL2_Spiel.vcxproj -> C:\workspaces\GitHub repos\FindetKevin_OpenGl\findetKevin\x64\Debug\SDL2_Spiel.exe
