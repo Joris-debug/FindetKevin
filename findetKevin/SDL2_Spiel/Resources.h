@@ -28,6 +28,7 @@
 #define RSC_NPC_KEVIN_SPRITE "./PlayerTextures/Kevin.png"
 #define RSC_FONT_PIXELSPLITTER "./Fonts/PixelSplitter.ttf"
 #define RSC_PLAYER_SPRITE "./PlayerTextures/Adventurer Sprite Sheet v1.1.png"
+#define RSC_ENDING_SCREEN "./OtherTextures/Endingscreen.png"
 
 #define RSC_HUD_LAYER "./OtherTextures/HUD.png"
 #define RSC_COIN_SPRITE "./OtherTextures/coin_16x16.png"

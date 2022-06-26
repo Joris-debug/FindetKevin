@@ -6,11 +6,16 @@
 
 #include "CSavefile.h"
 
+#include "Resources.h"
+
+#include <SDL_image.h>
+
 IKGameLogic::IKGameLogic(SDL_Renderer* renderer, SDL_Window* window, CSavefile* savefile)
 {
 	m_Renderer = renderer;
 	m_Window = window;
     m_GameBeat = false;
+    m_ShowEndingScreen = false;
     m_Savefile = savefile;
 }
 
@@ -23,6 +28,15 @@ void IKGameLogic::init()
     m_Map->init();
     m_Player = m_Map->getPlayer();
     m_Map->render();
+
+    SDL_Surface* surf = IMG_Load(RSC_ENDING_SCREEN);
+    if (surf == NULL)
+    {
+        std::cout << "Unable to load image " << RSC_ENDING_SCREEN << "!SDL_image Error : " << IMG_GetError() << std::endl;
+        return;
+    }
+    m_EndingScreen = SDL_CreateTextureFromSurface(m_Map->getRenderer(), surf);
+    SDL_FreeSurface(surf);
 
 	SDL_RenderPresent(m_Renderer);
 
@@ -48,12 +62,12 @@ void IKGameLogic::init()
 
                 case SDLK_w:
                 case SDLK_s:
-                    m_Player->walk(NONE);
+                    //m_Player->walk(NONE);
                     break;
 
                 case SDLK_d:
                 case SDLK_a:
-                    m_Player->walk(LEFT);
+                    //m_Player->walk(LEFT);
                     break;
                 case SDLK_SPACE:
                     //m_Player->jump();
@@ -100,10 +114,21 @@ void IKGameLogic::init()
         {
             m_Player->walk(RIGHT);
         }
+        else if (keystates[SDL_SCANCODE_SPACE] && m_ShowEndingScreen)
+        {
+            m_ShowEndingScreen = false;
+            m_GameBeat = true;
+        }
 
         /* Gameloop */
-        update(deltaTime);
-        render();
+        if (!m_ShowEndingScreen)
+        {
+            update(deltaTime);
+            render();
+        }
+        else {
+            renderEndingScreen();
+        }
 
         /* Restricting fps to 60 */
         if (deltaTime < float(1000 / 60)) //Limit FPS auf 60
@@ -127,6 +152,7 @@ IKGameLogic::~IKGameLogic()
     delete m_Map;
     *(m_Savefile->getLevel()) = 4;
     IKVirus::s_KilledViruses = 0;
+    SDL_DestroyTexture(m_EndingScreen);
 }
 
 void IKGameLogic::update(double& dt)
@@ -135,11 +161,19 @@ void IKGameLogic::update(double& dt)
     if (IKVirus::s_KilledViruses == 3)
     {
         std::cout << "Congrats! You beat the game!" << std::endl;
-        m_GameBeat = true;
+        m_ShowEndingScreen = true;
     }
 }
 
 void IKGameLogic::render()
 {
     m_Map->render();
+}
+
+void IKGameLogic::renderEndingScreen()
+{
+    SDL_Rect dstRect = { 0, 0, D_SCREEN_WIDTH, D_SCREEN_HEIGHT };
+    //SDL_Rect srcRect = { 0, 0, D_SC }
+
+    SDL_RenderCopy(m_Renderer, m_EndingScreen, &dstRect, &dstRect);
 }

@@ -40,7 +40,7 @@ void IKPlayer::init()
     SDL_Surface* surf = IMG_Load(RSC_PLAYER_SPRITE);
     if (surf == NULL)
     {
-        std::cout << "Unable to load image " << RSC_IK_CHARAKTER_SPRITE << "!SDL_image Error : " << IMG_GetError() << std::endl;
+        std::cout << "Unable to load image " << RSC_PLAYER_SPRITE << "!SDL_image Error : " << IMG_GetError() << std::endl;
         return;
     }
     m_Texture = SDL_CreateTextureFromSurface(m_Map->getRenderer(), surf);
