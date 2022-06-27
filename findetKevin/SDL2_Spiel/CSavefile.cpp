@@ -25,7 +25,6 @@ CSavefile::CSavefile()
 	this->totalScore = 0;
 	time_t result = time(NULL);
 	ctime_s(creationDate, 26, &result);
-	cout << creationDate << endl;
 	nextFile = nullptr;
 }
 
@@ -33,14 +32,17 @@ CSavefile::CSavefile(string playername, int gameDifficulty)
 {
 	this->playername = playername;
 	this->levelNmbr = 1;
-	this->currentHealth = 5;
+	if(gameDifficulty == 1)
+		this->currentHealth = 1;
+	if (gameDifficulty == 2)
+		this->currentHealth = 3;
+	if (gameDifficulty == 3)
+		this->currentHealth = 5;
 	this->gameDifficulty = gameDifficulty;
 	this->totalScore = 0;
 	time_t result = time(NULL);
 	ctime_s(creationDate, 26, &result);
-	cout << creationDate;
 	nextFile = nullptr;
-	cout << playername << "'s, neue Savefile wurde erstellt" << endl;
 }
 
 CSavefile::CSavefile(string playername, int levelNmbr, int currentHealth, int gameDifficulty, double totalScore, char* creationDate, CSavefile* previous)
@@ -51,9 +53,7 @@ CSavefile::CSavefile(string playername, int levelNmbr, int currentHealth, int ga
 	this->gameDifficulty = gameDifficulty;
 	this->totalScore = totalScore;
 	strncpy_s(this->creationDate, creationDate, 26);
-	cout << creationDate;
 	nextFile = previous;
-	cout << playername << "'s, Savefile wurde eingelesen" << endl;
 }
 
 void CSavefile::SchreibenDerSpeicherdaten()

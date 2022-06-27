@@ -166,7 +166,6 @@ void IKGameLogic::update(double& dt)
     m_Map->update(dt);
     if (IKVirus::s_KilledViruses == 3)
     {
-        std::cout << "Congrats! You beat the game!" << std::endl;
         m_ShowEndingScreen = true;
     }
 }

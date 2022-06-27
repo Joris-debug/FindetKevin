@@ -53,13 +53,11 @@ CEntity::CEntity(CGamemaster* game, SDL_Texture* textureTemp, string tag, SDL_Re
     this->game = game;
     this->killFlag = false;
 
-    cout << "Entity " << tag << ", ist gespawned" << endl;
 }
 
 CEntity::~CEntity()
 {
     SDL_DestroyTexture(texture);
-    cout << "Entity " << tag << " ist eliminiert" << endl;
 }
 
 CEntity::CEntity()
@@ -189,8 +187,8 @@ void CEntity::entityPathfinding(double deltaTime)
             walkingDirections.yDirection = walkingDirections.yDirection * (-1); //Nachdem er gegen eine Wand läuft soll er umkehren oder stehen bleiben, das macht den Gegner dynamischer
     }
     update(walkingDirectionY, walkingDirectionX);  //Neuer Sprite wird geladen
-    if(tag == "projectile")
-        std::cout << "lol" << std::endl;
+    //if(tag == "projectile")
+    //    std::cout << "lol" << std::endl;
     return;
 }
 

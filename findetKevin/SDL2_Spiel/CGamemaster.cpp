@@ -38,7 +38,6 @@ CGamemaster::CGamemaster()
 
 CGamemaster::~CGamemaster()
 {
-    cout << endl << "GameMasterclass wurde terminiert" << endl;
     //For quitting IMG systems
     IMG_Quit();
     SDL_Quit();
@@ -1397,11 +1396,11 @@ void CGamemaster::NPC_Pathfinding(double deltaTime)
         {
             if (((Projectile*)(*it))->getKillFlag())
             {
-                std::cout << "Entity count:" << listeVonEntitys.size() << std::endl;
-                std::cout << "Removing projectile" << std::endl;
+                //std::cout << "Entity count:" << listeVonEntitys.size() << std::endl;
+                //std::cout << "Removing projectile" << std::endl;
                 delete (*it);
                 listeVonEntitys.erase(it--);
-                std::cout << "Entity count:" << listeVonEntitys.size() << std::endl;
+                /*std::cout << "Entity count:" << listeVonEntitys.size() << std::endl;*/
             }
         }
         //it->entityPathfinding(deltaTime);

@@ -23,7 +23,6 @@ IKPlayer::IKPlayer(IKMap* map)
 
     m_Map = map;
 
-    std::cout << "Constructed Player!" << std::endl;
 }
 
 IKPlayer::~IKPlayer()

@@ -64,7 +64,7 @@ void IKMap::init()
 	Collider* floorCollider = new Collider({ 9 * 4 + 65 * 2, 644 * 4 + 27 * 2, 65 * 4, 27 * 4 }, m_Simulation);  // x, y, w, h
 	m_GeometryLayer->getColliders().push_back(floorCollider);
 
-	Collider* ceilingCollider = new Collider({ 5 * 4 + 183 * 2, 717 * 4 + 3 * 2, 183 * 4, 3 * 4 }, m_Simulation);  // x, y, w, h
+	Collider* ceilingCollider = new Collider({ 5 * 4 + 183 * 2, 717 * 4 + 3 * 2, 190 * 4, 3 * 4 }, m_Simulation);  // x, y, w, h
 	m_GeometryLayer->getColliders().push_back(ceilingCollider);
 
 	Collider* randomCollider = new Collider({ 72 * 4 + 72 * 2, 571 * 4 + 34 * 2, 72 * 4, 34 * 4 }, m_Simulation);  // x, y, w, h
